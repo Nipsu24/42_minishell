@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/05/14 11:43:35 by mmeier           ###   ########.fr        #
+#    Updated: 2024/05/14 12:43:09 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ clean:
 	
 fclean: clean
 	make fclean -C $(LIBFT)
-	rm -f $(MINISHELL)
+	rm -f $(NAME)
 
 re: fclean all
 
