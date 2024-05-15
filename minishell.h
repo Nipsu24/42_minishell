@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/14 11:13:17 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/15 16:00:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_placeholder
 	int		placeholder;
 }				t_placeholder;
 
-int	ft_input(void);
+int		ft_input(char **env);
+void	print_env(char **env);
 
 #endif
