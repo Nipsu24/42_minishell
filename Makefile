@@ -19,7 +19,7 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = test.c / utils.c
+FILES = test.c utils_tokenizer.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -31,7 +31,7 @@ $(NAME): $(OBJ_FILES) $(LIBFT)
 	@echo "\033[32m MINISHELL has been built successfully!\033[0m"
 
 fsanitize: 
-	$(CC) -o $(NAME) $(FILES) -L$(LIBFT) -lft -g -fsanitize=address -static-libsan 
+	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -L$(LIBFT) -lft -g -fsanitize=address -static-libsan 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)minishell.h | $(OBJ_DIR) 
 	$(CC) $(FLAGS) -c $< -o $@

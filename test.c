@@ -33,7 +33,12 @@ int	ft_input(char **env)
 {
 	char	*input;
 	char	*environment;
+	char	**tokens;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
 	environment = "env";
 	while (1)
 	{
@@ -49,8 +54,26 @@ int	ft_input(char **env)
 			printf("You entered %s\n", input);
 		if (ft_strlen(input) > 0)
 			add_history(input);
+		tokens = ft_tokenize(input, ' ', '"');
+		if (!tokens)
+			return (1);
+		while (tokens[i])
+		{
+			ft_printf("%s\n", tokens[i]);
+			i++;
+		}
+		i = 0;
 		free(input);
 		input = NULL;
+		while (tokens[j])
+		{
+			free(tokens[j]);
+			tokens[j] = NULL;
+			j++;
+		}
+		j = 0;
+		free(tokens);
+		tokens = NULL;
 	}
 	return (0);
 }
