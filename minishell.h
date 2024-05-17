@@ -25,5 +25,6 @@ typedef struct s_placeholder
 
 int		ft_input(char **env);
 void	print_env(char **env);
+char	**ft_tokenize(char const *s, char c, char str_flag);
 
 #endif
