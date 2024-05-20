@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/16 16:42:49 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/20 14:45:47 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Helper function of ft_wcount, iterates through quoted part of sting*/
+static void	w_count_quote_iter(const char *s, char str_flag, int *i)
+{
+	(*i)++;
+	while (s[*i] && s[*i] != str_flag)
+		(*i)++;
+}
 
 /*Counts words (and strings in quotes as one single word)*/
 static int	ft_wcount(char const *s, char c, char str_flag)
@@ -27,11 +35,8 @@ static int	ft_wcount(char const *s, char c, char str_flag)
 			count++;
 			while (s[i] && s[i] != c)
 			{
-				if (s[i] == str_flag && s[i + 1] && i++)
-				{
-					while (s[i] && s[i] != str_flag)
-						i++;
-				}
+				if (s[i] == str_flag && s[i + 1])
+					w_count_quote_iter(s, str_flag, &i);
 				if (s[i])
 					i++;
 			}
@@ -65,16 +70,15 @@ static char	**ft_iter_quote(char const *s, size_t *i, size_t *j, char **arr, cha
 	while (s[*i] != str_flag && s[*i])
 		(*i)++;
 	arr[*j] = ft_substr(s, start, (*i - start + 1));
-		if (arr[*j] == 0)
-			return (ft_free(arr, *j));
-		(*j)++;
-	arr[*j] = 0;
+	if (arr[*j] == 0)
+		return (ft_free(arr, *j));
+	(*j)++;
 	if (s[*i])
 		(*i)++;
 	return (arr);
 }
 
-/*Helper function of ft_store_words. Iterates through not quoted passages and copies
+/*Helper function of ft_store_words. Iterates through unquoted parts and copies
   those into array of strings*/
 static char	**ft_iter_str(char const *s, size_t *i, size_t *j, char **arr, char c)
 {
@@ -84,24 +88,22 @@ static char	**ft_iter_str(char const *s, size_t *i, size_t *j, char **arr, char 
 	while (s[*i] != c && s[*i])
 		(*i)++;
 	arr[*j] = ft_substr(s, start, (*i - start));
-		if (arr[*j] == 0)
-			return (ft_free(arr, *j));
-		(*j)++;
-	arr[*j] = 0;
+	if (arr[*j] == 0)
+		return (ft_free(arr, *j));
+	(*j)++;
 	return (arr);
 }
 
-/*Iterates through string and copies identified passages (words delimited by char c
-  and passages enclosed by str_flag - e.g. '"') into array of strings*/
+/*Iterates through string and copies identified passages (words delimited 
+  by char c and passages enclosed by str_flag - e.g. '"') into array of 
+  strings*/
 static char	**ft_store_words(char const *s, char c, char **arr, char str_flag)
 {
-	//size_t	start;
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	j = 0;
-	//start = 0;
 	while (s[i])
 	{
 		if (s[i] == str_flag)
@@ -120,29 +122,41 @@ static char	**ft_store_words(char const *s, char c, char **arr, char str_flag)
 	arr[j] = 0;
 	return (arr);
 }
-	
-/*Modification of ft_split. Takes in addition to delimiter also another argument 
- 'str_flag' which can identify quoted passages within a string and treats these 
- passages as 'one word' when populating the array of strings*/
+
+/*Modification of ft_split. Takes in addition to delimiter also another 
+  argument 'str_flag' which can identify quoted passages within a string
+  and treats these passages as 'one word' when populating the array of 
+  strings*/
 char	**ft_tokenize(char const *s, char c, char str_flag)
 {
 	char	**arr;
 
 	if (!s)
 		return (0);
-	arr = (char**) malloc (sizeof(char *) * (ft_wcount(s, c, str_flag) + 1));
+	arr = (char **) malloc (sizeof(char *) * (ft_wcount(s, c, str_flag) + 1));
 	if (arr == 0 || s == 0)
 		return (NULL);
 	return (ft_store_words(s, c, arr, str_flag));
 }
 
-int	main(int ac, char *av[])
-{
-	int	nbr;
-	nbr = 0;
-	if (ac > 1)
-		nbr = ft_wcount(av[1], ' ', '"');
-	ft_printf("%d\n", nbr);
+// int	main(void)
+// {
+// 	int	nbr;
+// 	nbr = 0;
+// 	char *str = "Hallo this \"is a\" test";
+// 	nbr = ft_wcount(str, ' ', '"');
+// 	ft_printf("%d\n", nbr);
+// 	return (0);
+// }
+// int	main(int ac, char *av[])
+// {
+// 	int	nbr;
+// 	nbr = 0;
+// 	if (ac > 1)
+// 		nbr = ft_wcount(av[1], ' ', '"');
+// 	ft_printf("%d\n", nbr);
+// 	return (0);
+	
 	// char **string;
 	// int	i;
 	// int j;
@@ -166,5 +180,5 @@ int	main(int ac, char *av[])
 	// 	free(string);
 	// 	string = NULL;
 	// }
-	return (0);
-}
+	// return (0);
+// }

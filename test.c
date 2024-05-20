@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/16 12:30:52 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/20 16:56:23 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,29 @@ void	print_env(char **env)
 	}
 }
 
+void	ft_token_type(t_tokens *tokens, int i)
+{
+	if (tokens->entry[i].cnt[0] == '"')
+		tokens->entry[i].type = STRING;
+	else if (!ft_strncmp(tokens->entry[i].cnt, "<\0", 2))
+		tokens->entry[i].type = REDIRECT_IN;
+	else if (!ft_strncmp(tokens->entry[i].cnt, ">\0", 2))
+		tokens->entry[i].type = REDIRECT_OUT;
+	else if (tokens->entry[i].cnt[0] == '|')
+		tokens->entry[i].type = PIPE;
+	else if (!ft_strncmp(tokens->entry[i].cnt, "<<\0", 2))
+		tokens->entry[i].type = REDIRECT_IN_DEL;
+	else if (!ft_strncmp(tokens->entry[i].cnt, ">>\0", 2))
+		tokens->entry[i].type = REDIRECT_OUT_APP;
+	else if ((tokens->entry[i].cnt[i - 1] == '<') ||
+		(tokens->entry[i].cnt[i - 1] == '>'))
+		tokens->entry[i].type = FILE_NAME;
+	else if (tokens->entry[i].cnt[0] == '$')
+		tokens->entry[i].type = ENVAR;
+	else
+		tokens->entry[i].type = COMMAND;	
+}
+
 /*The 'readline' function enables writing commands to program during execution. 
   In case 'env' is typed to shell, env. variables are printed to the terminal, 
   otherwise command that user inputs is printed. The 'add_history' function 
@@ -31,11 +54,12 @@ void	print_env(char **env)
   after a command has been typed)*/
 int	ft_input(char **env)
 {
-	char	*input;
-	char	*environment;
-	char	**tokens;
-	int		i;
-	int		j;
+	// t_tokens	token_table;
+	char		*input;
+	char		*environment;
+	char		**tokens;
+	int			i;
+	int			j;
 
 	i = 0;
 	j = 0;
@@ -59,7 +83,12 @@ int	ft_input(char **env)
 			return (1);
 		while (tokens[i])
 		{
+			
 			ft_printf("%s\n", tokens[i]);
+			// token_table.entry[i].cnt = tokens[i];
+			// ft_token_type(&token_table, i);
+			// ft_printf("%s\n", token_table.entry[i].cnt);
+			// ft_printf("%d\n", token_table.entry[i].type);
 			i++;
 		}
 		i = 0;
