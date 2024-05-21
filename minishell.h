@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/20 16:32:21 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:14:20 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-typedef struct s_placeholder
-{
-	int		placeholder;
-}				t_placeholder;
 
 typedef enum s_token_type
 {
@@ -48,9 +43,18 @@ typedef struct s_tokens
 	t_token		*entry;	
 }				t_tokens;
 
-int		ft_input(char **env);
+typedef struct s_data
+{
+	char		**temp_env;
+	char		**tokens;
+	char		*input;
+	t_tokens	*token_list;
+}				t_data;
+
+int		ft_input(t_data *data);
 void	print_env(char **env);
 char	**ft_tokenize(char const *s, char c, char str_flag);
-void	ft_token_type(t_tokens *tokens, int i);
+void	ft_token_type(t_data *tokens, int i);
+void	free_all(t_data *data);
 
 #endif
