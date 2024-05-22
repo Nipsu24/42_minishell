@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/21 17:14:58 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/22 10:32:47 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ void	ft_token_type(t_data *data, int i)
 {
 	if (data->token_list->entry[i].cnt[0] == '"')
 		data->token_list->entry[i].type = STRING;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, "<\0", 1) == 0)
+	else if (ft_strncmp(data->token_list->entry[i].cnt, "<<", 2) == 0)
+		data->token_list->entry[i].type = REDIRECT_IN_DEL;
+	else if (ft_strncmp(data->token_list->entry[i].cnt, ">>", 2) == 0)
+		data->token_list->entry[i].type = REDIRECT_OUT_APP;
+	else if (ft_strncmp(data->token_list->entry[i].cnt, "<", 1) == 0)
 		data->token_list->entry[i].type = REDIRECT_IN;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, ">\0", 1) == 0)
+	else if (ft_strncmp(data->token_list->entry[i].cnt, ">", 1) == 0)
 		data->token_list->entry[i].type = REDIRECT_OUT;
 	else if (data->token_list->entry[i].cnt[0] == '|')
 		data->token_list->entry[i].type = PIPE;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, "<<\0", 2) == 0)
-		data->token_list->entry[i].type = REDIRECT_IN_DEL;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, ">>\0", 2) == 0)
-		data->token_list->entry[i].type = REDIRECT_OUT_APP;
-	else if ((data->token_list->entry[i].cnt[i - 1] == '<') ||
-		(data->token_list->entry[i].cnt[i - 1] == '>'))
+	else if ((data->token_list->entry[i - 1].cnt[0] == '<')
+		|| (data->token_list->entry[i - 1].cnt[0] == '>'))
 		data->token_list->entry[i].type = FILE_NAME;
 	else if (data->token_list->entry[i].cnt[0] == '$')
 		data->token_list->entry[i].type = ENVAR;

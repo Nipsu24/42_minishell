@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/21 17:14:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/22 10:19:13 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,21 @@ typedef enum s_token_type
 	ENVAR,
 }			t_token_type;
 
+/*Holds information of a single token*/
 typedef struct s_token
 {
 	char			*cnt;
 	t_token_type	type;
 }				t_token;
 
+/*Struct containing all tokens generated from user input*/
 typedef struct s_tokens
 {
 	int			index;
 	t_token		*entry;	
 }				t_tokens;
 
+/*Overall struct for all relevant data of the shell*/
 typedef struct s_data
 {
 	char		**temp_env;
