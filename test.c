@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/22 10:32:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:32:55 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,15 @@ void	ft_token_type(t_data *data, int i)
 		data->token_list->entry[i].type = REDIRECT_OUT;
 	else if (data->token_list->entry[i].cnt[0] == '|')
 		data->token_list->entry[i].type = PIPE;
-	else if ((data->token_list->entry[i - 1].cnt[0] == '<')
-		|| (data->token_list->entry[i - 1].cnt[0] == '>'))
+	else if (i > 0 && ((data->token_list->entry[i - 1].cnt[0] == '<')
+		|| (data->token_list->entry[i - 1].cnt[0] == '>')))
 		data->token_list->entry[i].type = FILE_NAME;
 	else if (data->token_list->entry[i].cnt[0] == '$')
 		data->token_list->entry[i].type = ENVAR;
+	else if (i > 2 && ((data->token_list->entry[i - 2].type == REDIRECT_IN)
+		|| (data->token_list->entry[i - 2].type == REDIRECT_OUT))
+		&& data->token_list->entry[i -1].type == FILE_NAME)
+		data->token_list->entry[i].type = COMMAND;
 	else
 		data->token_list->entry[i].type = COMMAND;
 }
