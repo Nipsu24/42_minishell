@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/23 14:52:01 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/23 14:59:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,24 @@ void	ft_token_type(t_data *data, int i)
 		data->token_list->entry[i].type = REDIRECT_IN;
 	else if (ft_strncmp(data->token_list->entry[i].cnt, ">", 1) == 0)
 		data->token_list->entry[i].type = REDIRECT_OUT;
-	else if (data->token_list->entry[i].cnt[0] == '|' 
+	else if (data->token_list->entry[i].cnt[0] == '|'
 		&& ft_strlen(data->token_list->entry[i].cnt) == 1)
 		data->token_list->entry[i].type = PIPE;
 	else if (i > 0 && ((data->token_list->entry[i - 1].cnt[0] == '<')
-		|| (data->token_list->entry[i - 1].cnt[0] == '>')))
+			|| (data->token_list->entry[i - 1].cnt[0] == '>')))
 		data->token_list->entry[i].type = FILE_NAME;
 	else if (data->token_list->entry[i].cnt[0] == '$')
 		data->token_list->entry[i].type = ENVAR;
 	else if (i > 2 && ((data->token_list->entry[i - 2].type == REDIRECT_IN)
-		|| (data->token_list->entry[i - 2].type == REDIRECT_OUT))
+			|| (data->token_list->entry[i - 2].type == REDIRECT_OUT))
 		&& data->token_list->entry[i -1].type == FILE_NAME)
 		data->token_list->entry[i].type = COMMAND;
 	else
 		data->token_list->entry[i].type = COMMAND;
 }
 
-/*Handles basic syntax errors e.g. if two PIPE-Tokens are next to each other or if 
-  there is not input after a redirect arrow*/
+/*Handles basic syntax errors e.g. if two PIPE-Tokens are next to each other or 
+  if there is not input after a redirect arrow*/
 int	token_syntax_check(t_data *data)
 {
 	int	i;
@@ -72,17 +72,17 @@ int	token_syntax_check(t_data *data)
 	{
 		if (i > 0 && data->token_list->entry[i - 1].type == PIPE
 			&& data->token_list->entry[i].type == PIPE)
-			{
-				printf("minishell: syntax error near unexpected token '|'\n");
-				return (1);
-			}
+		{
+			printf("minishell: syntax error near unexpected token '|'\n");
+			return (1);
+		}
 		if ((data->token_list->entry[i].type == REDIRECT_IN
-			|| data->token_list->entry[i].type == REDIRECT_OUT)
+				|| data->token_list->entry[i].type == REDIRECT_OUT)
 			&& (!(data->token_list->entry[i + 1].type)))
-			{
-				printf("minishell: syntax error near unexpected token 'newline'\n");
-				return (1);
-			}
+		{
+			printf("minishell: syntax error near unexpected token 'newline'\n");
+			return (1);
+		}
 		i++;
 	}
 	return (0);
