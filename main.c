@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/23 11:55:36 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:32:08 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,30 @@ static int	ft_input(t_data *data)
 	return (0);
 }
 
+/*Creates copy of env var in order to being able of modifying this copy
+  later on in the course of the shell execution*/
+static char	**ft_copy_env(char **env, char **cpy_env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (env[j])
+		j++;
+	cpy_env = (char **) malloc (sizeof(char *) * (j + 1));
+	if (!cpy_env)
+		return (NULL);
+	while (env[i])
+	{
+		cpy_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
+		if (!cpy_env[i])
+			return (free_arr_rev(cpy_env, i));
+		i++;
+	}
+	return (cpy_env);
+}
+
 /*String array 'env' holds by default environment variables of the system. 
   Array still needs to be copied before doing any alterations, but it's 
   already possible to print it.*/
@@ -109,7 +133,7 @@ int	main(int ac, char *av[], char *env[])
 {
 	t_data	data;	
 
-	data.temp_env = env;
+	data.temp_env = ft_copy_env(env, data.temp_env);
 	if (ac > 1 || av[1])
 	{
 		printf("Error. File does not take input.\n");
