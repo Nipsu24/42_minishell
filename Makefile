@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/05/16 12:21:33 by mmeier           ###   ########.fr        #
+#    Updated: 2024/05/23 11:39:17 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = test.c utils_tokenizer.c
+FILES = main.c utils_tokenizer.c token_handling.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 

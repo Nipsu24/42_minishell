@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/22 12:32:55 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:55:36 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_all(t_data *data)
 		free(data->input);
 		data->input = NULL;
 	}
-	if (data->tokens)
+	if (data->tokens && data->tokens[j])
 	{
 		while (data->tokens[j])
 		{
@@ -45,6 +45,7 @@ void	free_all(t_data *data)
 			j++;
 		}
 		free(data->tokens);
+		data->tokens = NULL;
 	}
 	if (data->token_list)
 	{
@@ -54,60 +55,12 @@ void	free_all(t_data *data)
 	}
 }
 
-/*Assigns type (e.g. 'pipe', 'command' etc.) to each identified token. Not all
-  yet functional and recognised, needs rework.*/
-void	ft_token_type(t_data *data, int i)
-{
-	if (data->token_list->entry[i].cnt[0] == '"')
-		data->token_list->entry[i].type = STRING;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, "<<", 2) == 0)
-		data->token_list->entry[i].type = REDIRECT_IN_DEL;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, ">>", 2) == 0)
-		data->token_list->entry[i].type = REDIRECT_OUT_APP;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, "<", 1) == 0)
-		data->token_list->entry[i].type = REDIRECT_IN;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, ">", 1) == 0)
-		data->token_list->entry[i].type = REDIRECT_OUT;
-	else if (data->token_list->entry[i].cnt[0] == '|')
-		data->token_list->entry[i].type = PIPE;
-	else if (i > 0 && ((data->token_list->entry[i - 1].cnt[0] == '<')
-		|| (data->token_list->entry[i - 1].cnt[0] == '>')))
-		data->token_list->entry[i].type = FILE_NAME;
-	else if (data->token_list->entry[i].cnt[0] == '$')
-		data->token_list->entry[i].type = ENVAR;
-	else if (i > 2 && ((data->token_list->entry[i - 2].type == REDIRECT_IN)
-		|| (data->token_list->entry[i - 2].type == REDIRECT_OUT))
-		&& data->token_list->entry[i -1].type == FILE_NAME)
-		data->token_list->entry[i].type = COMMAND;
-	else
-		data->token_list->entry[i].type = COMMAND;
-}
-
-/*Allocates memory for t_tokens & t_token structs. Calculates first amount of 
-  tokens available which is relevant for allocating right amount of t_token 
-  structs.*/
-int	ft_malloc_token(t_data *data)
-{
-	int	num_tokens;
-
-	num_tokens = 0;
-	while (data->tokens[num_tokens])
-		num_tokens++;
-	data->token_list = (t_tokens *) malloc(sizeof(t_tokens));
-	if (!data->token_list)
-		return (0);
-	data->token_list->entry = (t_token *) malloc(num_tokens * sizeof(t_token));
-	if (!data->token_list->entry)
-		return (0);
-	return (1);
-}
-
 /*The 'readline' function enables writing commands to program during execution. 
   In case 'env' is typed to shell, env. variables are printed to the terminal, 
   otherwise command that user inputs is printed. The 'add_history' function 
   enables visibility of previous inserted commands (using keyboards "arrow up" 
   after a command has been typed)*/
-int	ft_input(t_data *data)
+static int	ft_input(t_data *data)
 {
 	char		*environment;
 	int			i;
@@ -137,10 +90,12 @@ int	ft_input(t_data *data)
 		{
 			data->token_list->entry[i].cnt = data->tokens[i];
 			ft_token_type(data, i);
-			ft_printf("%s\n", data->token_list->entry[i].cnt);
-			ft_printf("%d\n", data->token_list->entry[i].type);
+			printf("%s\n", data->token_list->entry[i].cnt);
+			printf("%d\n", data->token_list->entry[i].type);
 			i++;
 		}
+		if (token_syntax_check(data))
+			free_all(data);
 		i = 0;
 		free_all(data);
 	}

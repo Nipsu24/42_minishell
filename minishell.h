@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/22 10:19:13 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/23 14:41:44 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_token
 /*Struct containing all tokens generated from user input*/
 typedef struct s_tokens
 {
-	int			index;
 	t_token		*entry;	
 }				t_tokens;
 
@@ -54,10 +53,11 @@ typedef struct s_data
 	t_tokens	*token_list;
 }				t_data;
 
-int		ft_input(t_data *data);
 void	print_env(char **env);
 char	**ft_tokenize(char const *s, char c, char str_flag);
 void	ft_token_type(t_data *tokens, int i);
 void	free_all(t_data *data);
+int		token_syntax_check(t_data *data);
+int		ft_malloc_token(t_data *data);
 
 #endif
