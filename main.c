@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/23 16:32:08 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:23:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,8 @@ static char	**ft_copy_env(char **env, char **cpy_env)
 }
 
 /*String array 'env' holds by default environment variables of the system. 
-  Array still needs to be copied before doing any alterations, but it's 
-  already possible to print it.*/
+  Array is copied with ft_copy_env so that any alterations done to the
+  env variables during minishell execution do not affect the original env.*/
 int	main(int ac, char *av[], char *env[])
 {
 	t_data	data;	
