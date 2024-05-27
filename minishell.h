@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/24 13:46:45 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:52:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_data
 	char		**temp_env;
 	char		**tokens;
 	char		*input;
+	char		**path;
 	t_tokens	*token_list;
 }				t_data;
 
@@ -61,5 +62,6 @@ void	free_all(t_data *data);
 int		token_syntax_check(t_data *data);
 int		ft_malloc_token(t_data *data);
 char	**free_arr_rev(char **av, int j);
+int		ft_exec(t_data *data);
 
 #endif
