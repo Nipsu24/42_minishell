@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/27 15:52:07 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:42:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_data
 	char		**tokens;
 	char		*input;
 	char		**path;
+	char		*val_pth;
 	t_tokens	*token_list;
 }				t_data;
 
