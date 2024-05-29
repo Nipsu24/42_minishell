@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/24 14:23:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/29 16:34:55 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,18 @@ static int	ft_input(t_data *data)
 			printf("EOF or ERROR");
 			return (1);
 		}
+		if (ft_strlen(data->input) > 0)
+			add_history(data->input);
+		if (not_valid_input(data->input))
+		{
+			free(data->input);
+			data->input = NULL;
+			continue;
+		}
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
 		else
 			printf("You entered %s\n", data->input);
-		if (ft_strlen(data->input) > 0)
-			add_history(data->input);
 		data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
@@ -94,8 +100,8 @@ static int	ft_input(t_data *data)
 			printf("%d\n", data->token_list->entry[i].type);
 			i++;
 		}
-		if (token_syntax_check(data))
-			free_all(data);
+		// if (token_syntax_check(data))
+		// 	free_all(data);
 		i = 0;
 		free_all(data);
 	}

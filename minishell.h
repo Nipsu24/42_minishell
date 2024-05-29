@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/24 13:46:45 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:16:45 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	print_env(char **env);
 char	**ft_tokenize(char const *s, char c, char str_flag);
 void	ft_token_type(t_data *tokens, int i);
 void	free_all(t_data *data);
-int		token_syntax_check(t_data *data);
+//int		token_syntax_check(t_data *data);
 int		ft_malloc_token(t_data *data);
 char	**free_arr_rev(char **av, int j);
+int		not_valid_input(char *str);
 
 #endif
