@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/27 15:00:12 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/29 13:57:15 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ static char	**ft_copy_env(char **env, char **cpy_env)
   env variables during minishell execution do not affect the original env.*/
 int	main(int ac, char *av[], char *env[])
 {
-	t_data	data;	
-
+	t_data	data;
+		
 	data.temp_env = ft_copy_env(env, data.temp_env);
 	if (ac > 1 || av[1])
 	{
