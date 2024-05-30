@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/29 16:34:55 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:35:09 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ static int	ft_input(t_data *data)
 			add_history(data->input);
 		if (not_valid_input(data->input))
 		{
-			free(data->input);
-			data->input = NULL;
+			free_all(data);
 			continue;
 		}
 		if (ft_strncmp(data->input, environment, 3) == 0)
@@ -100,8 +99,6 @@ static int	ft_input(t_data *data)
 			printf("%d\n", data->token_list->entry[i].type);
 			i++;
 		}
-		// if (token_syntax_check(data))
-		// 	free_all(data);
 		i = 0;
 		free_all(data);
 	}

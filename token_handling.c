@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/29 15:42:07 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:35:37 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,3 @@ void	ft_token_type(t_data *data, int i)
 		data->token_list->entry[i].type = COMMAND;
 }
 
-/*not needed as already handled before splitting*/
-/*Handles basic syntax errors e.g. if two PIPE-Tokens are next to each other or 
-  if there is not input after a redirect arrow*/
-// int	token_syntax_check(t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (data->token_list->entry[i].cnt)
-// 	{
-// 		if (i > 0 && data->token_list->entry[i - 1].type == PIPE
-// 			&& data->token_list->entry[i].type == PIPE)
-// 		{
-// 			printf("minishell: syntax error near unexpected token '|'\n");
-// 			return (1);
-// 		}
-// 		if ((data->token_list->entry[i].type == REDIRECT_IN
-// 				|| data->token_list->entry[i].type == REDIRECT_OUT)
-// 			&& (!(data->token_list->entry[i + 1].type)))
-// 		{
-// 			printf("minishell: syntax error near unexpected token 'newline'\n");
-// 			return (1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
