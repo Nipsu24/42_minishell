@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/05/29 18:13:06 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/05/30 15:08:58 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c
+FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
