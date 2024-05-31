@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/30 15:11:53 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:13:59 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int		ft_malloc_token(t_data *data);
 char	**free_arr_rev(char **av, int j);
 int		not_valid_input(char *str);
 void	setup_signal(void);
+int		between_quotes(char *input, int pos);
 
 #endif
