@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:45:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/30 11:33:39 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:13:37 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int	write_sytx_error(int n)
 	return (0);
 }
 
+
 /*Checks if there are pipes next to each other in user input, if yes, prints 
   respective error message.*/
 static int	check_pipes(char *input)
@@ -76,11 +77,13 @@ static int	check_pipes(char *input)
 		return (0);
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (input[i] == '|' && !between_quotes(input, i))
 		{
 			i++;
 			if (input[i] == '|')
 				return (write_sytx_error(0));
+			if (!input[i] || input[i] == '<' || input[i] == '>')
+				return (write_sytx_error(1));
 			while (input[i] && input[i] == 32)
 				i++;
 			if (input[i] && input[i] == '|')
@@ -103,7 +106,8 @@ static int	check_redirects(char *input)
 		return (0);
 	while (input[i])
 	{
-		if (input[i] == '<' || input[i] == '>')
+		if ((input[i] == '<' && !between_quotes(input, i))
+			|| (input[i] == '>' && !between_quotes(input, i)))
 		{
 			i++;
 			if (!input[i] || input[i] == '|')
