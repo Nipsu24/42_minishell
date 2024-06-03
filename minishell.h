@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/31 12:13:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/03 14:47:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+/*Linked list containing command structure extracted from tokens*/
+typedef struct s_command
+{
+	char				*cmd;
+	char				**args;
+	char				*file_in;
+	char				*file_out;
+	struct s_command	*next;
+}				t_command;
 
 typedef enum s_token_type
 {
@@ -42,7 +52,8 @@ typedef struct s_token
 /*Struct containing all tokens generated from user input*/
 typedef struct s_tokens
 {
-	t_token		*entry;	
+	t_token		*entry;
+	int			num;	
 }				t_tokens;
 
 /*Overall struct for all relevant data of the shell*/
@@ -52,6 +63,7 @@ typedef struct s_data
 	char		**tokens;
 	char		*input;
 	t_tokens	*token_list;
+	t_command	*cmds;
 }				t_data;
 
 void	print_env(char **env);
@@ -63,5 +75,6 @@ char	**free_arr_rev(char **av, int j);
 int		not_valid_input(char *str);
 void	setup_signal(void);
 int		between_quotes(char *input, int pos);
+int		parse_cmds(t_data *data);
 
 #endif

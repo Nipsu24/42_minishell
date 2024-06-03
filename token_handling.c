@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/30 11:35:37 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/03 14:24:26 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Allocates memory for t_tokens & t_token structs. Calculates first amount of 
   tokens available which is relevant for allocating right amount of t_token 
-  structs.*/
+  structs. Saves amount of token in data struct for later use in parsing part*/
 int	ft_malloc_token(t_data *data)
 {
 	int	num_tokens;
@@ -28,6 +28,7 @@ int	ft_malloc_token(t_data *data)
 	data->token_list->entry = (t_token *) malloc(num_tokens * sizeof(t_token));
 	if (!data->token_list->entry)
 		return (0);
+	data->token_list->num = num_tokens;
 	return (1);
 }
 
