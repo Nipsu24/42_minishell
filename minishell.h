@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/03 14:47:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:56:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,25 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/*Linked list containing command structure extracted from tokens*/
+/*Struct containing command structure extracted from tokens*/
 typedef struct s_command
 {
-	char				*cmd;
+	char				*cnt;
 	char				**args;
 	char				*file_in;
 	char				*file_out;
-	struct s_command	*next;
 }				t_command;
+
+/*Struct containing all command structures extracted from tokens*/
+typedef struct s_com_lst
+{
+	t_command	*cmd;
+}				t_com_lst;
 
 typedef enum s_token_type
 {
 	COMMAND,
+	ARGUMENT,
 	STRING,
 	REDIRECT_IN,
 	REDIRECT_OUT,
@@ -62,8 +68,9 @@ typedef struct s_data
 	char		**temp_env;
 	char		**tokens;
 	char		*input;
+	int			pipe_count;
 	t_tokens	*token_list;
-	t_command	*cmds;
+	t_com_lst	*cmds;
 }				t_data;
 
 void	print_env(char **env);
