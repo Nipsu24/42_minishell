@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/03 14:24:26 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/04 10:58:55 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	ft_malloc_token(t_data *data)
 	return (1);
 }
 
-/*Assigns type (e.g. 'pipe', 'command' etc.) to each identified token. Not all
-  yet functional and recognised, needs rework.*/
+/*Assigns type (e.g. 'pipe', 'command' etc.) to each identified token.*/
 void	ft_token_type(t_data *data, int i)
 {
 	if (data->token_list->entry[i].cnt[0] == '"')
@@ -58,7 +57,10 @@ void	ft_token_type(t_data *data, int i)
 			|| (data->token_list->entry[i - 2].type == REDIRECT_OUT))
 		&& data->token_list->entry[i -1].type == FILE_NAME)
 		data->token_list->entry[i].type = COMMAND;
-	else
+	else if ((data->token_list->entry[0].cnt && i == 0)
+		|| (i > 0 && data->token_list->entry[i - 1].type == PIPE))
 		data->token_list->entry[i].type = COMMAND;
+	else
+		data->token_list->entry[i].type = ARGUMENT;
 }
 
