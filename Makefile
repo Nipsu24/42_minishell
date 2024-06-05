@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
+#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/05/31 12:49:40 by mmeier           ###   ########.fr        #
+#    Updated: 2024/06/05 14:18:58 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)minishell.h | $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR) 
 
 clean:
 	make clean -C $(LIBFT)
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) $(OBJ_FILES:.o=.dSYM)
 	
 fclean: clean
 	make fclean -C $(LIBFT)
