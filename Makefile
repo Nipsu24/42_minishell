@@ -6,7 +6,7 @@
 #    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/06/05 14:18:58 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/06/05 17:29:09 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,23 @@ OBJ_DIR = obj
 LIBFT = ./libft/
 
 FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c in_quotes_check.c
+
+BUILTINS = builtins/builtin_utils.c \
+			builtins/pwd.c \
+
+PARSING = 
+
+TOKENIZER =
+
+EXEC = 
+
+SRCS = $(BUILTINS) \
+		$(PARSING) \
+		$(TOKENIZER) \
+		$(EXEC) \
+		main.c
+			
+
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
