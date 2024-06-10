@@ -69,6 +69,8 @@ typedef struct s_data
 	char		**tokens;
 	char		*input;
 	int			pipe_count;
+	char		**prcs_buf;
+	char		**prcs;
 	t_tokens	*token_list;
 	t_com_lst	*cmds;
 }				t_data;
@@ -83,5 +85,8 @@ int		not_valid_input(char *str);
 void	setup_signal(void);
 int		between_quotes(char *input, int pos);
 int		parse_cmds(t_data *data);
+int		split_in_prcs(t_data *data);
+char	**ft_free(char **result, size_t j);
+char	**free_arr(char **arr);
 
 #endif
