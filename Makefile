@@ -19,7 +19,7 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c in_quotes_check.c parsing.c
+FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c in_quotes_check.c split_pipes.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 

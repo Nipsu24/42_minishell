@@ -29,8 +29,10 @@ void	print_env(char **env)
 void	free_all(t_data *data)
 {
 	int	j;
+	int	i;
 
 	j = 0;
+	i = 0;
 	if (data->input)
 	{
 		free(data->input);
@@ -46,6 +48,17 @@ void	free_all(t_data *data)
 		}
 		free(data->tokens);
 		data->tokens = NULL;
+	}
+	if (data->prcs && data->prcs[i])
+	{
+		while (data->prcs[i])
+		{
+			free(data->prcs[i]);
+			data->prcs[i] = NULL;
+			i++;
+		}
+		free(data->prcs);
+		data->prcs = NULL;
 	}
 	if (data->token_list)
 	{
@@ -63,9 +76,9 @@ void	free_all(t_data *data)
 static int	ft_input(t_data *data)
 {
 	char		*environment;
-	int			i;
+	//int			i;
 
-	i = 0;
+	//i = 0;
 	environment = "env";
 	while (1)
 	{
@@ -87,21 +100,23 @@ static int	ft_input(t_data *data)
 			print_env(data->temp_env);
 		else
 			printf("You entered %s\n", data->input);
+		if (split_in_prcs(data))
+			return (1);
 		data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
 		if (!ft_malloc_token(data))
 			return (1);
-		while (data->tokens[i])
-		{
-			data->token_list->entry[i].cnt = data->tokens[i];
-			ft_token_type(data, i);
-			printf("%s\n", data->token_list->entry[i].cnt);
-			printf("%d\n", data->token_list->entry[i].type);
-			i++;
-		}
-		i = 0;
-		parse_cmds(data);
+		// while (data->tokens[i])
+		// {
+		// 	data->token_list->entry[i].cnt = data->tokens[i];
+		// 	ft_token_type(data, i);
+		// 	printf("%s\n", data->token_list->entry[i].cnt);
+		// 	printf("%d\n", data->token_list->entry[i].type);
+		// 	i++;
+		// }
+		//i = 0;
+		//parse_cmds(data);
 		free_all(data);
 	}
 	return (0);
