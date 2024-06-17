@@ -146,6 +146,18 @@ static char	**ft_copy_env(char **env, char **cpy_env)
 	return (cpy_env);
 }
 
+void	init_data(t_data *data)
+{
+	data->temp_env = NULL;
+	data->tokens = NULL;
+	data->input = NULL;
+	data->pipe_count = 0;
+	data->prcs_buf = NULL;
+	data->prcs = NULL;
+	data->token_list = NULL;
+	data->cmds = NULL;
+}
+
 /*String array 'env' holds by default environment variables of the system. 
   Array is copied with ft_copy_env so that any alterations done to the
   env variables during minishell execution do not affect the original env.*/
@@ -153,6 +165,7 @@ int	main(int ac, char *av[], char *env[])
 {
 	t_data	data;	
 
+	init_data(&data);
 	data.temp_env = ft_copy_env(env, data.temp_env);
 	if (ac > 1 || av[1])
 	{

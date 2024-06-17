@@ -36,7 +36,7 @@ static int is_quote(char c)
 }
 
 /*Helper function of ft_split_prcs. Quote != 0 means, that character 
-  is in quoted segment. If not in quoted segment and character is pipe
+  is in quoted segment. If not in quoted segment and character is pipe,
   iteration stops and index i is used in split_prcs function for sub-
   string function.*/
 static void is_in_quotes(char *s, size_t *i)
