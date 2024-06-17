@@ -116,7 +116,7 @@ static int	ft_input(t_data *data)
 		// 	i++;
 		// }
 		//i = 0;
-		//parse_cmds(data);
+		parse_cmds(data);
 		free_all(data);
 	}
 	return (0);
