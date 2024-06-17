@@ -76,6 +76,7 @@ typedef struct s_data
 }				t_data;
 
 void	print_env(char **env);
+void	init_data(t_data *data);
 char	**ft_tokenize(char const *s, char c, char str_flag);
 void	ft_token_type(t_data *tokens, int i);
 void	free_all(t_data *data);

@@ -12,29 +12,35 @@
 
 #include "minishell.h"
 
-/*Checks if there are unclosed single or double quotes within the user input. 
-  39 = single quote (')*/
+
+/*Returns " or ' character in case c is one of these, otherwise 0
+  !!!clean up as identical within split_pipes.c function*/
+static int is_quote(char c)
+{
+    return (c == '"' || c == '\'');
+}
+
+/*Checks if there are unclosed single or double quotes within the user input.
+  Quote != 0 means open quotes.*/
 static int	check_quotes(char *input)
 {
+	char quote;
 	int	i;
-	int	d_quotes;
-	int	s_quotes;
 
+	quote = 0;
 	i = 0;
-	d_quotes = 0;
-	s_quotes = 0;
-	if (!input && !input[i])
-		return (0);
 	while (input[i])
 	{
-		if (input[i] == '"')
-			d_quotes++;
-		if (input[i] == 39)
-			s_quotes++;
+		if (is_quote(input[i]))
+		{
+			if (quote == input[i])
+				quote = 0;
+			else if (quote == 0)
+				quote = input[i];
+		}
 		i++;
 	}
-	if ((d_quotes != 0 && d_quotes % 2 != 0)
-		|| (s_quotes != 0 && s_quotes % 2 != 0))
+	if (quote)
 	{
 		printf("minishell: syntax error, unclosed quotes\n");
 		return (1);
