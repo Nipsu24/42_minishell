@@ -47,18 +47,6 @@ static int	ft_wcount(char const *s, char c, char str_flag)
 	return (count);
 }
 
-static char	**ft_free(char **arr, size_t j)
-{
-	while (j > 0)
-	{
-		free(arr[j - 1]);
-		j--;
-	}
-	free(arr);
-	arr = NULL;
-	return (NULL);
-}
-
 /*Helper function of ft_store_words. Iterates through quoted passages and copies
   those into strings of array*/
 static char	**ft_iter_quote(char const *s, size_t *i, size_t *j, char **arr, char str_flag)

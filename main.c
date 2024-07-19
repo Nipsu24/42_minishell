@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/30 15:05:15 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:25:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	print_env(char **env)
 void	free_all(t_data *data)
 {
 	int	j;
+	int	i;
 
 	j = 0;
+	i = 0;
 	if (data->input)
 	{
 		free(data->input);
@@ -46,6 +48,17 @@ void	free_all(t_data *data)
 		}
 		free(data->tokens);
 		data->tokens = NULL;
+	}
+	if (data->prcs && data->prcs[i])
+	{
+		while (data->prcs[i])
+		{
+			free(data->prcs[i]);
+			data->prcs[i] = NULL;
+			i++;
+		}
+		free(data->prcs);
+		data->prcs = NULL;
 	}
 	if (data->token_list)
 	{
@@ -63,9 +76,9 @@ void	free_all(t_data *data)
 static int	ft_input(t_data *data)
 {
 	char		*environment;
-	int			i;
+	//int			i;
 
-	i = 0;
+	//i = 0;
 	environment = "env";
 	while (1)
 	{
@@ -83,24 +96,31 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue;
 		}
+		trim_space(data);
+		printf("TRIM STR: %s\n", data->input);
+		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
 		else
 			printf("You entered %s\n", data->input);
+		if (split_in_prcs(data))
+			return (1);
 		data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
 		if (!ft_malloc_token(data))
 			return (1);
-		while (data->tokens[i])
-		{
-			data->token_list->entry[i].cnt = data->tokens[i];
-			ft_token_type(data, i);
-			printf("%s\n", data->token_list->entry[i].cnt);
-			printf("%d\n", data->token_list->entry[i].type);
-			i++;
-		}
-		i = 0;
+		// while (data->tokens[i])
+		// {
+		// 	data->token_list->entry[i].cnt = data->tokens[i];
+		// 	ft_token_type(data, i);
+		// 	printf("%s\n", data->token_list->entry[i].cnt);
+		// 	printf("%d\n", data->token_list->entry[i].type);
+		// 	i++;
+		// }
+		//i = 0;
+		
+		//parse_cmds(data);
 		free_all(data);
 	}
 	return (0);
@@ -130,6 +150,18 @@ static char	**ft_copy_env(char **env, char **cpy_env)
 	return (cpy_env);
 }
 
+void	init_data(t_data *data)
+{
+	data->temp_env = NULL;
+	data->tokens = NULL;
+	data->input = NULL;
+	data->pipe_count = 0;
+	data->prcs_buf = NULL;
+	data->prcs = NULL;
+	data->token_list = NULL;
+	data->cmds = NULL;
+}
+
 /*String array 'env' holds by default environment variables of the system. 
   Array is copied with ft_copy_env so that any alterations done to the
   env variables during minishell execution do not affect the original env.*/
@@ -137,6 +169,7 @@ int	main(int ac, char *av[], char *env[])
 {
 	t_data	data;	
 
+	init_data(&data);
 	data.temp_env = ft_copy_env(env, data.temp_env);
 	if (ac > 1 || av[1])
 	{

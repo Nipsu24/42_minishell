@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/06/05 17:29:09 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/07/19 15:50:32 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c in_quotes_check.c
+FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c in_quotes_check.c split_pipes.c expansion.c
 
 BUILTINS = builtins/builtin_utils.c \
 			builtins/pwd.c \

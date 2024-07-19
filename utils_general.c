@@ -20,11 +20,43 @@ char	**free_arr_rev(char **av, int i)
 		return (NULL);
 	while (i > 0)
 	{
-		free(av[i]);
-		av[i] = NULL;
+		free(av[i - 1]);
+		av[i - 1] = NULL;
 		i--;
 	}
 	free(av);
 	av = NULL;
+	return (NULL);
+}
+
+/*dublicate with above function!! to be cleand up!n*/
+char	**ft_free(char **result, size_t j)
+{
+	while (j > 0)
+	{
+		free(result[j - 1]);
+		j--;
+	}
+	free(result);
+	result = NULL;
+	return (NULL);
+}
+
+char	**free_arr(char **arr)
+{
+	int	j;
+
+	j = 0;
+	if (arr && arr[j])
+	{
+		while (arr[j])
+		{
+			free(arr[j]);
+			arr[j] = NULL;
+			j++;
+		}
+		free(arr);
+		arr = NULL;
+	}
 	return (NULL);
 }
