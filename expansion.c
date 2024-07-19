@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trim_space.c                                       :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/19 14:25:21 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/19 15:09:46 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ static void	def_var(t_data *data, int i)
 	else
 		cut_var(data, start - 1, len);
 	printf("ENVAR-VAR %s\n", tmp);
+	free(tmp);
+	tmp = NULL;
 }
 
 /*Checks if $ is between quotes. If it is between double quotes or
