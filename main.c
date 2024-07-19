@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/04 15:18:44 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:25:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue;
 		}
+		trim_space(data);
+		printf("TRIM STR: %s\n", data->input);
+		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
 		else
@@ -116,7 +119,8 @@ static int	ft_input(t_data *data)
 		// 	i++;
 		// }
 		//i = 0;
-		parse_cmds(data);
+		
+		//parse_cmds(data);
 		free_all(data);
 	}
 	return (0);

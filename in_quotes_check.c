@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:12:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/31 12:48:52 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:31:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	between_quotes(char *input, int pos)
 		return (1);
 	if ((count_s_quotes_left(input, pos) == 1)
 		&& (count_s_quotes_right(input, pos) != 0))
-		return (1);
+		return (2);
 	else
 		return (0);
 }

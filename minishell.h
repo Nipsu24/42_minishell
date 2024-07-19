@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/04 14:56:43 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:26:06 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,7 @@ int		parse_cmds(t_data *data);
 int		split_in_prcs(t_data *data);
 char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
+void	trim_space(t_data *data);
+int		ft_expand(t_data *data);
 
 #endif
