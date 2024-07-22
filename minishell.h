@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/18 15:26:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/22 15:43:26 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,21 @@ typedef struct s_com_lst
 
 typedef enum s_token_type
 {
-	COMMAND,
-	ARGUMENT,
-	STRING,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	REDIRECT_IN_DEL,
-	REDIRECT_OUT_APP,
-	FILE_NAME,
-	PIPE,
-	ENVAR,
-	BUILTIN
+	COMMAND, //0
+	REDIRECT_IN, //1
+	REDIRECT_OUT, //2
+	HEREDOC, //3
+	REDIRECT_OUT_APP, //4
+	PIPE, //5
+	ENVAR, //6
+	BUILTIN, //7
+	REMOVE //8
 }			t_token_type;
 
 /*Holds information of a single token*/
 typedef struct s_token
 {
-	char			*cnt;
+	//char			*cnt;
 	t_token_type	type;
 }				t_token;
 
@@ -89,7 +87,7 @@ int		parse_cmds(t_data *data);
 int		split_in_prcs(t_data *data);
 char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
-void	trim_space(t_data *data);
+int		trim_space(t_data *data);
 int		ft_expand(t_data *data);
 
 #endif

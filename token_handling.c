@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/04 10:58:55 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/22 15:48:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,72 @@ int	ft_malloc_token(t_data *data)
 /*Assigns type (e.g. 'pipe', 'command' etc.) to each identified token.*/
 void	ft_token_type(t_data *data, int i)
 {
-	if (data->token_list->entry[i].cnt[0] == '"')
-		data->token_list->entry[i].type = STRING;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, "<<", 2) == 0)
-		data->token_list->entry[i].type = REDIRECT_IN_DEL;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, ">>", 2) == 0)
-		data->token_list->entry[i].type = REDIRECT_OUT_APP;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, "<", 1) == 0)
-		data->token_list->entry[i].type = REDIRECT_IN;
-	else if (ft_strncmp(data->token_list->entry[i].cnt, ">", 1) == 0)
-		data->token_list->entry[i].type = REDIRECT_OUT;
-	else if (data->token_list->entry[i].cnt[0] == '|'
-		&& ft_strlen(data->token_list->entry[i].cnt) == 1)
+	if (ft_strncmp(data->tokens[i], "<<", 2) == 0)
+	{
+		data->token_list->entry[i].type = REMOVE;
+		data->token_list->entry[i + 1].type = HEREDOC;
+	}
+	else if (ft_strncmp(data->tokens[i], ">>", 2) == 0)
+	{
+		data->token_list->entry[i].type = REMOVE;
+		data->token_list->entry[i + 1].type = REDIRECT_OUT_APP;
+	}
+	else if (ft_strncmp(data->tokens[i], "<", 1) == 0)
+	{
+		data->token_list->entry[i].type = REMOVE;
+		data->token_list->entry[i + 1].type = REDIRECT_IN;
+	}
+	else if (ft_strncmp(data->tokens[i], ">", 1) == 0)
+	{
+		data->token_list->entry[i].type = REMOVE;
+		data->token_list->entry[i + 1].type = REDIRECT_OUT;
+	}
+	else if (data->tokens[i][0] == '|'
+		&& ft_strlen(data->tokens[i]) == 1)
 		data->token_list->entry[i].type = PIPE;
-	else if (i > 0 && ((data->token_list->entry[i - 1].cnt[0] == '<')
-			|| (data->token_list->entry[i - 1].cnt[0] == '>')))
-		data->token_list->entry[i].type = FILE_NAME;
-	else if (data->token_list->entry[i].cnt[0] == '$')
-		data->token_list->entry[i].type = ENVAR;
-	else if (i > 2 && ((data->token_list->entry[i - 2].type == REDIRECT_IN)
-			|| (data->token_list->entry[i - 2].type == REDIRECT_OUT))
-		&& data->token_list->entry[i -1].type == FILE_NAME)
+	else if (i > 0 && ((data->token_list->entry[i - 1].type == REDIRECT_IN)
+		|| (data->token_list->entry[i - 1].type == REDIRECT_OUT)))
 		data->token_list->entry[i].type = COMMAND;
-	else if ((data->token_list->entry[0].cnt && i == 0)
-		|| (i > 0 && data->token_list->entry[i - 1].type == PIPE))
+	else if (i > 0 && data->token_list->entry[i - 1].type == PIPE)
 		data->token_list->entry[i].type = COMMAND;
-	else
-		data->token_list->entry[i].type = ARGUMENT;
+	else if (data->tokens[i][0] == '"' || data->tokens[i][0] == 39)
+		data->token_list->entry[i].type = COMMAND;
+	else if (i > 0 && data->token_list->entry[i - 1].type == COMMAND)
+		data->token_list->entry[i].type = COMMAND;
 }
 
+// void	ft_token_type(t_data *data, int i)
+// {
+// 	if (ft_strncmp(data->token_list->entry[i].cnt, "<<", 2) == 0)
+// 	{
+// 		data->token_list->entry[i].type = REMOVE;
+// 		data->token_list->entry[i + 1].type = HEREDOC;
+// 	}
+// 	else if (ft_strncmp(data->token_list->entry[i].cnt, ">>", 2) == 0)
+// 	{
+// 		data->token_list->entry[i].type = REMOVE;
+// 		data->token_list->entry[i + 1].type = REDIRECT_OUT_APP;
+// 	}
+// 	else if (ft_strncmp(data->token_list->entry[i].cnt, "<", 1) == 0)
+// 	{
+// 		data->token_list->entry[i].type = REMOVE;
+// 		data->token_list->entry[i + 1].type = REDIRECT_IN;
+// 	}
+// 	else if (ft_strncmp(data->token_list->entry[i].cnt, ">", 1) == 0)
+// 	{
+// 		data->token_list->entry[i].type = REMOVE;
+// 		data->token_list->entry[i + 1].type = REDIRECT_OUT;
+// 	}
+// 	else if (data->token_list->entry[i].cnt[0] == '|'
+// 		&& ft_strlen(data->token_list->entry[i].cnt) == 1)
+// 		data->token_list->entry[i].type = PIPE;
+// 	else if (i > 0 && ((data->token_list->entry[i - 1].type == REDIRECT_IN)
+// 		|| (data->token_list->entry[i - 1].type == REDIRECT_OUT)))
+// 		data->token_list->entry[i].type = COMMAND;
+// 	else if (i > 0 && data->token_list->entry[i - 1].type == PIPE)
+// 		data->token_list->entry[i].type = COMMAND;
+// 	else if (data->token_list->entry[i].cnt[0] == '"' || data->token_list->entry[i].cnt[0] == 39)
+// 		data->token_list->entry[i].type = COMMAND;
+// 	else if (i > 0 && data->token_list->entry[i - 1].type == COMMAND)
+// 		data->token_list->entry[i].type = COMMAND;
+// }
