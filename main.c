@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/18 15:25:32 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/22 15:43:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	free_all(t_data *data)
 static int	ft_input(t_data *data)
 {
 	char		*environment;
-	//int			i;
+	int			i;
 
-	//i = 0;
+	i = 0;
 	environment = "env";
 	while (1)
 	{
@@ -96,20 +96,32 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue;
 		}
-		trim_space(data);
+		if (trim_space(data))
+		{
+			free_all(data);
+			continue;
+		}
 		printf("TRIM STR: %s\n", data->input);
 		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
 		else
 			printf("You entered %s\n", data->input);
-		if (split_in_prcs(data))
-			return (1);
+		// if (split_in_prcs(data))
+		// 	return (1);
 		data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
 		if (!ft_malloc_token(data))
 			return (1);
+		while (data->tokens[i])
+		{
+			//data->token_list->entry[i].cnt = data->tokens[i];
+			ft_token_type(data, i);
+			printf("%s\n", data->tokens[i]);
+			printf("%d\n", data->token_list->entry[i].type);
+			i++;
+		}
 		// while (data->tokens[i])
 		// {
 		// 	data->token_list->entry[i].cnt = data->tokens[i];
@@ -118,7 +130,7 @@ static int	ft_input(t_data *data)
 		// 	printf("%d\n", data->token_list->entry[i].type);
 		// 	i++;
 		// }
-		//i = 0;
+		i = 0;
 		
 		//parse_cmds(data);
 		free_all(data);

@@ -6,20 +6,11 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/19 15:09:46 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/22 12:29:53 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	trim_space(t_data *data)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(data->input, " ");
-	free(data->input);
-	data->input = tmp;
-}
 
 static int	var_exist(t_data *data, char *tmp)
 {

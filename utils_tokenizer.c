@@ -6,13 +6,13 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/20 14:45:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/22 13:06:47 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Helper function of ft_wcount, iterates through quoted part of sting*/
+/*Helper function of ft_wcount, iterates through quoted part of string*/
 static void	w_count_quote_iter(const char *s, char str_flag, int *i)
 {
 	(*i)++;
@@ -48,7 +48,7 @@ static int	ft_wcount(char const *s, char c, char str_flag)
 }
 
 /*Helper function of ft_store_words. Iterates through quoted passages and copies
-  those into strings of array*/
+  those into array of strings*/
 static char	**ft_iter_quote(char const *s, size_t *i, size_t *j, char **arr, char str_flag)
 {
 	size_t	start;
