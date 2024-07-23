@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/22 15:43:07 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/23 15:33:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_all(t_data *data)
 	}
 	if (data->token_list)
 	{
-		free(data->token_list->entry);
+		//free(data->token_list->entry);
 		free(data->token_list);
 		data->token_list = NULL;
 	}
@@ -114,24 +114,20 @@ static int	ft_input(t_data *data)
 			return (1);
 		if (!ft_malloc_token(data))
 			return (1);
+		//while(i < 1)
 		while (data->tokens[i])
 		{
-			//data->token_list->entry[i].cnt = data->tokens[i];
 			ft_token_type(data, i);
 			printf("%s\n", data->tokens[i]);
-			printf("%d\n", data->token_list->entry[i].type);
+			printf("%d\n", data->token_list[i].type);
 			i++;
 		}
-		// while (data->tokens[i])
-		// {
-		// 	data->token_list->entry[i].cnt = data->tokens[i];
-		// 	ft_token_type(data, i);
-		// 	printf("%s\n", data->token_list->entry[i].cnt);
-		// 	printf("%d\n", data->token_list->entry[i].type);
-		// 	i++;
-		// }
+		if (fill_exec_structs(data))
+		{
+			free_all(data);
+			continue;
+		}
 		i = 0;
-		
 		//parse_cmds(data);
 		free_all(data);
 	}
@@ -172,6 +168,8 @@ void	init_data(t_data *data)
 	data->prcs = NULL;
 	data->token_list = NULL;
 	data->cmds = NULL;
+	data->count_cmd = 0;
+	data->count_other = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 

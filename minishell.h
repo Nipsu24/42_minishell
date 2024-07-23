@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/22 15:43:26 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/23 15:33:15 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_com_lst
 
 typedef enum s_token_type
 {
+	INIT_VAL = -1,
 	COMMAND, //0
 	REDIRECT_IN, //1
 	REDIRECT_OUT, //2
@@ -42,23 +43,21 @@ typedef enum s_token_type
 	REDIRECT_OUT_APP, //4
 	PIPE, //5
 	ENVAR, //6
-	BUILTIN, //7
-	REMOVE //8
+	BUILTIN, //7 not yet handled
+	REMOVE, //8
 }			t_token_type;
+
+typedef struct s_exec
+{
+	char			**arr;
+	t_token_type	type;
+}			t_exec;
 
 /*Holds information of a single token*/
 typedef struct s_token
 {
-	//char			*cnt;
 	t_token_type	type;
 }				t_token;
-
-/*Struct containing all tokens generated from user input*/
-typedef struct s_tokens
-{
-	t_token		*entry;
-	int			num;	
-}				t_tokens;
 
 /*Overall struct for all relevant data of the shell*/
 typedef struct s_data
@@ -69,8 +68,11 @@ typedef struct s_data
 	int			pipe_count;
 	char		**prcs_buf;
 	char		**prcs;
-	t_tokens	*token_list;
+	int			count_cmd;
+	int			count_other;
+	t_token		*token_list;
 	t_com_lst	*cmds;
+	t_exec		*execs;
 }				t_data;
 
 void	print_env(char **env);
@@ -89,5 +91,6 @@ char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
 int		trim_space(t_data *data);
 int		ft_expand(t_data *data);
+int		fill_exec_structs(t_data *data);
 
 #endif
