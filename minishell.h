@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/23 15:33:15 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/24 14:47:54 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/*Struct containing command structure extracted from tokens*/
-typedef struct s_command
-{
-	char				*cnt;
-	char				**args;
-	char				*file_in;
-	char				*file_out;
-}				t_command;
-
 /*Struct containing all command structures extracted from tokens*/
-typedef struct s_com_lst
-{
-	t_command	*cmd;
-}				t_com_lst;
+// typedef struct s_com_lst
+// {
+// 	t_command	*cmd;
+// }				t_com_lst;
 
 typedef enum s_token_type
 {
@@ -44,8 +35,16 @@ typedef enum s_token_type
 	PIPE, //5
 	ENVAR, //6
 	BUILTIN, //7 not yet handled
-	REMOVE, //8
+	RED_OP, //8
 }			t_token_type;
+
+/*Holds information of a single token*/
+typedef struct s_token
+{
+	t_token_type	type;
+}				t_token;
+
+
 
 typedef struct s_exec
 {
@@ -53,11 +52,22 @@ typedef struct s_exec
 	t_token_type	type;
 }			t_exec;
 
-/*Holds information of a single token*/
-typedef struct s_token
+
+
+// typedef struct	s_prc
+// {
+// 	t_exec	*execs;
+// }				t_prc;
+
+/*Struct containing relevant data of a process (one pipe)*/
+typedef struct s_prc
 {
-	t_token_type	type;
-}				t_token;
+	char				**cmd;
+	char				**redir; // < > << >>
+	// char				**red_out; // >
+	// char				**here; // <<
+	// char				**app_out; // >>
+}				t_prc;
 
 /*Overall struct for all relevant data of the shell*/
 typedef struct s_data
@@ -70,8 +80,10 @@ typedef struct s_data
 	char		**prcs;
 	int			count_cmd;
 	int			count_other;
+	int			proc_nbr;
 	t_token		*token_list;
-	t_com_lst	*cmds;
+	//t_com_lst	*cmds;
+	t_prc		*proc;
 	t_exec		*execs;
 }				t_data;
 
