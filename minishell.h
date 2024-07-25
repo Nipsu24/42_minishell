@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 12:30:40 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:18:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,31 @@ typedef struct s_data
 	t_prc		*proc;
 }				t_data;
 
-void	print_env(char **env);
-void	init_data(t_data *data);
-char	**ft_tokenize(char const *s, char c, char str_flag);
-void	ft_token_type(t_data *tokens, int i);
+/*free functions*/
 void	free_all(t_data *data);
-int		ft_malloc_token(t_data *data);
 char	**free_arr_rev(char **av, int j);
-int		not_valid_input(char *str);
-void	setup_signal(void);
-int		between_quotes(char *input, int pos);
-int		parse_cmds(t_data *data);
-int		split_in_prcs(t_data *data);
 char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
+int		free_proc_arr_rev(t_data *data);
+
+/*init and malloc functions*/
+void	init_data(t_data *data);
+int		ft_malloc_token(t_data *data);
+int		init_proc_structs(t_data *data);
+
+/*Error check and utils*/
+int		not_valid_input(char *str);
+int		between_quotes(char *input, int pos);
+
+/*parsing*/
+char	**ft_tokenize(char const *s, char c, char str_flag);
+void	ft_token_type(t_data *tokens, int i);
 int		trim_space(t_data *data);
 int		ft_expand(t_data *data);
-int		init_proc_structs(t_data *data);
-int		free_proc_arr_rev(t_data *data);
+
+/*further functions*/
+void	setup_signal(void);
+void	print_env(char **env);
+int		split_in_prcs(t_data *data);
 
 #endif

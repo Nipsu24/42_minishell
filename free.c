@@ -1,17 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_general.c                                    :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 16:10:48 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 12:31:33 by mmeier           ###   ########.fr       */
+/*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
+/*   Updated: 2024/07/25 13:05:12 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Frees relevant parts of the main struct. Last if-statement still
+  to be investigated if sufficient.*/
+void	free_all(t_data *data)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	i = 0;
+	if (data->input)
+	{
+		free(data->input);
+		data->input = NULL;
+	}
+	if (data->tokens && data->tokens[j])
+	{
+		while (data->tokens[j])
+		{
+			free(data->tokens[j]);
+			data->tokens[j] = NULL;
+			j++;
+		}
+		free(data->tokens);
+		data->tokens = NULL;
+	}
+	if (data->prcs && data->prcs[i])
+	{
+		while (data->prcs[i])
+		{
+			free(data->prcs[i]);
+			data->prcs[i] = NULL;
+			i++;
+		}
+		free(data->prcs);
+		data->prcs = NULL;
+	}
+	if (data->token_list)
+	{
+		//free(data->token_list->entry);
+		free(data->token_list);
+		data->token_list = NULL;
+	}
+}
 /*Frees 2d array in reversed order e.g. for failed copy
   of env variable in ft_copy_env function*/
 char	**free_arr_rev(char **av, int i)

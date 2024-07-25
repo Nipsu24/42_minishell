@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/07/22 12:30:32 by mmeier           ###   ########.fr        #
+#    Updated: 2024/07/25 13:38:20 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,17 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = main.c utils_tokenizer.c token_handling.c utils_general.c signals.c input_check.c in_quotes_check.c split_pipes.c expansion.c trim_input.c
+FILES = main.c \
+		utils_tokenizer.c \
+		token_handling.c \
+		signals.c \
+		input_check.c \
+		in_quotes_check.c \
+		split_pipes.c \
+		expansion.c \
+		trim_input.c \
+		free.c \
+		init_proc_structs.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
