@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 11:36:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:08:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,50 +21,6 @@ void	print_env(char **env)
 	{
 		printf("%s\n", env[i]);
 		i++;
-	}
-}
-
-/*Frees relevant parts of the main struct. Last if-statement still
-  to be investigated if sufficient.*/
-void	free_all(t_data *data)
-{
-	int	j;
-	int	i;
-
-	j = 0;
-	i = 0;
-	if (data->input)
-	{
-		free(data->input);
-		data->input = NULL;
-	}
-	if (data->tokens && data->tokens[j])
-	{
-		while (data->tokens[j])
-		{
-			free(data->tokens[j]);
-			data->tokens[j] = NULL;
-			j++;
-		}
-		free(data->tokens);
-		data->tokens = NULL;
-	}
-	if (data->prcs && data->prcs[i])
-	{
-		while (data->prcs[i])
-		{
-			free(data->prcs[i]);
-			data->prcs[i] = NULL;
-			i++;
-		}
-		free(data->prcs);
-		data->prcs = NULL;
-	}
-	if (data->token_list)
-	{
-		//free(data->token_list->entry);
-		free(data->token_list);
-		data->token_list = NULL;
 	}
 }
 
@@ -127,7 +83,6 @@ static int	ft_input(t_data *data)
 			continue;
 		}
 		i = 0;
-		//parse_cmds(data);
 		free_all(data);
 	}
 	return (0);
