@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/24 14:47:54 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:30:40 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-/*Struct containing all command structures extracted from tokens*/
-// typedef struct s_com_lst
-// {
-// 	t_command	*cmd;
-// }				t_com_lst;
 
 typedef enum s_token_type
 {
@@ -44,29 +38,11 @@ typedef struct s_token
 	t_token_type	type;
 }				t_token;
 
-
-
-typedef struct s_exec
-{
-	char			**arr;
-	t_token_type	type;
-}			t_exec;
-
-
-
-// typedef struct	s_prc
-// {
-// 	t_exec	*execs;
-// }				t_prc;
-
 /*Struct containing relevant data of a process (one pipe)*/
 typedef struct s_prc
 {
 	char				**cmd;
 	char				**redir; // < > << >>
-	// char				**red_out; // >
-	// char				**here; // <<
-	// char				**app_out; // >>
 }				t_prc;
 
 /*Overall struct for all relevant data of the shell*/
@@ -81,10 +57,12 @@ typedef struct s_data
 	int			count_cmd;
 	int			count_other;
 	int			proc_nbr;
+	int			i;
+	int			j;
+	int			k;
+	int			l;
 	t_token		*token_list;
-	//t_com_lst	*cmds;
 	t_prc		*proc;
-	t_exec		*execs;
 }				t_data;
 
 void	print_env(char **env);
@@ -103,6 +81,7 @@ char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
 int		trim_space(t_data *data);
 int		ft_expand(t_data *data);
-int		fill_exec_structs(t_data *data);
+int		init_proc_structs(t_data *data);
+int		free_proc_arr_rev(t_data *data);
 
 #endif
