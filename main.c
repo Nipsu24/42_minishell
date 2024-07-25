@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/24 15:39:52 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 11:36:57 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,7 @@ static int	ft_input(t_data *data)
 			printf("%d\n", data->token_list[i].type);
 			i++;
 		}
-		//printf("TEST1234\n");
-		if (fill_exec_structs(data))
+		if (init_proc_structs(data))
 		{
 			free_all(data);
 			continue;
@@ -167,7 +166,6 @@ void	init_data(t_data *data)
 	data->prcs_buf = NULL;
 	data->prcs = NULL;
 	data->token_list = NULL;
-	//data->cmds = NULL;
 	data->count_cmd = 0;
 	data->count_other = 0;
 	data->proc_nbr = 0;
