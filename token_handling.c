@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:29:09 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 14:49:17 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,23 @@ int	ft_malloc_token(t_data *data)
 	return (1);
 }
 
+/*2nd part of assign_token_type function*/
+static void	assign_token_type_2(t_data *data, int i)
+{
+	if (data->tokens[i][0] == '|'
+		&& ft_strlen(data->tokens[i]) == 1)
+		data->token_list[i].type = PIPE;
+	else if (i > 0 && ((data->token_list[i - 1].type == REDIRECT_IN)
+			|| (data->token_list[i - 1].type == REDIRECT_OUT)))
+		data->token_list[i].type = COMMAND;
+	else if (i > 0 && data->token_list[i - 1].type == PIPE)
+		data->token_list[i].type = COMMAND;
+	else if (i > 0 && data->token_list[i - 1].type == COMMAND)
+		data->token_list[i].type = COMMAND;
+}
+
 /*Assigns type (e.g. 'pipe', 'command' etc.) to each identified token.*/
-void	ft_token_type(t_data *data, int i)
+void	assign_token_type(t_data *data, int i)
 {
 	if (data->token_list[i].type < COMMAND || data->token_list[i].type > RED_OP)
 		data->token_list[i].type = COMMAND;
@@ -70,14 +85,16 @@ void	ft_token_type(t_data *data, int i)
 		data->token_list[i].type = RED_OP;
 		data->token_list[i + 1].type = REDIRECT_OUT;
 	}
-	else if (data->tokens[i][0] == '|'
-		&& ft_strlen(data->tokens[i]) == 1)
-		data->token_list[i].type = PIPE;
-	else if (i > 0 && ((data->token_list[i - 1].type == REDIRECT_IN)
-			|| (data->token_list[i - 1].type == REDIRECT_OUT)))
-		data->token_list[i].type = COMMAND;
-	else if (i > 0 && data->token_list[i - 1].type == PIPE)
-		data->token_list[i].type = COMMAND;
-	else if (i > 0 && data->token_list[i - 1].type == COMMAND)
-		data->token_list[i].type = COMMAND;
+	else
+		assign_token_type_2(data, i);
+	// else if (data->tokens[i][0] == '|'
+	// 	&& ft_strlen(data->tokens[i]) == 1)
+	// 	data->token_list[i].type = PIPE;
+	// else if (i > 0 && ((data->token_list[i - 1].type == REDIRECT_IN)
+	// 		|| (data->token_list[i - 1].type == REDIRECT_OUT)))
+	// 	data->token_list[i].type = COMMAND;
+	// else if (i > 0 && data->token_list[i - 1].type == PIPE)
+	// 	data->token_list[i].type = COMMAND;
+	// else if (i > 0 && data->token_list[i - 1].type == COMMAND)
+	// 	data->token_list[i].type = COMMAND;
 }

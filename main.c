@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:08:04 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:44:03 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	ft_input(t_data *data)
 			return (1);
 		while (data->tokens[i])
 		{
-			ft_token_type(data, i);
+			assign_token_type(data, i);
 			printf("%s\n", data->tokens[i]);
 			printf("%d\n", data->token_list[i].type);
 			i++;

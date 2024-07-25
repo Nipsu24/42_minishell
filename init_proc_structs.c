@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:33:33 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:49:06 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,33 +130,31 @@ static int	fill_proc_structs(t_data *data)
 		}
 		data->j++;
 	}
+	data->i = 0;
+	data->j = 0;
+	data->k = 0;
+	while (data->j < data->proc_nbr)
+	{
+		printf("CMD STRUCT %d:\n", data->j);
+		while (data->proc[data->j].cmd[data->i])
+		{
+			printf("%s\n", data->proc[data->j].cmd[data->i]);
+			data->i++;
+		}
+		printf("RED STRUCT %d:\n", data->j);
+		while (data->proc[data->j].redir[data->k])
+		{
+			printf("%s\n", data->proc[data->j].redir[data->k]);
+			data->k++;
+		}
+		data->k = 0;
+		data->i = 0;
+		data->j++;
+	}
 	return (0);
 }
 /*for printing, attach to above function (remove return (0) 
   from fill_proc_structs before)*/
-// 	data->i = 0;
-// 	data->j = 0;
-// 	data->k = 0;
-// 	while (data->j < data->proc_nbr)
-// 	{
-// 		printf("CMD STRUCT %d:\n", data->j);
-// 		while (data->proc[data->j].cmd[data->i])
-// 		{
-// 			printf("%s\n", data->proc[data->j].cmd[data->i]);
-// 			data->i++;
-// 		}
-// 		printf("RED STRUCT %d:\n", data->j);
-// 		while (data->proc[data->j].redir[data->k])
-// 		{
-// 			printf("%s\n", data->proc[data->j].redir[data->k]);
-// 			data->k++;
-// 		}
-// 		data->k = 0;
-// 		data->i = 0;
-// 		data->j++;
-// 	}
-// 	return (0);
-// }
 	
 int	init_proc_structs(t_data *data)
 {

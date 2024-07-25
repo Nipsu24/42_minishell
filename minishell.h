@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:18:43 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:44:30 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		between_quotes(char *input, int pos);
 
 /*parsing*/
 char	**ft_tokenize(char const *s, char c, char str_flag);
-void	ft_token_type(t_data *tokens, int i);
+void	assign_token_type(t_data *tokens, int i);
 int		trim_space(t_data *data);
 int		ft_expand(t_data *data);
 
