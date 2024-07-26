@@ -82,10 +82,11 @@ int		not_valid_input(char *str);
 int		between_quotes(char *input, int pos);
 
 /*parsing*/
-char	**ft_tokenize(char const *s, char c, char str_flag);
+char	**ft_tokenize(char const *s);
+//char	**ft_tokenize(char const *s, char c, char str_flag);
 void	assign_token_type(t_data *tokens, int i);
-int		trim_space(t_data *data);
 int		ft_expand(t_data *data);
+int		insert_space(t_data *data);
 
 /*further functions*/
 void	setup_signal(void);

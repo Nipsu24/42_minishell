@@ -52,12 +52,11 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue;
 		}
-		if (trim_space(data))
+		if (insert_space(data))
 		{
 			free_all(data);
 			continue;
 		}
-		printf("TRIM STR: %s\n", data->input);
 		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
@@ -65,7 +64,8 @@ static int	ft_input(t_data *data)
 			printf("You entered %s\n", data->input);
 		// if (split_in_prcs(data))
 		// 	return (1);
-		data->tokens = ft_tokenize(data->input, ' ', '"');
+		data->tokens = ft_tokenize(data->input);
+		//data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
 		if (!ft_malloc_token(data))

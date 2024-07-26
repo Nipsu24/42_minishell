@@ -17,10 +17,10 @@
 void	free_all(t_data *data)
 {
 	int	j;
-	int	i;
+	//int	i;
 
 	j = 0;
-	i = 0;
+	//i = 0;
 	if (data->input)
 	{
 		free(data->input);
@@ -37,20 +37,19 @@ void	free_all(t_data *data)
 		free(data->tokens);
 		data->tokens = NULL;
 	}
-	if (data->prcs && data->prcs[i])
-	{
-		while (data->prcs[i])
-		{
-			free(data->prcs[i]);
-			data->prcs[i] = NULL;
-			i++;
-		}
-		free(data->prcs);
-		data->prcs = NULL;
-	}
+	// if (data->prcs && data->prcs[i])
+	// {
+	// 	while (data->prcs[i])
+	// 	{
+	// 		free(data->prcs[i]);
+	// 		data->prcs[i] = NULL;
+	// 		i++;
+	// 	}
+	// 	free(data->prcs);
+	// 	data->prcs = NULL;
+	// }
 	if (data->token_list)
 	{
-		//free(data->token_list->entry);
 		free(data->token_list);
 		data->token_list = NULL;
 	}

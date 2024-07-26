@@ -14,13 +14,11 @@
 
 static int	var_exist(t_data *data, char *tmp)
 {
-	int	i;
 	int	j;
 	int	len;
 
-	i = 0;
 	j = 0;
-	len = strlen(tmp);
+	len = ft_strlen(tmp);
 	while (data->temp_env[j])
 	{
 		if (ft_strncmp(data->temp_env[j], tmp, len) == 0)
@@ -34,12 +32,10 @@ static int	var_exist(t_data *data, char *tmp)
   of respective env. variable (tmp)*/
 static char	*get_expansion(t_data *data, char *tmp)
 {
-	int	i;
 	int	j;
 	int	len;
 	int	len2;
 
-	i = 0;
 	j = 0;
 	len = ft_strlen(tmp);
 	len2 = 0;
