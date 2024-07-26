@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/18 15:25:32 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:44:03 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,50 +24,6 @@ void	print_env(char **env)
 	}
 }
 
-/*Frees relevant parts of the main struct. Last if-statement still
-  to be investigated if sufficient.*/
-void	free_all(t_data *data)
-{
-	int	j;
-	int	i;
-
-	j = 0;
-	i = 0;
-	if (data->input)
-	{
-		free(data->input);
-		data->input = NULL;
-	}
-	if (data->tokens && data->tokens[j])
-	{
-		while (data->tokens[j])
-		{
-			free(data->tokens[j]);
-			data->tokens[j] = NULL;
-			j++;
-		}
-		free(data->tokens);
-		data->tokens = NULL;
-	}
-	if (data->prcs && data->prcs[i])
-	{
-		while (data->prcs[i])
-		{
-			free(data->prcs[i]);
-			data->prcs[i] = NULL;
-			i++;
-		}
-		free(data->prcs);
-		data->prcs = NULL;
-	}
-	if (data->token_list)
-	{
-		free(data->token_list->entry);
-		free(data->token_list);
-		data->token_list = NULL;
-	}
-}
-
 /*The 'readline' function enables writing commands to program during execution. 
   In case 'env' is typed to shell, env. variables are printed to the terminal, 
   otherwise command that user inputs is printed. The 'add_history' function 
@@ -76,9 +32,9 @@ void	free_all(t_data *data)
 static int	ft_input(t_data *data)
 {
 	char		*environment;
-	//int			i;
+	int			i;
 
-	//i = 0;
+	i = 0;
 	environment = "env";
 	while (1)
 	{
@@ -96,31 +52,37 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue;
 		}
-		trim_space(data);
-		printf("TRIM STR: %s\n", data->input);
+		if (insert_space(data))
+		{
+			free_all(data);
+			continue;
+		}
 		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
 		else
 			printf("You entered %s\n", data->input);
-		if (split_in_prcs(data))
-			return (1);
-		data->tokens = ft_tokenize(data->input, ' ', '"');
+		// if (split_in_prcs(data))
+		// 	return (1);
+		data->tokens = ft_tokenize(data->input);
+		//data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
 		if (!ft_malloc_token(data))
 			return (1);
-		// while (data->tokens[i])
-		// {
-		// 	data->token_list->entry[i].cnt = data->tokens[i];
-		// 	ft_token_type(data, i);
-		// 	printf("%s\n", data->token_list->entry[i].cnt);
-		// 	printf("%d\n", data->token_list->entry[i].type);
-		// 	i++;
-		// }
-		//i = 0;
-		
-		//parse_cmds(data);
+		while (data->tokens[i])
+		{
+			assign_token_type(data, i);
+			printf("%s\n", data->tokens[i]);
+			printf("%d\n", data->token_list[i].type);
+			i++;
+		}
+		if (init_proc_structs(data))
+		{
+			free_all(data);
+			continue;
+		}
+		i = 0;
 		free_all(data);
 	}
 	return (0);
@@ -159,7 +121,9 @@ void	init_data(t_data *data)
 	data->prcs_buf = NULL;
 	data->prcs = NULL;
 	data->token_list = NULL;
-	data->cmds = NULL;
+	data->count_cmd = 0;
+	data->count_other = 0;
+	data->proc_nbr = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 

@@ -6,30 +6,19 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/19 15:09:46 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/22 12:29:53 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	trim_space(t_data *data)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(data->input, " ");
-	free(data->input);
-	data->input = tmp;
-}
-
 static int	var_exist(t_data *data, char *tmp)
 {
-	int	i;
 	int	j;
 	int	len;
 
-	i = 0;
 	j = 0;
-	len = strlen(tmp);
+	len = ft_strlen(tmp);
 	while (data->temp_env[j])
 	{
 		if (ft_strncmp(data->temp_env[j], tmp, len) == 0)
@@ -43,12 +32,10 @@ static int	var_exist(t_data *data, char *tmp)
   of respective env. variable (tmp)*/
 static char	*get_expansion(t_data *data, char *tmp)
 {
-	int	i;
 	int	j;
 	int	len;
 	int	len2;
 
-	i = 0;
 	j = 0;
 	len = ft_strlen(tmp);
 	len2 = 0;
