@@ -87,14 +87,4 @@ void	assign_token_type(t_data *data, int i)
 	}
 	else
 		assign_token_type_2(data, i);
-	// else if (data->tokens[i][0] == '|'
-	// 	&& ft_strlen(data->tokens[i]) == 1)
-	// 	data->token_list[i].type = PIPE;
-	// else if (i > 0 && ((data->token_list[i - 1].type == REDIRECT_IN)
-	// 		|| (data->token_list[i - 1].type == REDIRECT_OUT)))
-	// 	data->token_list[i].type = COMMAND;
-	// else if (i > 0 && data->token_list[i - 1].type == PIPE)
-	// 	data->token_list[i].type = COMMAND;
-	// else if (i > 0 && data->token_list[i - 1].type == COMMAND)
-	// 	data->token_list[i].type = COMMAND;
 }

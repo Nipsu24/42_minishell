@@ -27,7 +27,7 @@ FILES = main.c \
 		in_quotes_check.c \
 		split_pipes.c \
 		expansion.c \
-		trim_input.c \
+		insert_space.c \
 		free.c \
 		init_proc_structs.c
 
