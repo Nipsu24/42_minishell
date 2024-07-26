@@ -25,7 +25,6 @@ FILES = main.c \
 		signals.c \
 		input_check.c \
 		in_quotes_check.c \
-		split_pipes.c \
 		expansion.c \
 		insert_space.c \
 		free.c \

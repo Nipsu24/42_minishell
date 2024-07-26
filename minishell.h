@@ -27,9 +27,7 @@ typedef enum s_token_type
 	HEREDOC, //3
 	REDIRECT_OUT_APP, //4
 	PIPE, //5
-	ENVAR, //6
-	BUILTIN, //7 not yet handled
-	RED_OP, //8
+	RED_OP, //6
 }			t_token_type;
 
 /*Holds information of a single token*/
@@ -38,7 +36,11 @@ typedef struct s_token
 	t_token_type	type;
 }				t_token;
 
-/*Struct containing relevant data of a process (one pipe)*/
+/*Struct containing relevant data of a process (one pipe).
+  cmd contains command and its arguments.
+  redir contains all redirect operators (<, >, <<, >>) of a
+  pipe. Every operator is always followd by the filename as 
+  the next string in the array*/
 typedef struct s_prc
 {
 	char				**cmd;
@@ -51,9 +53,6 @@ typedef struct s_data
 	char		**temp_env;
 	char		**tokens;
 	char		*input;
-	int			pipe_count;
-	char		**prcs_buf;
-	char		**prcs;
 	int			count_cmd;
 	int			count_other;
 	int			proc_nbr;
