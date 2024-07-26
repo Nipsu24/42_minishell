@@ -62,8 +62,6 @@ static int	ft_input(t_data *data)
 			print_env(data->temp_env);
 		else
 			printf("You entered %s\n", data->input);
-		// if (split_in_prcs(data))
-		// 	return (1);
 		data->tokens = ft_tokenize(data->input);
 		//data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
@@ -117,9 +115,6 @@ void	init_data(t_data *data)
 	data->temp_env = NULL;
 	data->tokens = NULL;
 	data->input = NULL;
-	data->pipe_count = 0;
-	data->prcs_buf = NULL;
-	data->prcs = NULL;
 	data->token_list = NULL;
 	data->count_cmd = 0;
 	data->count_other = 0;
