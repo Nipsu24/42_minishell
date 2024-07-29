@@ -29,7 +29,8 @@ FILES = main.c \
 		expansion.c \
 		insert_space.c \
 		free.c \
-		init_proc_structs.c
+		init_proc_structs.c \
+		remove_quotes.c
 
 BUILTINS = builtins/builtin_utils.c \
 			builtins/pwd.c \
