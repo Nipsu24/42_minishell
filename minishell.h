@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:44:30 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/29 11:46:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	free_all(t_data *data);
 char	**free_arr_rev(char **av, int j);
 char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
+void	**free_arr_void(char **arr);
 int		free_proc_arr_rev(t_data *data);
 
 /*init and malloc functions*/
@@ -80,10 +81,11 @@ int		init_proc_structs(t_data *data);
 /*Error check and utils*/
 int		not_valid_input(char *str);
 int		between_quotes(char *input, int pos);
+int		is_quote(char c);
 
 /*parsing*/
-char	**ft_tokenize(char const *s);
-//char	**ft_tokenize(char const *s, char c, char str_flag);
+char	**ft_tokenize(char *s);
+void	w_count_quote_iter(char *s, int *i);
 void	assign_token_type(t_data *tokens, int i);
 int		ft_expand(t_data *data);
 int		insert_space(t_data *data);
@@ -91,6 +93,5 @@ int		insert_space(t_data *data);
 /*further functions*/
 void	setup_signal(void);
 void	print_env(char **env);
-int		split_in_prcs(t_data *data);
 
 #endif
