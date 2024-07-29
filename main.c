@@ -63,7 +63,6 @@ static int	ft_input(t_data *data)
 		else
 			printf("You entered %s\n", data->input);
 		data->tokens = ft_tokenize(data->input);
-		//data->tokens = ft_tokenize(data->input, ' ', '"');
 		if (!data->tokens)
 			return (1);
 		if (!ft_malloc_token(data))
@@ -74,6 +73,11 @@ static int	ft_input(t_data *data)
 			printf("%s\n", data->tokens[i]);
 			printf("%d\n", data->token_list[i].type);
 			i++;
+		}
+		if (remove_quotes(data))
+		{
+			free_all(data);
+			continue;
 		}
 		if (init_proc_structs(data))
 		{

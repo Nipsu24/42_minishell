@@ -72,7 +72,7 @@ char	**free_arr(char **arr)
 }
 
 /*Void version of free_arr*/
-void	**free_arr_void(char **arr)
+void	free_arr_void(char **arr)
 {
 	int	j;
 

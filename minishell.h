@@ -69,7 +69,7 @@ typedef struct s_data
 void	free_all(t_data *data);
 char	**free_arr_rev(char **av, int j);
 char	**free_arr(char **arr);
-void	**free_arr_void(char **arr);
+void	free_arr_void(char **arr);
 int		free_proc_arr_rev(t_data *data);
 void	free_proc_structs(t_data *data);
 
@@ -89,6 +89,7 @@ void	w_count_quote_iter(char *s, int *i);
 void	assign_token_type(t_data *tokens, int i);
 int		ft_expand(t_data *data);
 int		insert_space(t_data *data);
+int		remove_quotes(t_data *data);
 
 /*further functions*/
 void	setup_signal(void);
