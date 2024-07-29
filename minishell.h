@@ -68,10 +68,10 @@ typedef struct s_data
 /*free functions*/
 void	free_all(t_data *data);
 char	**free_arr_rev(char **av, int j);
-char	**ft_free(char **result, size_t j);
 char	**free_arr(char **arr);
 void	**free_arr_void(char **arr);
 int		free_proc_arr_rev(t_data *data);
+void	free_proc_structs(t_data *data);
 
 /*init and malloc functions*/
 void	init_data(t_data *data);
