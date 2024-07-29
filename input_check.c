@@ -6,26 +6,18 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:45:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/18 10:09:49 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/29 11:29:42 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-/*Returns " or ' character in case c is one of these, otherwise 0
-  !!!clean up as identical within split_pipes.c function*/
-static int is_quote(char c)
-{
-    return (c == '"' || c == '\'');
-}
-
 /*Checks if there are unclosed single or double quotes within the user input.
   Quote != 0 means open quotes.*/
 static int	check_quotes(char *input)
 {
-	char quote;
-	int	i;
+	char	quote;
+	int		i;
 
 	quote = 0;
 	i = 0;
@@ -70,7 +62,6 @@ static int	write_sytx_error(int n)
 	}
 	return (0);
 }
-
 
 /*Checks if there are pipes next to each other in user input, if yes, prints 
   respective error message.*/

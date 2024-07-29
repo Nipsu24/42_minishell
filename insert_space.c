@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trim_input.c                                       :+:      :+:    :+:   */
+/*   insert_space.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:37 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/22 13:00:22 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/29 10:46:49 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static int	count_op(t_data *data)
 	while (data->input[i])
 	{
 		if ((data->input[i] == '<'
-			|| data->input[i] == '>'
-			|| data->input[i] == '|') 
+				|| data->input[i] == '>'
+				|| data->input[i] == '|')
 			&& !between_quotes(data->input, i)
 			&& data->input[i + 1] != '<'
 			&& data->input[i + 1] != '>')
@@ -43,11 +43,11 @@ static int	count_op(t_data *data)
   plied by 2, + 1 for NULL terminator.*/
 static char	*malloc_for_spaces(t_data *data, int count)
 {
-    char *ptr;
+	char	*ptr;
 
-    ptr = malloc(ft_strlen(data->input) + count * 2 + 1);
-    if (!ptr)
-        return (NULL);
+	ptr = malloc(ft_strlen(data->input) + count * 2 + 1);
+	if (!ptr)
+		return (NULL);
 	return (ptr);
 }
 
@@ -56,28 +56,28 @@ static char	*malloc_for_spaces(t_data *data, int count)
   afterwards increments ptr's index*/
 static char	*fill_str_w_spaces(t_data *data, char *ptr)
 {
-    int	i;
-    int	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-    while (data->input[i])
+	while (data->input[i])
 	{
-        if ((data->input[i] == '<' || data->input[i] == '>'
-			|| data->input[i] == '|') && !between_quotes(data->input, i))
+		if ((data->input[i] == '<' || data->input[i] == '>'
+				|| data->input[i] == '|') && !between_quotes(data->input, i))
 		{
-            ptr[j++] = ' ';
-            ptr[j++] = data->input[i];
-            if (data->input[i + 1] == data->input[i])
-                ptr[j++] = data->input[i++];
 			ptr[j++] = ' ';
-        }
+			ptr[j++] = data->input[i];
+			if (data->input[i + 1] == data->input[i])
+				ptr[j++] = data->input[i++];
+			ptr[j++] = ' ';
+		}
 		else
 			ptr[j++] = data->input[i];
-        i++;
-    }
-    ptr[j] = '\0';
-    return (ptr);
+		i++;
+	}
+	ptr[j] = '\0';
+	return (ptr);
 }
 
 /*Copies the newly allocated string with the inserted spaces
@@ -93,8 +93,8 @@ static int	copy_to_input(t_data *data, char *ptr)
 
 int	insert_space(t_data *data)
 {
-	int	count;
-	char *ptr;
+	int		count;
+	char	*ptr;
 
 	count = count_op(data);
 	if (count == 0)

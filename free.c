@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:05:12 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/29 11:50:57 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,24 @@
 void	free_all(t_data *data)
 {
 	int	j;
-	//int	i;
 
 	j = 0;
-	//i = 0;
 	if (data->input)
 	{
 		free(data->input);
 		data->input = NULL;
 	}
 	if (data->tokens && data->tokens[j])
-	{
-		while (data->tokens[j])
-		{
-			free(data->tokens[j]);
-			data->tokens[j] = NULL;
-			j++;
-		}
-		free(data->tokens);
-		data->tokens = NULL;
-	}
-	// if (data->prcs && data->prcs[i])
+		free_arr_void(data->tokens);
 	// {
-	// 	while (data->prcs[i])
-	// 	{
-	// 		free(data->prcs[i]);
-	// 		data->prcs[i] = NULL;
-	// 		i++;
-	// 	}
-	// 	free(data->prcs);
-	// 	data->prcs = NULL;
+	// 	// while (data->tokens[j])
+	// 	// {
+	// 	// 	free(data->tokens[j]);
+	// 	// 	data->tokens[j] = NULL;
+	// 	// 	j++;
+	// 	// }
+	// 	// free(data->tokens);
+	// 	// data->tokens = NULL;
 	// }
 	if (data->token_list)
 	{
@@ -54,6 +42,7 @@ void	free_all(t_data *data)
 		data->token_list = NULL;
 	}
 }
+
 /*Frees 2d array in reversed order e.g. for failed copy
   of env variable in ft_copy_env function*/
 char	**free_arr_rev(char **av, int i)
@@ -71,19 +60,7 @@ char	**free_arr_rev(char **av, int i)
 	return (NULL);
 }
 
-/*dublicate with above function!! to be cleand up!n*/
-char	**ft_free(char **result, size_t j)
-{
-	while (j > 0)
-	{
-		free(result[j - 1]);
-		j--;
-	}
-	free(result);
-	result = NULL;
-	return (NULL);
-}
-
+/*Frees 2d array - char version*/
 char	**free_arr(char **arr)
 {
 	int	j;
@@ -101,6 +78,25 @@ char	**free_arr(char **arr)
 		arr = NULL;
 	}
 	return (NULL);
+}
+
+/*Void version of free_arr*/
+void	**free_arr_void(char **arr)
+{
+	int	j;
+
+	j = 0;
+	if (arr && arr[j])
+	{
+		while (arr[j])
+		{
+			free(arr[j]);
+			arr[j] = NULL;
+			j++;
+		}
+		free(arr);
+		arr = NULL;
+	}
 }
 
 /*Helper function of free_proc_arrays_rev, loops through redir array.*/
