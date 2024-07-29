@@ -12,8 +12,7 @@
 
 #include "minishell.h"
 
-/*Frees relevant parts of the main struct. Last if-statement still
-  to be investigated if sufficient.*/
+/*Frees relevant parts of the main struct.*/
 void	free_all(t_data *data)
 {
 	int	j;
@@ -26,21 +25,13 @@ void	free_all(t_data *data)
 	}
 	if (data->tokens && data->tokens[j])
 		free_arr_void(data->tokens);
-	// {
-	// 	// while (data->tokens[j])
-	// 	// {
-	// 	// 	free(data->tokens[j]);
-	// 	// 	data->tokens[j] = NULL;
-	// 	// 	j++;
-	// 	// }
-	// 	// free(data->tokens);
-	// 	// data->tokens = NULL;
-	// }
 	if (data->token_list)
 	{
 		free(data->token_list);
 		data->token_list = NULL;
 	}
+	if (data->proc_nbr)
+		free_proc_structs(data);
 }
 
 /*Frees 2d array in reversed order e.g. for failed copy
@@ -96,6 +87,28 @@ void	**free_arr_void(char **arr)
 		}
 		free(arr);
 		arr = NULL;
+	}
+}
+
+/*Frees all proc_structs in order.*/
+void	free_proc_structs(t_data *data)
+{
+	int	j;
+	int	k;
+	int	l;
+
+	j = 0;
+	k = 0;
+	l = 0;
+	while (j < data->proc_nbr)
+	{
+		if (data->proc[j].cmd[k] != NULL
+		|| data->proc[j].cmd != NULL)
+			free_arr_void(data->proc[j].cmd);
+		if (data->proc[j].redir[l] != NULL
+		|| data->proc[j].redir != NULL)
+			free_arr_void(data->proc[j].redir);
+		j++;
 	}
 }
 
