@@ -90,24 +90,33 @@ void	free_arr_void(char **arr)
 	}
 }
 
+/*Frees string and sets pointer to NULL. Caller function
+  should pass address of str to this function.*/
+void	free_str(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
+
 /*Frees all proc_structs in order.*/
 void	free_proc_structs(t_data *data)
 {
 	int	j;
-	int	k;
-	int	l;
 
 	j = 0;
-	k = 0;
-	l = 0;
 	while (j < data->proc_nbr)
 	{
-		if (data->proc[j].cmd[k] != NULL
+		if (data->proc[j].cmd[0] != NULL
 		|| data->proc[j].cmd != NULL)
 			free_arr_void(data->proc[j].cmd);
-		if (data->proc[j].redir[l] != NULL
+		if (data->proc[j].redir[0] != NULL
 		|| data->proc[j].redir != NULL)
 			free_arr_void(data->proc[j].redir);
+		if (data->proc[j].path != NULL)
+			free_str(&data->proc[j].path);
 		j++;
 	}
 }
