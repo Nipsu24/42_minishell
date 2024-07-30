@@ -84,6 +84,7 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue;
 		}
+		init_path(data);
 		i = 0;
 		free_all(data);
 	}

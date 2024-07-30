@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <marvin@42.fr>                 +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 14:07:00 by mariusmeier       #+#    #+#             */
 /*   Updated: 2024/07/29 14:07:03 by mariusmeier      ###   ########.fr       */

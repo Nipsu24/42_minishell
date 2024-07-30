@@ -122,6 +122,7 @@ static int	fill_proc_structs(t_data *data)
 		}
 		data->proc[data->j].cmd[data->k] = NULL;
 		data->proc[data->j].redir[data->l] = NULL;
+		data->proc[data->j].path = NULL;
 		if (data->token_list[data->i].type == PIPE)
 		{
 			data->i++;
@@ -130,7 +131,7 @@ static int	fill_proc_structs(t_data *data)
 		}
 		data->j++;
 	}
-	data->i = 0;
+	data->i = 0; //for printing, if not needed anymore, remove until return (0)
 	data->j = 0;
 	data->k = 0;
 	while (data->j < data->proc_nbr)
@@ -153,8 +154,6 @@ static int	fill_proc_structs(t_data *data)
 	}
 	return (0);
 }
-/*for printing, attach to above function (remove return (0) 
-  from fill_proc_structs before)*/
 	
 int	init_proc_structs(t_data *data)
 {

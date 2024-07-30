@@ -59,4 +59,5 @@ int		ft_unsigned_int_count(unsigned int n, int *cmp);
 int		ft_hexconvert_upper(unsigned int n, int *cmp);
 int		ft_hexconvert_lower(unsigned long long int n, int *cmp);
 int		ft_putptr(void *s, int *cmp);
+char	*ft_gnl_strjoin(char *s1, char *s2);
 #endif
