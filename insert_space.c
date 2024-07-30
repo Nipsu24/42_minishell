@@ -32,7 +32,6 @@ static int	count_op(t_data *data)
 			count++;
 		i++;
 	}
-	printf("AMOUNT OP is: %d\n", count);
 	return (count);
 }
 
@@ -87,7 +86,6 @@ static int	copy_to_input(t_data *data, char *ptr)
 	free(data->input);
 	data->input = NULL;
 	data->input = ptr;
-	printf("NEW STRING: %s\n", data->input);
 	return (0);
 }
 
