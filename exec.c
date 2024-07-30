@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		exec_cmd(t_data *data)
+int	exec_cmd(t_data *data)
 {
 	int	pid;
 	int	j;
@@ -24,5 +24,6 @@ int		exec_cmd(t_data *data)
 		if (execve(data->proc[j].path, data->proc[j].cmd, data->temp_env) == -1)
 			printf("%s: command not found\n", data->proc[j].cmd[0]);
 	}
+	waitpid(pid, NULL, 0);
 	return (0);
 }
