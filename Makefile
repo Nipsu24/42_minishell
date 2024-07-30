@@ -31,7 +31,8 @@ FILES = main.c \
 		free.c \
 		init_proc_structs.c \
 		remove_quotes.c \
-		path.c
+		path.c \
+		exec.c
 
 BUILTINS = builtins/builtin_utils.c \
 			builtins/pwd.c \

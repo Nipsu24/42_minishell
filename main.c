@@ -60,8 +60,8 @@ static int	ft_input(t_data *data)
 		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
-		else
-			printf("You entered %s\n", data->input);
+		// else
+		// 	printf("You entered %s\n", data->input);
 		data->tokens = ft_tokenize(data->input);
 		if (!data->tokens)
 			return (1);
@@ -70,8 +70,8 @@ static int	ft_input(t_data *data)
 		while (data->tokens[i])
 		{
 			assign_token_type(data, i);
-			printf("%s\n", data->tokens[i]);
-			printf("%d\n", data->token_list[i].type);
+			//printf("%s\n", data->tokens[i]);
+			//printf("%d\n", data->token_list[i].type);
 			i++;
 		}
 		if (remove_quotes(data))
@@ -90,6 +90,7 @@ static int	ft_input(t_data *data)
 			continue;
 		}
 		i = 0;
+		exec_cmd(data);
 		free_all(data);
 	}
 	return (0);

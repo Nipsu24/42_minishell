@@ -99,5 +99,6 @@ void	setup_signal(void);
 void	print_env(char **env);
 
 int		init_path(t_data *data);
+int		exec_cmd(t_data *data);
 
 #endif

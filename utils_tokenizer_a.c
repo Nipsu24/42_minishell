@@ -36,7 +36,6 @@ static int	ft_wcount(char *s)
 		while (s[i] && s[i] == ' ')
 			i++;
 	}
-	printf("WORDCOUNT: %d\n", count);
 	return (count);
 }
 
