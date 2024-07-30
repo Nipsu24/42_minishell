@@ -46,11 +46,9 @@ static int	join_slash(t_data *data)
 {
 	int		j;
 	char	*slash;
-	//int		i;
 
 	j = 0;
 	slash = "/";
-	//i = -1;
 	while (data->path_arr[j])
 	{
 		data->path_arr[j] = ft_gnl_strjoin(data->path_arr[j], slash);
@@ -58,9 +56,38 @@ static int	join_slash(t_data *data)
 			return (1);
 		j++;
 	}
-	// printf("PATH ARRAY:\n");
-	// while (++i, data->path_arr[i])
-	// 	printf("%s\n", data->path_arr[i]);
+	return (0);
+}
+
+/*Loops through the path_arr array and joins the command of each process
+  with each string in the path array into the *path variable. In case the 
+  path exists, breaks out of path_arr while loop and continues with next
+  process (if available). In case the command cannot be found 
+  (via access function) the path string remains empty (NULL). */
+static int	join_cmd_path(t_data *data)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	i = 0;
+	while (j < data->proc_nbr)
+	{
+		i = 0;
+		while (data->path_arr[i])
+		{
+			data->proc[j].path = ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);
+			if (!data->proc[j].path)
+				return (1);
+			if (access(data->proc[j].path, F_OK) == 0)
+				break ;
+			free(data->proc[j].path);
+			data->proc[j].path = NULL;
+			i++;
+		}
+		//printf("PATH EXISTS: %s\n", data->proc[j].path);
+		j++;
+	}
 	return (0);
 }
 
@@ -69,6 +96,8 @@ int	init_path(t_data *data)
 	if (create_path_arr(data))
 		return (1);
 	if (join_slash(data))
+		return (1);
+	if (join_cmd_path(data))
 		return (1);
 	return (0);
 }
