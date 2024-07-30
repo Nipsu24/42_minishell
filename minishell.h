@@ -46,6 +46,7 @@ typedef struct s_prc
 {
 	char				**cmd;
 	char				**redir; // < > << >>
+	char				*path;
 }				t_prc;
 
 /*Overall struct for all relevant data of the shell*/
@@ -61,6 +62,7 @@ typedef struct s_data
 	int			j;
 	int			k;
 	int			l;
+	char		**path_arr;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -94,5 +96,7 @@ int		remove_quotes(t_data *data);
 /*further functions*/
 void	setup_signal(void);
 void	print_env(char **env);
+
+int		init_path(t_data *data);
 
 #endif
