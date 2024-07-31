@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 10:13:26 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/31 11:37:03 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
+/*Relevant tokens for lexing and parsing part.
+  INIT_VAL for initial initiation when matching
+  with strings of 2d input array.*/
 typedef enum s_token_type
 {
 	INIT_VAL = -1,
@@ -97,8 +102,11 @@ int		remove_quotes(t_data *data);
 /*further functions*/
 void	setup_signal(void);
 void	print_env(char **env);
+char	**ft_copy_env(char **env, char **cpy_env);
 
 int		init_path(t_data *data);
 int		exec_cmd(t_data *data);
+int		lexer(t_data *data);
+int		parsing(t_data *data);
 
 #endif

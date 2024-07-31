@@ -6,22 +6,53 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 10:12:43 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/31 13:05:14 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(char **env)
+/*Holds all relevant functions related to the lexing part.
+  Inserts space before and after operants, expands $, splits
+  input by words (if in unquoted passage) into 2d array.
+  Assigns tokens to strings of 2d array and removes quotes
+  from strings of 2d array*/
+int	lexer(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	if (insert_space(data))
+		return (1);
+	if (ft_expand(data))
+		return (1);
+	data->tokens = ft_tokenize(data->input);
+	if (!data->tokens)
+		return (1);
+	if (!ft_malloc_token(data))
+		return (1);
+	while (data->tokens[i])
 	{
-		printf("%s\n", env[i]);
+		assign_token_type(data, i);
+		// printf("%s\n", data->tokens[i]);
+		// printf("%d\n", data->token_list[i].type);
 		i++;
 	}
+	if (remove_quotes(data))
+		return (1);
+	return (0);
+}
+
+/*Allocates sufficient memory for process structs and
+  populats them with respective data. Also creates command
+  path for later execution part.*/
+int	parsing(t_data *data)
+{
+	if (init_proc_structs(data))
+		return (1);
+	if (init_path(data))
+		return (1);
+	return (0);
 }
 
 /*The 'readline' function enables writing commands to program during execution. 
@@ -32,9 +63,7 @@ void	print_env(char **env)
 static int	ft_input(t_data *data)
 {
 	char		*environment;
-	int			i;
 
-	i = 0;
 	environment = "env";
 	while (1)
 	{
@@ -50,76 +79,29 @@ static int	ft_input(t_data *data)
 		if (not_valid_input(data->input))
 		{
 			free_all(data);
-			continue;
+			continue ;
 		}
-		if (insert_space(data))
+		if (lexer(data))
 		{
 			free_all(data);
-			continue;
+			continue ;
 		}
-		ft_expand(data);
 		if (ft_strncmp(data->input, environment, 3) == 0)
 			print_env(data->temp_env);
 		// else
 		// 	printf("You entered %s\n", data->input);
-		data->tokens = ft_tokenize(data->input);
-		if (!data->tokens)
-			return (1);
-		if (!ft_malloc_token(data))
-			return (1);
-		while (data->tokens[i])
-		{
-			assign_token_type(data, i);
-			//printf("%s\n", data->tokens[i]);
-			//printf("%d\n", data->token_list[i].type);
-			i++;
-		}
-		if (remove_quotes(data))
+		if (parsing(data))
 		{
 			free_all(data);
-			continue;
+			continue ;
 		}
-		if (init_proc_structs(data))
-		{
-			free_all(data);
-			continue;
-		}
-		if (init_path(data))
-		{
-			free_all(data);
-			continue;
-		}
-		i = 0;
 		exec_cmd(data);
 		free_all(data);
 	}
 	return (0);
 }
 
-/*Creates copy of env var in order to being able of modifying this copy
-  later on in the course of the shell execution*/
-static char	**ft_copy_env(char **env, char **cpy_env)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (env[j])
-		j++;
-	cpy_env = (char **) malloc (sizeof(char *) * (j + 1));
-	if (!cpy_env)
-		return (NULL);
-	while (env[i])
-	{
-		cpy_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
-		if (!cpy_env[i])
-			return (free_arr_rev(cpy_env, i));
-		i++;
-	}
-	return (cpy_env);
-}
-
+/*Initialise all relevant data of the main data struct*/
 void	init_data(t_data *data)
 {
 	data->temp_env = NULL;
@@ -129,6 +111,7 @@ void	init_data(t_data *data)
 	data->count_cmd = 0;
 	data->count_other = 0;
 	data->proc_nbr = 0;
+	data->path_arr = NULL;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
@@ -140,12 +123,15 @@ int	main(int ac, char *av[], char *env[])
 
 	init_data(&data);
 	data.temp_env = ft_copy_env(env, data.temp_env);
+	if (!data.temp_env)
+		return (1);
 	if (ac > 1 || av[1])
 	{
 		printf("Error. File does not take input.\n");
 		return (1);
 	}
 	else
-		ft_input(&data);
+		if (ft_input(&data))
+			return (1);
 	return (0);
 }

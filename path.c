@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/07/30 10:35:25 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/07/31 10:23:48 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
   the directory paths of this env var into data->path_arr.*/
 static int	create_path_arr(t_data *data)
 {
-	int	i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	tmp = NULL;
@@ -76,7 +76,8 @@ static int	join_cmd_path(t_data *data)
 		i = 0;
 		while (data->path_arr[i])
 		{
-			data->proc[j].path = ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);
+			data->proc[j].path = ft_strjoin(data->path_arr[i],
+					data->proc[j].cmd[0]);
 			if (!data->proc[j].path)
 				return (1);
 			if (access(data->proc[j].path, F_OK) == 0)

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/29 11:50:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/31 10:20:50 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ void	free_proc_structs(t_data *data)
 	while (j < data->proc_nbr)
 	{
 		if (data->proc[j].cmd[0] != NULL
-		|| data->proc[j].cmd != NULL)
+			|| data->proc[j].cmd != NULL)
 			free_arr_void(data->proc[j].cmd);
 		if (data->proc[j].redir[0] != NULL
-		|| data->proc[j].redir != NULL)
+			|| data->proc[j].redir != NULL)
 			free_arr_void(data->proc[j].redir);
 		if (data->proc[j].path != NULL)
 			free_str(&data->proc[j].path);
