@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:37 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/29 10:46:49 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/31 11:29:52 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static int	copy_to_input(t_data *data, char *ptr)
 	return (0);
 }
 
+/*Inserts space before and after each operant (<,>, <<, >>, |)*/
 int	insert_space(t_data *data)
 {
 	int		count;
