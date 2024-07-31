@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 11:37:03 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/31 13:55:52 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,32 +81,37 @@ int		free_proc_arr_rev(t_data *data);
 void	free_proc_structs(t_data *data);
 void	free_str(char **str);
 
-/*init and malloc functions*/
-void	init_data(t_data *data);
-int		ft_malloc_token(t_data *data);
-int		init_proc_structs(t_data *data);
-
 /*Error check and utils*/
 int		not_valid_input(char *str);
 int		between_quotes(char *input, int pos);
 int		is_quote(char c);
 
-/*parsing*/
+/*lexing*/
+int		lexer(t_data *data);
+int		insert_space(t_data *data);
+int		ft_expand(t_data *data);
 char	**ft_tokenize(char *s);
 void	w_count_quote_iter(char *s, int *i);
+int		ft_malloc_token(t_data *data);
 void	assign_token_type(t_data *tokens, int i);
-int		ft_expand(t_data *data);
-int		insert_space(t_data *data);
 int		remove_quotes(t_data *data);
 
-/*further functions*/
-void	setup_signal(void);
+/*parsing*/
+int		parsing(t_data *data);
+int		init_proc_structs(t_data *data);
+int		init_path(t_data *data);
+
+/*execution*/
+int		exec_cmd(t_data *data);
+
+/*env variable*/
 void	print_env(char **env);
 char	**ft_copy_env(char **env, char **cpy_env);
 
-int		init_path(t_data *data);
-int		exec_cmd(t_data *data);
-int		lexer(t_data *data);
-int		parsing(t_data *data);
+/*signals*/
+void	setup_signal(void);
+
+/*further functions*/
+void	init_data(t_data *data);
 
 #endif
