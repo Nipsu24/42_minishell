@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_general.c                                    :+:      :+:    :+:   */
+/*   utils_tokenizer_b.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 16:10:48 by mmeier            #+#    #+#             */
-/*   Updated: 2024/05/23 16:33:10 by mmeier           ###   ########.fr       */
+/*   Created: 2024/07/29 11:21:38 by mmeier            #+#    #+#             */
+/*   Updated: 2024/07/29 11:24:24 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Frees 2d array in reversed order e.g. for failed copy
-  of env variable in ft_copy_env function*/
-char	**free_arr_rev(char **av, int i)
+/*returns double or single quote if character is respective symbol,
+  otherwise 0.*/
+
+int	is_quote(char c)
 {
-	if (av[i] == NULL || av == NULL)
-		return (NULL);
-	while (i > 0)
-	{
-		free(av[i]);
-		av[i] = NULL;
-		i--;
-	}
-	free(av);
-	av = NULL;
-	return (NULL);
+	return (c == '"' || c == '\'');
+}
+
+/*Helper function of ft_wcount, iterates through quoted part of string*/
+void	w_count_quote_iter(char *s, int *i)
+{
+	(*i)++;
+	while (s[*i] && !is_quote(s[*i]))
+		(*i)++;
 }

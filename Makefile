@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/05/27 14:50:25 by mmeier           ###   ########.fr        #
+#    Updated: 2024/07/31 10:10:55 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,37 @@ SRC_DIR = ./
 OBJ_DIR = obj
 LIBFT = ./libft/
 
-FILES = main.c utils_tokenizer.c token_handling.c utils_general.c exec.c
+FILES = main.c \
+		utils_tokenizer_a.c \
+		utils_tokenizer_b.c \
+		token_handling.c \
+		signals.c \
+		input_check.c \
+		in_quotes_check.c \
+		expansion.c \
+		insert_space.c \
+		free.c \
+		init_proc_structs.c \
+		remove_quotes.c \
+		path.c \
+		exec.c
+
+BUILTINS = builtins/builtin_utils.c \
+			builtins/pwd.c \
+
+PARSING = 
+
+TOKENIZER =
+
+EXEC = 
+
+SRCS = $(BUILTINS) \
+		$(PARSING) \
+		$(TOKENIZER) \
+		$(EXEC) \
+		main.c
+			
+
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -37,11 +67,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)minishell.h | $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR) 
 
 clean:
 	make clean -C $(LIBFT)
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) $(OBJ_FILES:.o=.dSYM)
 	
 fclean: clean
 	make fclean -C $(LIBFT)

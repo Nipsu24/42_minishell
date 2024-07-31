@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/07/31 10:12:00 by mmeier           ###   ########.fr       */
+/*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
+/*   Updated: 2024/06/05 17:17:17 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmd(t_data *data)
+int	pwd(void)
 {
-	int	pid;
-	int	j;
+	char	*cwd;
 
-	pid = fork();
-	j = 0;
-	if (pid == 0)
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
 	{
-		if (execve(data->proc[j].path, data->proc[j].cmd, data->temp_env) == -1)
-			printf("%s: command not found\n", data->proc[j].cmd[0]);
+		perror("Error getting cwd");
+		return (1);
 	}
-	waitpid(pid, NULL, 0);
+	ft_printf("%s\n", cwd);
 	return (0);
 }

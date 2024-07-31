@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/07/31 10:12:00 by mmeier           ###   ########.fr       */
+/*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
+/*   Updated: 2024/06/05 17:38:20 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmd(t_data *data)
+bool	needs_arg(char **comand_array)
 {
-	int	pid;
-	int	j;
+	if (comand_array[0][0] == )
 
-	pid = fork();
-	j = 0;
-	if (pid == 0)
-	{
-		if (execve(data->proc[j].path, data->proc[j].cmd, data->temp_env) == -1)
-			printf("%s: command not found\n", data->proc[j].cmd[0]);
-	}
-	waitpid(pid, NULL, 0);
-	return (0);
+	if (!ft_strncmp("pwd", comand_array[0][0], 3)
+		|| !ft_strncmp("cd", comand_array[0][0], 2))
+		return(TRUE);
 }

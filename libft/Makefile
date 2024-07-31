@@ -54,6 +54,7 @@ FILES = ft_calloc.c \
 		ft_putptr.c \
 		ft_putstr_count.c \
 		ft_unsigned_int.c \
+		ft_gnl_strjoin.c
 
 OBJ = $(FILES:.c=.o)
 
