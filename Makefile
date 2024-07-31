@@ -16,39 +16,29 @@ FLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 SRC_DIR = ./
-OBJ_DIR = obj
+OBJ_DIR = ./obj/
 LIBFT = ./libft/
+INCLUDES = -I./
 
 FILES = main.c \
-		utils_tokenizer_a.c \
-		utils_tokenizer_b.c \
-		token_handling.c \
-		signals.c \
-		input_check.c \
-		in_quotes_check.c \
-		expansion.c \
-		insert_space.c \
-		free.c \
-		init_proc_structs.c \
-		remove_quotes.c \
-		path.c \
-		exec.c \
-		env.c
+		check_input/input_check.c \
+		check_input/in_quotes_check.c \
+		lexing/utils_tokenizer_a.c \
+		lexing/utils_tokenizer_b.c \
+		lexing/token_handling.c \
+		lexing/expansion.c \
+		lexing/insert_space.c \
+		lexing/remove_quotes.c \
+		parsing/init_proc_structs.c \
+		parsing/path.c \
+		free/free_a.c \
+		free/free_b.c \
+		execution/exec.c \
+		signal/signals.c \
+		env/env.c
 
-BUILTINS = builtins/builtin_utils.c \
+#BUILTINS = builtins/builtin_utils.c \
 			builtins/pwd.c \
-
-PARSING = 
-
-TOKENIZER =
-
-EXEC = 
-
-SRCS = $(BUILTINS) \
-		$(PARSING) \
-		$(TOKENIZER) \
-		$(EXEC) \
-		main.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -63,10 +53,18 @@ fsanitize:
 	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -L$(LIBFT) -lft -g -fsanitize=address -static-libsan 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)minishell.h | $(OBJ_DIR) 
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR) 
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/builtins2
+	@mkdir -p $(OBJ_DIR)/check_input
+	@mkdir -p $(OBJ_DIR)/lexing
+	@mkdir -p $(OBJ_DIR)/parsing
+	@mkdir -p $(OBJ_DIR)/execution
+	@mkdir -p $(OBJ_DIR)/free
+	@mkdir -p $(OBJ_DIR)/env
+	@mkdir -p $(OBJ_DIR)/signal
 
 clean:
 	make clean -C $(LIBFT)
