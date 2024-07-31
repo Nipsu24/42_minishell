@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
+/*   Updated: 2024/07/31 10:12:00 by mmeier           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	exec_cmd(t_data *data)
+{
+	int	pid;
+	int	j;
+
+	pid = fork();
+	j = 0;
+	if (pid == 0)
+	{
+		if (execve(data->proc[j].path, data->proc[j].cmd, data->temp_env) == -1)
+			printf("%s: command not found\n", data->proc[j].cmd[0]);
+	}
+	waitpid(pid, NULL, 0);
+	return (0);
+}
