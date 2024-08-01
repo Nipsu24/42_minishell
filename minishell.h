@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 
 /*Relevant tokens for lexing and parsing part.
   INIT_VAL for initial initiation when matching

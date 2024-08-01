@@ -133,27 +133,29 @@ static int	fill_proc_structs(t_data *data)
 	}
 	return (0);
 }
-	// data->i = 0; //for printing, if not needed anymore, remove until return (0)
-	// data->j = 0;
-	// data->k = 0;
-	// while (data->j < data->proc_nbr)
-	// {
-	// 	printf("CMD STRUCT %d:\n", data->j);
-	// 	while (data->proc[data->j].cmd[data->i])
-	// 	{
-	// 		printf("%s\n", data->proc[data->j].cmd[data->i]);
-	// 		data->i++;
-	// 	}
-	// 	printf("RED STRUCT %d:\n", data->j);
-	// 	while (data->proc[data->j].redir[data->k])
-	// 	{
-	// 		printf("%s\n", data->proc[data->j].redir[data->k]);
-	// 		data->k++;
-	// 	}
-	// 	data->k = 0;
-	// 	data->i = 0;
-	// 	data->j++;
-	//}
+// 	data->i = 0; //for printing, if not needed anymore, remove until return (0)
+// 	data->j = 0;
+// 	data->k = 0;
+// 	while (data->j < data->proc_nbr)
+// 	{
+// 		printf("CMD STRUCT %d:\n", data->j);
+// 		while (data->proc[data->j].cmd[data->i])
+// 		{
+// 			printf("%s\n", data->proc[data->j].cmd[data->i]);
+// 			data->i++;
+// 		}
+// 		printf("RED STRUCT %d:\n", data->j);
+// 		while (data->proc[data->j].redir[data->k])
+// 		{
+// 			printf("%s\n", data->proc[data->j].redir[data->k]);
+// 			data->k++;
+// 		}
+// 		data->k = 0;
+// 		data->i = 0;
+// 		data->j++;
+// 	}
+// 	return (0);
+// }
 	
 int	init_proc_structs(t_data *data)
 {
