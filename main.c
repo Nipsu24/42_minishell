@@ -34,8 +34,8 @@ int	lexer(t_data *data)
 	while (data->tokens[i])
 	{
 		assign_token_type(data, i);
-		// printf("%s\n", data->tokens[i]);
-		// printf("%d\n", data->token_list[i].type);
+		//printf("%s\n", data->tokens[i]);
+		//printf("%d\n", data->token_list[i].type);
 		i++;
 	}
 	if (remove_quotes(data))
