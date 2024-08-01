@@ -104,9 +104,11 @@ int		init_path(t_data *data);
 /*execution*/
 int		exec_cmd(t_data *data);
 
-/*env variable*/
+/*built-ins*/
 void	print_env(char **env);
 char	**ft_copy_env(char **env, char **cpy_env);
+// bool	needs_arg(char **comand_array);
+// int		pwd(void);
 
 /*signals*/
 void	setup_signal(void);

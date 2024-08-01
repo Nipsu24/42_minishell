@@ -35,10 +35,9 @@ FILES = main.c \
 		free/free_b.c \
 		execution/exec.c \
 		signal/signals.c \
-		env/env.c
-
-#BUILTINS = builtins/builtin_utils.c \
-			builtins/pwd.c \
+		builtins/env.c \
+#		builtins/builtin_utils.c \
+#		builtins/pwd.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -57,14 +56,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)minishell.h | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/builtins2
-	@mkdir -p $(OBJ_DIR)/check_input
-	@mkdir -p $(OBJ_DIR)/lexing
-	@mkdir -p $(OBJ_DIR)/parsing
-	@mkdir -p $(OBJ_DIR)/execution
-	@mkdir -p $(OBJ_DIR)/free
-	@mkdir -p $(OBJ_DIR)/env
-	@mkdir -p $(OBJ_DIR)/signal
+	@mkdir -p $(OBJ_DIR)builtins
+	@mkdir -p $(OBJ_DIR)check_input
+	@mkdir -p $(OBJ_DIR)lexing
+	@mkdir -p $(OBJ_DIR)parsing
+	@mkdir -p $(OBJ_DIR)execution
+	@mkdir -p $(OBJ_DIR)free
+	@mkdir -p $(OBJ_DIR)signal
 
 clean:
 	make clean -C $(LIBFT)
