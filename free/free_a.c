@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 10:20:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:25:57 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	free_proc_structs(t_data *data)
 			free_arr_void(data->proc[j].redir);
 		if (data->proc[j].path != NULL)
 			free_str(&data->proc[j].path);
+		if (data->proc[j].fd != NULL)
+			free_int_arr(&data->proc[j].fd);
 		j++;
 	}
 }
@@ -88,6 +90,8 @@ int	free_proc_arr_rev(t_data *data)
 			free(data->proc[data->j].redir);
 			data->proc[data->j].redir = NULL;
 		}
+		if (data->proc[data->j].fd != NULL)
+			free_int_arr(&data->proc[data->j].fd);
 		data->j--;
 	}
 	return (1);

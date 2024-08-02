@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 10:20:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:26:10 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,13 @@ void	free_str(char **str)
 		free(*str);
 		*str = NULL;
 	}
+}
+
+/*Frees int array and sets freed pointer to NULL.*/
+void	free_int_arr(int **arr)
+{
+	if (*arr == NULL)
+		return ;
+	free(*arr);
+	*arr = NULL;
 }

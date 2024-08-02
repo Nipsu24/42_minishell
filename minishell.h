@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 13:55:52 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:26:25 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_prc
 	char				**cmd;
 	char				**redir; // < > << >>
 	char				*path;
+	int					*fd;
+	int					fd_amount;
 }				t_prc;
 
 /*Overall struct for all relevant data of the shell*/
@@ -69,6 +71,7 @@ typedef struct s_data
 	int			k;
 	int			l;
 	char		**path_arr;
+	int			save_stdout;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -81,6 +84,7 @@ void	free_arr_void(char **arr);
 int		free_proc_arr_rev(t_data *data);
 void	free_proc_structs(t_data *data);
 void	free_str(char **str);
+void	free_int_arr(int **arr);
 
 /*Error check and utils*/
 int		not_valid_input(char *str);
