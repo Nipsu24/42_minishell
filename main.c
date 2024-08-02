@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 13:05:14 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/02 17:40:06 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	init_data(t_data *data)
 	data->count_other = 0;
 	data->proc_nbr = 0;
 	data->path_arr = NULL;
+	data->save_stdout = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 

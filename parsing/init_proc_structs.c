@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_proc_structs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/25 13:49:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/02 17:44:51 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,62 @@ static void	count_arrays(t_data *data, int *i)
 	}
 }
 
-/*Allocates memory for cmd array and redir array in process structs. If no
-  command or redirection in process line, arrays will be initialised with
-  1 char string, which later will be set to null.*/
-static int	alloc_proc_structs(t_data *data)
+/*Allocates memory for the needed fds in each process.*/
+static int	alloc_fds(t_data *data)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
+	if (data->proc[data->j].fd_amount == 0)
+	{
+		data->proc[data->j].fd = NULL;
+		return (0);
+	}
+	data->proc[data->j].fd = malloc (sizeof(int) * (data->proc[data->j].fd_amount));
+	if (!data->proc[data->j].fd)
+	{
+		free(data->proc[data->j].cmd);
+		data->proc[data->j].cmd = NULL;
+		free(data->proc[data->j].redir);
+		data->proc[data->j].redir = NULL;
+		return (1);
+	}
+	while (i < (data->proc[data->j].fd_amount))
+	{
+		data->proc[data->j].fd[i] = -1;
+		i++;
+	}
+	return (0);
+}
+
+/*Allocates memory for cmd array, redir array and fd array in process
+  structs. If no command or redirection in process line, arrays will be 
+  initialised with 1 char string, which later will be set to null.*/
+static int	alloc_proc_structs(t_data *data)
+{
+	data->i = 0;
+	data->j = 0;
 	data->count_cmd = 0;
 	data->count_other = 0;
-	while (j < data->proc_nbr)
+	while (data->j < data->proc_nbr)
 	{
-		count_arrays(data, &i);
-		data->proc[j].cmd = malloc ((data->count_cmd + 1) * sizeof(char *));
-		if (!data->proc[j].cmd)
+		count_arrays(data, &data->i);
+		data->proc[data->j].cmd = malloc ((data->count_cmd + 1) * sizeof(char *));
+		if (!data->proc[data->j].cmd)
 			return (1);
-		data->proc[j].redir = malloc ((data->count_other + 1) * sizeof(char *));
-		if (!data->proc[j].redir)
+		data->proc[data->j].redir = malloc ((data->count_other + 1) * sizeof(char *));
+		if (!data->proc[data->j].redir)
 			return (1);
-		if (data->token_list[i].type == PIPE)
+		data->proc[data->j].fd_amount = data->count_other / 2;
+		if (alloc_fds(data))
+			return (1);
+		if (data->token_list[data->i].type == PIPE)
 		{
-			i++;
+			data->i++;
 			data->count_cmd = 0;
 			data->count_other = 0;
 		}
-		j++;
+		data->j++;
 	}
 	return (0);
 }
@@ -136,6 +164,7 @@ static int	fill_proc_structs(t_data *data)
 // 	data->i = 0; //for printing, if not needed anymore, remove until return (0)
 // 	data->j = 0;
 // 	data->k = 0;
+// 	data->l = 0;
 // 	while (data->j < data->proc_nbr)
 // 	{
 // 		printf("CMD STRUCT %d:\n", data->j);
@@ -150,8 +179,15 @@ static int	fill_proc_structs(t_data *data)
 // 			printf("%s\n", data->proc[data->j].redir[data->k]);
 // 			data->k++;
 // 		}
+// 		printf("FD STRUCT %d:\n", data->j);
+// 		while (data->l < data->proc[data->j].fd_amount)
+// 		{
+// 			printf("%d\n", data->proc[data->j].fd[data->l]);
+// 			data->l++;
+// 		}
 // 		data->k = 0;
 // 		data->i = 0;
+// 		data->l = 0;
 // 		data->j++;
 // 	}
 // 	return (0);
