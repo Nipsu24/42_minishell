@@ -6,7 +6,7 @@
 /*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/02 16:26:25 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/03 13:42:55 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_data
 	int			l;
 	char		**path_arr;
 	int			save_stdout;
+	int			save_stdin;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -107,7 +108,7 @@ int		init_proc_structs(t_data *data);
 int		init_path(t_data *data);
 
 /*execution*/
-int		exec_cmd(t_data *data);
+int		exec_proc(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);

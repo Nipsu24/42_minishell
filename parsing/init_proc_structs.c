@@ -6,7 +6,7 @@
 /*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/02 17:44:51 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/03 11:07:47 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,19 +167,19 @@ static int	fill_proc_structs(t_data *data)
 // 	data->l = 0;
 // 	while (data->j < data->proc_nbr)
 // 	{
-// 		printf("CMD STRUCT %d:\n", data->j);
+// 		printf("CMD ARRAY %d:\n", data->j);
 // 		while (data->proc[data->j].cmd[data->i])
 // 		{
 // 			printf("%s\n", data->proc[data->j].cmd[data->i]);
 // 			data->i++;
 // 		}
-// 		printf("RED STRUCT %d:\n", data->j);
+// 		printf("RED ARRAY %d:\n", data->j);
 // 		while (data->proc[data->j].redir[data->k])
 // 		{
 // 			printf("%s\n", data->proc[data->j].redir[data->k]);
 // 			data->k++;
 // 		}
-// 		printf("FD STRUCT %d:\n", data->j);
+// 		printf("FD ARRAY %d:\n", data->j);
 // 		while (data->l < data->proc[data->j].fd_amount)
 // 		{
 // 			printf("%d\n", data->proc[data->j].fd[data->l]);

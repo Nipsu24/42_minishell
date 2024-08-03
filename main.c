@@ -6,7 +6,7 @@
 /*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/02 17:40:06 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/03 13:43:42 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,11 @@ static int	ft_input(t_data *data)
 			free_all(data);
 			continue ;
 		}
-		exec_cmd(data);
+		if (exec_proc(data))
+		{
+			free_all(data);
+			continue ;
+		}
 		free_all(data);
 	}
 	return (0);
@@ -113,6 +117,7 @@ void	init_data(t_data *data)
 	data->proc_nbr = 0;
 	data->path_arr = NULL;
 	data->save_stdout = 0;
+	data->save_stdin = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
