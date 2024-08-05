@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 09:44:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/05 15:34:51 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_prc
 	char				*path;
 	int					*fd;
 	int					fd_amount;
+	char				*here_tmp;
 }				t_prc;
 
 /*Overall struct for all relevant data of the shell*/
@@ -113,6 +114,7 @@ int		exec_proc(t_data *data);
 int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
 int		redin_loop(t_data *data);
+int		ft_heredoc(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);
