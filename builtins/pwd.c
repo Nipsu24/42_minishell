@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/06/05 17:17:17 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:07:46 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int	pwd(void)
 		return (1);
 	}
 	ft_printf("%s\n", cwd);
+	free_str(&cwd);
 	return (0);
 }
