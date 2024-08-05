@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/04/17 15:22:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/05 16:48:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+
+# define BUFFER_SIZE 1
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -59,5 +61,10 @@ int		ft_unsigned_int_count(unsigned int n, int *cmp);
 int		ft_hexconvert_upper(unsigned int n, int *cmp);
 int		ft_hexconvert_lower(unsigned long long int n, int *cmp);
 int		ft_putptr(void *s, int *cmp);
+char	*ft_ms_strjoin(char *s1, char *s2);
+char	*ft_ms_strjoin_rev_free(char *s1, char *s2);
+char	*get_next_line(int fd);
+char	*ft_free(char **str);
 char	*ft_gnl_strjoin(char *s1, char *s2);
+
 #endif

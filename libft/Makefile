@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/03/14 11:19:07 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/05 15:27:57 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,8 @@ FILES = ft_calloc.c \
 		ft_putptr.c \
 		ft_putstr_count.c \
 		ft_unsigned_int.c \
+		ft_ms_strjoin.c \
+		get_next_line.c \
 		ft_gnl_strjoin.c
 
 OBJ = $(FILES:.c=.o)

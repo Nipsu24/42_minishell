@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 09:21:38 by mmeier            #+#    #+#             */
-/*   Updated: 2024/03/06 15:20:53 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/05 15:30:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_subcount(char const *s, char c)
 	return (count);
 }
 
-static char	**ft_free(char **result, size_t j)
+static char	**ft_free_split(char **result, size_t j)
 {
 	while (j > 0)
 	{
@@ -63,7 +63,7 @@ static char	**ft_writewords(char const *s, char c, char **strings)
 				i++;
 			strings[j] = ft_substr(s, start, (i - start));
 			if (strings[j] == 0)
-				return (ft_free(strings, j));
+				return (ft_free_split(strings, j));
 			j++;
 		}
 		else
