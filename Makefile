@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/07/31 13:00:39 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/05 09:43:07 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ FILES = main.c \
 		free/free_a.c \
 		free/free_b.c \
 		execution/exec.c \
+		execution/redirects.c \
 		signal/signals.c \
 		builtins/env.c \
 #		builtins/builtin_utils.c \
