@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/05 09:54:36 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/05 10:17:23 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,14 @@ int	exec_proc(t_data *data)
 				data->i++;
 			}
 		}
-		if (execve(data->proc[data->j].path,
-				data->proc[data->j].cmd, data->temp_env) == -1)
-			printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+		if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to builint part line below
+			printf("BUILTIN PART\n");
+		else
+		{
+			if (execve(data->proc[data->j].path,
+					data->proc[data->j].cmd, data->temp_env) == -1)
+				printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+		}
 	}
 	waitpid(pid, NULL, 0);
 	dup2(data->save_stdout, STDOUT_FILENO);
