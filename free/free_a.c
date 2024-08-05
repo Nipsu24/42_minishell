@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   free_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/02 16:25:57 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/05 09:37:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Frees relevant parts of the main struct.*/
-void	free_all(t_data *data)
+void	free_all(t_data *data, int exit_flag)
 {
 	int	j;
 
@@ -32,6 +32,9 @@ void	free_all(t_data *data)
 	}
 	if (data->proc_nbr)
 		free_proc_structs(data);
+	if (exit_flag == 1)
+		exit(1);
+	return ;
 }
 
 /*Frees all proc_structs in order.*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/03 13:43:42 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/05 10:02:27 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int	parsing(t_data *data)
   In case 'env' is typed to shell, env. variables are printed to the terminal, 
   otherwise command that user inputs is printed. The 'add_history' function 
   enables visibility of previous inserted commands (using keyboards "arrow up" 
-  after a command has been typed)*/
+  after a command has been typed). err_flag prevents going into further
+  functions if not valid input is inserted (flag set to 1). In case any function
+  in err_flag if statement fails, data is freed and exited (1), except when
+  exec_proc fails (0/void)*/
 static int	ft_input(t_data *data)
 {
 	char		*environment;
@@ -67,6 +70,7 @@ static int	ft_input(t_data *data)
 	environment = "env";
 	while (1)
 	{
+		data->err_flag = 0;
 		setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
@@ -78,29 +82,23 @@ static int	ft_input(t_data *data)
 			add_history(data->input);
 		if (not_valid_input(data->input))
 		{
-			free_all(data);
-			continue ;
+			free_str(&data->input);
+			data->err_flag = 1;
 		}
-		if (lexer(data))
+		if (data->err_flag == 0)
 		{
-			free_all(data);
-			continue ;
+			if (lexer(data))
+				free_all(data, 1);
+			if (ft_strncmp(data->input, environment, 3) == 0)
+				print_env(data->temp_env);
+			// else
+			// 	printf("You entered %s\n", data->input);
+			if (parsing(data))
+				free_all(data, 1);
+			if (exec_proc(data))
+				free_all(data, 0);
+			free_all(data, 0); //needed here?
 		}
-		if (ft_strncmp(data->input, environment, 3) == 0)
-			print_env(data->temp_env);
-		// else
-		// 	printf("You entered %s\n", data->input);
-		if (parsing(data))
-		{
-			free_all(data);
-			continue ;
-		}
-		if (exec_proc(data))
-		{
-			free_all(data);
-			continue ;
-		}
-		free_all(data);
 	}
 	return (0);
 }
@@ -115,6 +113,7 @@ void	init_data(t_data *data)
 	data->count_cmd = 0;
 	data->count_other = 0;
 	data->proc_nbr = 0;
+	data->err_flag = 0;
 	data->path_arr = NULL;
 	data->save_stdout = 0;
 	data->save_stdin = 0;

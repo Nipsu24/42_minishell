@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/03 13:42:55 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/05 09:44:47 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_data
 	int			j;
 	int			k;
 	int			l;
+	int			err_flag;
 	char		**path_arr;
 	int			save_stdout;
 	int			save_stdin;
@@ -78,7 +79,7 @@ typedef struct s_data
 }				t_data;
 
 /*free functions*/
-void	free_all(t_data *data);
+void	free_all(t_data *data, int exit_flag);
 char	**free_arr_rev(char **av, int j);
 char	**free_arr(char **arr);
 void	free_arr_void(char **arr);
@@ -109,6 +110,9 @@ int		init_path(t_data *data);
 
 /*execution*/
 int		exec_proc(t_data *data);
+int		redout_loop(t_data *data);
+int		appendout_loop(t_data *data);
+int		redin_loop(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);

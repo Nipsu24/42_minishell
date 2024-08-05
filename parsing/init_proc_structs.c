@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_proc_structs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/03 11:07:47 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/05 09:57:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static int	alloc_fds(t_data *data)
 		data->proc[data->j].fd = NULL;
 		return (0);
 	}
-	data->proc[data->j].fd = malloc (sizeof(int) * (data->proc[data->j].fd_amount));
+	data->proc[data->j].fd
+		= malloc (sizeof(int) * (data->proc[data->j].fd_amount));
 	if (!data->proc[data->j].fd)
 	{
 		free(data->proc[data->j].cmd);
@@ -90,10 +91,12 @@ static int	alloc_proc_structs(t_data *data)
 	while (data->j < data->proc_nbr)
 	{
 		count_arrays(data, &data->i);
-		data->proc[data->j].cmd = malloc ((data->count_cmd + 1) * sizeof(char *));
+		data->proc[data->j].cmd
+			= malloc ((data->count_cmd + 1) * sizeof(char *));
 		if (!data->proc[data->j].cmd)
 			return (1);
-		data->proc[data->j].redir = malloc ((data->count_other + 1) * sizeof(char *));
+		data->proc[data->j].redir
+			= malloc ((data->count_other + 1) * sizeof(char *));
 		if (!data->proc[data->j].redir)
 			return (1);
 		data->proc[data->j].fd_amount = data->count_other / 2;
