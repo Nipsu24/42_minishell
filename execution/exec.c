@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/05 16:53:05 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/06 09:56:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	exec_proc(t_data *data)
 	data->save_stdin = dup(STDIN_FILENO);
 	if (pid == 0)
 	{
-		printf("TEST1");
 		if (data->proc[data->j].redir && data->proc[data->j].redir[data->l])
 		{
-			printf("TEST1");
 			while (data->proc[data->j].redir[data->l])
 			{
 				if (ft_heredoc(data))

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 16:54:26 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/06 11:48:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,9 @@ static int	ft_input(t_data *data)
 			// 	printf("You entered %s\n", data->input);
 			if (parsing(data))
 				free_all(data, 1);
-			if (exec_proc(data))
-				free_all(data, 0);
+			count_heres(data);
+			// if (exec_proc(data))
+			// 	free_all(data, 0);
 			free_all(data, 0); //needed here?
 		}
 	}
@@ -117,6 +118,7 @@ void	init_data(t_data *data)
 	data->path_arr = NULL;
 	data->save_stdout = 0;
 	data->save_stdin = 0;
+	data->temp_here = NULL;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
