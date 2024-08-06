@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:15:44 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/05 13:20:19 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:42:34 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@ static bool	is_newline(const char *str)
 	return (true);
 }
 
-int	echo(char **args)
+/* Prints the arguments given to the echo command. If the -n flag is given,
+the newline character is not printed. */
+void	print_echo(char **args)
 {
-	int	i;
-	int	n_flag;
+	bool	n_flag;
+	int		i;
 
+	n_flag = false;
 	i = 1;
-	n_flag = 0;
 	if (args[1] && is_newline(args[1]))
 	{
-		n_flag = 1;
+		n_flag = true;
 		i++;
 	}
 	while (args[i])
@@ -50,5 +52,18 @@ int	echo(char **args)
 	}
 	if (!n_flag)
 		ft_printf("\n");
+}
+
+/* The echo command. */
+int	echo(char **args)
+{
+	if (!args[1])
+	{
+		ft_printf("\n");
+		free_str(args);
+		return (0);
+	}
+	print_echo(args);
+	free_str(args);
 	return (0);
 }
