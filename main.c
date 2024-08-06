@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/06 11:48:31 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/06 14:26:51 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ static int	ft_input(t_data *data)
 			// 	printf("You entered %s\n", data->input);
 			if (parsing(data))
 				free_all(data, 1);
-			count_heres(data);
-			// if (exec_proc(data))
-			// 	free_all(data, 0);
+			alloc_here_tmp(data);
+			if (exec_proc(data))
+				free_all(data, 0);
 			free_all(data, 0); //needed here?
 		}
 	}
