@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 15:34:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/06 11:48:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_data
 	char		**path_arr;
 	int			save_stdout;
 	int			save_stdin;
+	char		**temp_here;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -115,6 +116,7 @@ int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
 int		redin_loop(t_data *data);
 int		ft_heredoc(t_data *data);
+int		count_heres(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);
