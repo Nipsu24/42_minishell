@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/06 11:48:07 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/06 14:04:19 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
 int		redin_loop(t_data *data);
 int		ft_heredoc(t_data *data);
-int		count_heres(t_data *data);
+int		alloc_here_tmp(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);
