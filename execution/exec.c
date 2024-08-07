@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/07 11:04:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/07 15:45:00 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,29 @@ int	exec_proc(t_data *data)
 				data->l++;
 			}
 		}
-		// if (data->proc[data->j].redir && data->proc[data->j].redir[data->i])
-		// {
-		// 	while (data->proc[data->j].redir[data->i])
-		// 	{
-		// 		if (redout_loop(data) || redin_loop(data)
-		// 			|| appendout_loop(data))
-		// 			return (1);
-		// 		data->i++;
-		// 	}
-		// }
-		// if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to builint part line below
-		// 	printf("BUILTIN PART\n");
-		// else
-		// {
-		// 	if (execve(data->proc[data->j].path,
-		// 			data->proc[data->j].cmd, data->temp_env) == -1)
-		// 		printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-		// }
+		if (data->proc[data->j].redir && data->proc[data->j].redir[data->i])
+		{
+			while (data->proc[data->j].redir[data->i])
+			{
+				if (redout_loop(data) || redin_loop(data)
+					|| appendout_loop(data))
+					return (1);
+				data->i++;
+			}
+		}
+		if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to builint part line below
+			printf("BUILTIN PART\n");
+		else
+		{
+			if (execve(data->proc[data->j].path,
+					data->proc[data->j].cmd, data->temp_env) == -1)
+				printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+		}
 	}
 	waitpid(pid, NULL, 0);
 	dup2(data->save_stdout, STDOUT_FILENO);
 	dup2(data->save_stdin, STDIN_FILENO);
+	//heredoc files maybe to be deleted here (also need for rename file to make them invisible)
 	close (data->save_stdout);
 	close (data->save_stdin);
 	return (0);

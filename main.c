@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/07 11:47:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/07 15:43:56 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,14 @@ void	init_data(t_data *data)
 	data->save_stdout = 0;
 	data->save_stdin = 0;
 	data->temp_here = NULL;
+	data->nl = "\n";
+	data->return_val = 0;
+	data->tmp = NULL;
+	data->j = 0;
+	data->i = 0;
+	data->k = 0;
+	data->l = 0;
+	data->m = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 

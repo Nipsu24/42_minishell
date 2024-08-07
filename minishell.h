@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/07 11:02:53 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/07 14:05:21 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ typedef struct s_data
 	int			save_stdout;
 	int			save_stdin;
 	char		**temp_here;
+	char		*nl;
+	int			return_val;
+	char 		*tmp;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
