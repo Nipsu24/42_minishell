@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 09:37:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/07 15:25:27 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	free_all(t_data *data, int exit_flag)
 	}
 	if (data->proc_nbr)
 		free_proc_structs(data);
+	if (data->temp_here)
+		free_arr(data->temp_here);
 	if (exit_flag == 1)
 		exit(1);
 	return ;
@@ -55,6 +57,8 @@ void	free_proc_structs(t_data *data)
 			free_str(&data->proc[j].path);
 		if (data->proc[j].fd != NULL)
 			free_int_arr(&data->proc[j].fd);
+		if (data->proc[j].here_tmp != NULL)
+			free_str(&data->proc[j].here_tmp);
 		j++;
 	}
 }
