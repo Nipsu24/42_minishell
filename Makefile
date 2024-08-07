@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/05 14:11:47 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/07 11:20:59 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ FILES = main.c \
 		execution/exec.c \
 		execution/redirects.c \
 		execution/heredoc.c \
+		execution/alloc_file_name.c \
 		signal/signals.c \
 		builtins/env.c \
 #		builtins/builtin_utils.c \
