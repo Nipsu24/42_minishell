@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/06 14:04:19 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/07 11:02:53 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_data
 	int			j;
 	int			k;
 	int			l;
+	int			m;
 	int			err_flag;
 	char		**path_arr;
 	int			save_stdout;

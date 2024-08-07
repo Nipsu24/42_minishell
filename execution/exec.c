@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/06 09:56:58 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/07 11:04:47 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	exec_proc(t_data *data)
 	data->i = 0;
 	data->k = 0;
 	data->l = 0;
+	data->m = 0;
 	data->save_stdout = dup(STDOUT_FILENO);
 	data->save_stdin = dup(STDIN_FILENO);
 	if (pid == 0)
