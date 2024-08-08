@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/07 15:43:56 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:24:49 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ int	lexer(t_data *data)
 
 /*Allocates sufficient memory for process structs and
   populats them with respective data. Also creates command
-  path for later execution part.*/
+  path for later execution part and filenames for heredocs.*/
 int	parsing(t_data *data)
 {
 	if (init_proc_structs(data))
 		return (1);
 	if (init_path(data))
+		return (1);
+	if (alloc_here_filename(data))
 		return (1);
 	return (0);
 }
@@ -95,13 +97,21 @@ static int	ft_input(t_data *data)
 			// 	printf("You entered %s\n", data->input);
 			if (parsing(data))
 				free_all(data, 1);
-			alloc_here_tmp(data);
 			if (exec_proc(data))
 				free_all(data, 0);
 			free_all(data, 0); //needed here?
 		}
 	}
 	return (0);
+}
+
+void	init_index(t_data *data)
+{
+	data->j = 0;
+	data->i = 0;
+	data->k = 0;
+	data->l = 0;
+	data->m = 0;
 }
 
 /*Initialise all relevant data of the main data struct*/
@@ -122,11 +132,7 @@ void	init_data(t_data *data)
 	data->nl = "\n";
 	data->return_val = 0;
 	data->tmp = NULL;
-	data->j = 0;
-	data->i = 0;
-	data->k = 0;
-	data->l = 0;
-	data->m = 0;
+	init_index(data);
 }
 
 /*String array 'env' holds by default environment variables of the system. 

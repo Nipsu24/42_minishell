@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_file_name.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/07 15:45:40 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:23:00 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	count_heres(t_data *data)
 	return (count);
 }
 
-/*Helper function of alloc_here_tmp, joins prefix, file number
+/*Helper function of alloc_here_filename, joins prefix, file number
   and suffix for filename creation into 2d array.*/
 static int	join_file_name(t_data *data, char *prefix,
 									char *suffix, int amount_files)
@@ -80,18 +80,16 @@ static int	join_file_name(t_data *data, char *prefix,
   allocates memory for the respective filenames in a 2d array.
   Structure of filenames is always 
   prefix -> file_nbr(created with itoa) -> suffix.*/
-int	alloc_here_tmp(t_data *data)
+int	alloc_here_filename(t_data *data)
 {
 	int		amount_files;
 	char	*prefix;
 	char	*suffix;
-	int		j;
-	int		i;
+	// int		j;
 
 	prefix = "file_";
 	suffix = ".txt";
-	j = 0;
-	i = 0;
+	// j = 0;
 	amount_files = count_heres(data);
 	if (amount_files > 0)
 	{
