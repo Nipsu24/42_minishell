@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_proc_structs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 14:07:17 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/08 12:12:34 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ static int	count_pipes(t_data *data)
   for cmd array and redir array.*/
 static void	count_arrays(t_data *data, int *i)
 {
-	while (data->token_list[*i].type != PIPE && data->tokens[*i])
-	{
-		if (data->token_list[*i].type == COMMAND)
-			data->count_cmd++;
-		if (data->token_list[*i].type > COMMAND
-			&& data->token_list[*i].type <= RED_OP)
-			data->count_other++;
-		(*i)++;
-	}
+	// if (data->token_list[*i].type && data->tokens[*i]) // line added
+	// {
+		while (data->token_list[*i].type != PIPE && data->tokens[*i])
+		{
+			if (data->token_list[*i].type == COMMAND)
+				data->count_cmd++;
+			if (data->token_list[*i].type > COMMAND
+				&& data->token_list[*i].type <= RED_OP)
+				data->count_other++;
+			(*i)++;
+		}
+	// }
 }
 
 /*Allocates memory for the needed fds in each process.*/
@@ -65,10 +68,16 @@ static int	alloc_fds(t_data *data)
 		= malloc (sizeof(int) * (data->proc[data->j].fd_amount));
 	if (!data->proc[data->j].fd)
 	{
-		free(data->proc[data->j].cmd);
-		data->proc[data->j].cmd = NULL;
-		free(data->proc[data->j].redir);
-		data->proc[data->j].redir = NULL;
+		if (data->proc[data->j].cmd)
+		{
+			free(data->proc[data->j].cmd);
+			data->proc[data->j].cmd = NULL;
+		}
+		if (data->proc[data->j].redir)
+		{
+			free(data->proc[data->j].redir);
+			data->proc[data->j].redir = NULL;
+		}
 		return (1);
 	}
 	while (i < (data->proc[data->j].fd_amount))
@@ -127,10 +136,13 @@ static int	fill_data(t_data *data)
 	if (data->token_list[data->i].type > COMMAND
 		&& data->token_list[data->i].type <= RED_OP)
 	{
-		data->proc[data->j].redir[data->l] = ft_strdup(data->tokens[data->i]);
-		if (!data->proc[data->j].redir[data->l])
-			return (free_proc_arr_rev(data));
-		data->l++;
+		if (data->tokens[data->i])
+		{
+			data->proc[data->j].redir[data->l] = ft_strdup(data->tokens[data->i]);
+			if (!data->proc[data->j].redir[data->l])
+				return (free_proc_arr_rev(data));
+			data->l++;
+		}
 	}
 	return (0);
 }

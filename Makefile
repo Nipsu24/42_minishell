@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
+#    By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/07 11:20:59 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/08 13:14:39 by mariusmeier      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -g -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 SRC_DIR = ./
@@ -31,12 +31,13 @@ FILES = main.c \
 		lexing/remove_quotes.c \
 		parsing/init_proc_structs.c \
 		parsing/path.c \
+		parsing/alloc_file_name.c \
 		free/free_a.c \
 		free/free_b.c \
 		execution/exec.c \
 		execution/redirects.c \
-		execution/heredoc.c \
-		execution/alloc_file_name.c \
+		execution/heredoc_a.c \
+		execution/heredoc_b.c \
 		signal/signals.c \
 		builtins/env.c \
 #		builtins/builtin_utils.c \

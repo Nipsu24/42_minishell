@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/07 14:05:21 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:33:38 by mariusmeier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int		remove_quotes(t_data *data);
 int		parsing(t_data *data);
 int		init_proc_structs(t_data *data);
 int		init_path(t_data *data);
+int		alloc_here_filename(t_data *data);
 
 /*execution*/
 int		exec_proc(t_data *data);
@@ -120,7 +121,7 @@ int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
 int		redin_loop(t_data *data);
 int		ft_heredoc(t_data *data);
-int		alloc_here_tmp(t_data *data);
+int		file_create_n_write(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);
@@ -133,5 +134,6 @@ void	setup_signal(void);
 
 /*further functions*/
 void	init_data(t_data *data);
+void	init_index(t_data *data);
 
 #endif
