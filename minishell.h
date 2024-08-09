@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/08 10:33:38 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/09 16:10:23 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,17 @@ int		parsing(t_data *data);
 int		init_proc_structs(t_data *data);
 int		init_path(t_data *data);
 int		alloc_here_filename(t_data *data);
+int		create_heredocs(t_data *data);
 
 /*execution*/
 int		exec_proc(t_data *data);
 int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
 int		redin_loop(t_data *data);
-int		ft_heredoc(t_data *data);
-int		file_create_n_write(t_data *data);
+int		here_redirect(t_data *data);
+int		no_other_redout(t_data *data);
+int		no_other_redin(t_data *data);
+int		no_other_heredoc(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);
