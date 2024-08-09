@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_file_name.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/08 10:23:00 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/09 16:26:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,36 +72,30 @@ static int	join_file_name(t_data *data, char *prefix,
 		}
 		j++;
 	}
-	data->temp_here[j] = 0;
+	data->temp_here[j] = NULL;
 	return (0);
 }
 
-/*Checks amount of needed temporary files for the heredocs and
-  allocates memory for the respective filenames in a 2d array.
-  Structure of filenames is always 
+/*Checks amount of needed temporary hidden files for the 
+  heredocs and allocates memory for the respective filenames
+  in a 2d array. Structure of filenames is always 
   prefix -> file_nbr(created with itoa) -> suffix.*/
 int	alloc_here_filename(t_data *data)
 {
 	int		amount_files;
 	char	*prefix;
 	char	*suffix;
-	// int		j;
 
-	prefix = "file_";
+	prefix = ".file_";
 	suffix = ".txt";
-	// j = 0;
 	amount_files = count_heres(data);
 	if (amount_files > 0)
 	{
-		data->temp_here = malloc (sizeof(char *) * amount_files + 1);
+		data->temp_here = malloc (sizeof(char *) * (amount_files + 1));
 		if (!data->temp_here)
 			return (1);
 		if (join_file_name(data, prefix, suffix, amount_files))
 			return (1);
 	}
-	// j = -1;
-	// printf("TEMP_FILES\n");
-	// while (j++, data->temp_here[j])
-	// 	printf("%s\n", data->temp_here[j]);
 	return (0);
 }

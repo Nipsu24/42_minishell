@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_a.c                                        :+:      :+:    :+:   */
+/*   create_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/08 14:17:22 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/09 16:18:22 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,35 @@ static int	dup_for_empty_here_tmp(t_data *data)
 	return (0);
 }
 
+/*Checks first, if no further heredoc is detected in the process.
+  If no further detected, creates temporary heredoc file by giving
+  the previously created filename (from alloc_here_filename function)
+  to the 'open' function as argument. Then writes content of here_tmp 
+  string into file and closes fd. Indices k and m are incremented for
+  potential next loop (if heredocs exist in other processes).*/
+static int	file_create_n_write(t_data *data)
+{
+	if (no_other_heredoc(data))
+	{
+		data->proc[data->j].fd[data->k]
+			= open(data->temp_here[data->m],
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		write(data->proc[data->j].fd[data->k],
+			data->proc[data->j].here_tmp,
+			ft_strlen(data->proc[data->j].here_tmp));
+		close (data->proc[data->j].fd[data->k]);
+		free_str(&data->tmp);
+		data->k++;
+		data->m++;
+	}
+	else
+	{
+		free_str(&data->tmp);
+		free_str(&data->proc[data->j].here_tmp);
+	}
+	return (0);
+}
+
 /*Helper function of ft_heredoc, joins new line character
   at end of here_tmp string and checks if the tmp string which
   contains the read line matches with the heredoc delimiter.
@@ -44,7 +73,6 @@ static int	eof_detected(t_data *data)
 	if (ft_strncmp(data->tmp, data->proc[data->j].redir[data->l + 1],
 			ft_strlen(data->tmp)) == 0)
 	{
-		//printf("HERE TMP:\n%s", data->proc[data->j].here_tmp);
 		free_str(&data->tmp);
 		return (-1);
 	}
@@ -62,7 +90,7 @@ static int	eof_detected(t_data *data)
 }
 
 /*Handles heredoc creation within a process.*/
-int	ft_heredoc(t_data *data)
+static int	ft_heredoc(t_data *data)
 {
 	if (ft_strncmp(data->proc[data->j].redir[data->l], "<<", 2) == 0)
 	{
@@ -88,6 +116,21 @@ int	ft_heredoc(t_data *data)
 		}
 		if (file_create_n_write(data))
 			return (1);
+	}
+	return (0);
+}
+
+/*Main function for creating heredocs.*/
+int	create_heredocs(t_data *data)
+{
+	if (data->proc[data->j].redir && data->proc[data->j].redir[data->l])
+	{
+		while (data->proc[data->j].redir[data->l])
+		{
+			if (ft_heredoc(data))
+				return (1);
+			data->l++;
+		}
 	}
 	return (0);
 }

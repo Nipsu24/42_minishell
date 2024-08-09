@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/08 10:24:49 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/09 15:42:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int	parsing(t_data *data)
 		return (1);
 	if (alloc_here_filename(data))
 		return (1);
+	init_index(data);
+	if (create_heredocs(data))
+		return (1);
 	return (0);
 }
 
@@ -99,7 +102,7 @@ static int	ft_input(t_data *data)
 				free_all(data, 1);
 			if (exec_proc(data))
 				free_all(data, 0);
-			free_all(data, 0); //needed here?
+			free_all(data, 0);
 		}
 	}
 	return (0);
