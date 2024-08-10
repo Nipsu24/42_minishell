@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 15:42:41 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/10 19:03:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	init_data(t_data *data)
 	data->nl = "\n";
 	data->return_val = 0;
 	data->tmp = NULL;
+	data->pid_arr = NULL;
+	data->fd_arr = NULL;
 	init_index(data);
 }
 
