@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 16:10:23 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/10 19:18:01 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_data
 	char		*nl;
 	int			return_val;
 	char 		*tmp;
+	int			*pid_arr;
+	int			**fd_arr;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
