@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 16:18:22 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/11 11:26:51 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ static int	dup_for_empty_here_tmp(t_data *data)
   If no further detected, creates temporary heredoc file by giving
   the previously created filename (from alloc_here_filename function)
   to the 'open' function as argument. Then writes content of here_tmp 
-  string into file and closes fd. Indices k and m are incremented for
-  potential next loop (if heredocs exist in other processes).*/
+  string into file and closes fd. Index k is incremented for
+  potential next loop (if further files for other redirects need to
+  be set up).*/
 static int	file_create_n_write(t_data *data)
 {
 	if (no_other_heredoc(data))
 	{
 		data->proc[data->j].fd[data->k]
-			= open(data->temp_here[data->m],
+			= open(data->proc[data->j].here_name,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		write(data->proc[data->j].fd[data->k],
 			data->proc[data->j].here_tmp,
@@ -47,7 +48,6 @@ static int	file_create_n_write(t_data *data)
 		close (data->proc[data->j].fd[data->k]);
 		free_str(&data->tmp);
 		data->k++;
-		data->m++;
 	}
 	else
 	{

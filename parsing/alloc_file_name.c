@@ -6,96 +6,73 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 16:26:41 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/11 11:25:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Checks occurence of heredocs in each process for determining how
-  many temporary files are need to be created. Breaks out of loop 
-  of each process count as soon as one heredoc is encountered
+/*Checks occurence of heredoc in avprocess for determining if
+  a temporary files needs to be created. Breaks out of loop 
+  as soon as one heredoc is encountered in the process
   as for each process only maximum one heredoc file needs to be
-  set up*/
-static int	count_heres(t_data *data)
+  set up.*/
+
+static int	here_in_prc(t_data *data)
 {
-	int	j;
 	int	l;
 	int	count;
-	int	start_count;
 
-	j = 0;
 	l = 0;
 	count = 0;
-	start_count = 0;
-	while (j < data->proc_nbr)
+	while (data->proc[data->j].redir[l])
 	{
-		l = 0;
-		start_count = count;
-		while (data->proc[j].redir[l])
+		if (ft_strncmp(data->proc[data->j].redir[l], "<<", 2) == 0)
 		{
-			if (ft_strncmp(data->proc[j].redir[l], "<<", 2) == 0)
-				count++;
-			if (start_count < count)
-				break ;
-			l++;
+			count++;
+			break ;
 		}
-		j++;
+		l++;
 	}
 	return (count);
 }
 
 /*Helper function of alloc_here_filename, joins prefix, file number
-  and suffix for filename creation into 2d array.*/
-static int	join_file_name(t_data *data, char *prefix,
-									char *suffix, int amount_files)
+  and suffix into one string for filename creation.*/
+static int	join_file_name(t_data *data, char *prefix, char *suffix)
 {
-	int		j;
-	int		i;
-
-	j = 0;
-	i = 0;
-	while (j < amount_files)
-	{
-		data->temp_here[j] = ft_ms_strjoin_rev_free(prefix, ft_itoa(i));
-		if (!data->temp_here[j])
-		{
-			free_arr_rev(data->temp_here, j);
-			return (1);
-		}
-		i++;
-		data->temp_here[j] = ft_ms_strjoin(data->temp_here[j], suffix);
-		if (!data->temp_env[j])
-		{
-			free_arr_rev(data->temp_here, j);
-			return (1);
-		}
-		j++;
-	}
-	data->temp_here[j] = NULL;
+	data->proc[data->j].here_name = ft_ms_strjoin_rev_free(prefix, ft_itoa(data->i));
+	if (!data->proc[data->j].here_name)
+		return (1);
+	data->i++;
+	data->proc[data->j].here_name = ft_ms_strjoin(data->proc[data->j].here_name, suffix);
+	if (!data->proc[data->j].here_name)
+		return (1);
+	printf("%s\n", data->proc[data->j].here_name);
 	return (0);
 }
 
-/*Checks amount of needed temporary hidden files for the 
-  heredocs and allocates memory for the respective filenames
-  in a 2d array. Structure of filenames is always 
+/*Checks if a temporary hidden file (heredoc) is needed within
+  a process, allocates memory for the respective filename string
+  and populates string. Structure of filenames is always 
   prefix -> file_nbr(created with itoa) -> suffix.*/
 int	alloc_here_filename(t_data *data)
 {
-	int		amount_files;
 	char	*prefix;
 	char	*suffix;
-
+	
+	data->j = 0;
+	data->i = 0;
 	prefix = ".file_";
 	suffix = ".txt";
-	amount_files = count_heres(data);
-	if (amount_files > 0)
+	while (data->j < data->proc_nbr)
 	{
-		data->temp_here = malloc (sizeof(char *) * (amount_files + 1));
-		if (!data->temp_here)
-			return (1);
-		if (join_file_name(data, prefix, suffix, amount_files))
-			return (1);
+		if (here_in_prc(data))
+		{
+			if (join_file_name(data, prefix, suffix))
+				return (1);
+		}
+		data->j++;
 	}
 	return (0);
 }
