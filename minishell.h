@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 11:29:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/11 12:53:35 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ int		here_redirect(t_data *data);
 int		no_other_redout(t_data *data);
 int		no_other_redin(t_data *data);
 int		no_other_heredoc(t_data *data);
+void	delete_heredocs(t_data *data);
+int		init_pid_arr(t_data *data);
+int		init_fd_arr(t_data *data);
 
 /*built-ins*/
 void	print_env(char **env);
