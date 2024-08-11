@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/10 19:18:01 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/11 11:29:20 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct s_token
   cmd contains command and its arguments.
   redir contains all redirect operators (<, >, <<, >>) of a
   pipe. Every operator is always followd by the filename as 
-  the next string in the array*/
+  the next string in the array. here_name is name of temporary
+  heredoc file, here_tmp is content of heredoc file.*/
 typedef struct s_prc
 {
 	char				**cmd;
@@ -55,6 +56,7 @@ typedef struct s_prc
 	char				*path;
 	int					*fd;
 	int					fd_amount;
+	char				*here_name;
 	char				*here_tmp;
 }				t_prc;
 
@@ -76,7 +78,6 @@ typedef struct s_data
 	char		**path_arr;
 	int			save_stdout;
 	int			save_stdin;
-	char		**temp_here;
 	char		*nl;
 	int			return_val;
 	char 		*tmp;

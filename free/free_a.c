@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 16:19:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/11 10:02:22 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	free_proc_structs(t_data *data)
 			free_int_arr(&data->proc[j].fd);
 		if (data->proc[j].here_tmp != NULL)
 			free_str(&data->proc[j].here_tmp);
+		if (data->proc[j].here_name != NULL)
+			free_str(&data->proc[j].here_name);
 		j++;
 	}
 }
@@ -97,6 +99,8 @@ int	free_proc_arr_rev(t_data *data)
 		}
 		if (data->proc[data->j].fd != NULL)
 			free_int_arr(&data->proc[data->j].fd);
+		if (data->proc[data->j].here_name != NULL)
+			free_str(&data->proc[data->j].here_name);
 		data->j--;
 	}
 	return (1);

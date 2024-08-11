@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 16:20:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/11 09:24:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ static int	fill_proc_structs(t_data *data)
 		data->proc[data->j].redir[data->l] = NULL;
 		data->proc[data->j].path = NULL;
 		data->proc[data->j].here_tmp = NULL;
+		data->proc[data->j].here_name = NULL;
 		if (data->token_list[data->i].type == PIPE)
 		{
 			data->i++;
