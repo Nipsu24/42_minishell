@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/09 16:20:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 11:05:18 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
   of env variable in ft_copy_env function*/
 char	**free_arr_rev(char **av, int i)
 {
-	if (av[i] == NULL || av == NULL)
+	if (av == NULL)
 		return (NULL);
 	while (i > 0)
 	{
@@ -84,6 +84,44 @@ void	free_int_arr(int **arr)
 {
 	if (*arr == NULL)
 		return ;
+	free(*arr);
+	*arr = NULL;
+}
+
+/*Frees 2d int array from the start.*/
+void	free_2d_int_arr(t_data *data, int ***arr)
+{
+	int n;
+	int	j;
+	
+	j = 0;
+	n = data->proc_nbr -1;
+	while (j < n)
+	{
+		if ((*arr)[j] != NULL)
+		{
+			free((*arr)[j]);
+			*arr[j] = NULL;
+		}
+		j++;
+	}
+	free(*arr);
+	arr = NULL;
+}
+
+/*Frees 2d int array in reversed order in case of malloc failure.*/
+void	free_2d_int_arr_rev(int ***arr, int j)
+{
+	if (*arr == NULL)
+		return ;
+	while (j > 0)
+	{
+		{
+			free((*arr)[j - 1]);
+			(*arr)[j -1] = NULL;
+		}
+		j--;
+	}
 	free(*arr);
 	*arr = NULL;
 }

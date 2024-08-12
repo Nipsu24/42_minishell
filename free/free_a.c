@@ -6,23 +6,21 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 10:02:22 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 11:04:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Frees relevant parts of the main struct.*/
+/*Exit_flag 1: failure; Exit_flag 2: success.
+  Frees relevant parts of the main struct.*/
 void	free_all(t_data *data, int exit_flag)
 {
 	int	j;
 
 	j = 0;
 	if (data->input)
-	{
-		free(data->input);
-		data->input = NULL;
-	}
+		free_str(&data->input);
 	if (data->tokens && data->tokens[j])
 		free_arr_void(data->tokens);
 	if (data->token_list)
@@ -32,8 +30,14 @@ void	free_all(t_data *data, int exit_flag)
 	}
 	if (data->proc_nbr)
 		free_proc_structs(data);
+	if (data->pid_arr)
+		free_int_arr(&data->pid_arr);
+	if (data->fd_arr)
+		free_2d_int_arr(data, &data->fd_arr);
 	if (exit_flag == 1)
-		exit(1);
+		exit(EXIT_FAILURE);
+	if (exit_flag == 2)
+		exit(EXIT_SUCCESS);
 	return ;
 }
 

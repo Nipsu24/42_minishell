@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:48:28 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 12:53:41 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 11:05:51 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ int	init_fd_arr(t_data *data)
 	data->fd_arr = malloc (sizeof(int *) * (data->proc_nbr - 1));
 	if (!data->fd_arr)
 		return (1);
-	while (j < data->proc_nbr)
+	while (j < data->proc_nbr -1)
 	{
 		data->fd_arr[j] = malloc (sizeof(int) * 2);
 		if (!data->fd_arr[j])
-			return (1); // free reverse to put here
+		{
+			free_2d_int_arr_rev(&data->fd_arr, j);
+			return (1);
+		}
 		data->fd_arr[j][0] = 0;
 		data->fd_arr[j][1] = 1;
 		j++;

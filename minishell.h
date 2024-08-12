@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 12:53:35 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 11:06:02 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int		free_proc_arr_rev(t_data *data);
 void	free_proc_structs(t_data *data);
 void	free_str(char **str);
 void	free_int_arr(int **arr);
+void	free_2d_int_arr(t_data *data, int ***arr);
+void	free_2d_int_arr_rev(int ***arr, int j);
 
 /*Error check and utils*/
 int		not_valid_input(char *str);

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 11:25:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 11:07:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	join_file_name(t_data *data, char *prefix, char *suffix)
 	data->proc[data->j].here_name = ft_ms_strjoin(data->proc[data->j].here_name, suffix);
 	if (!data->proc[data->j].here_name)
 		return (1);
-	printf("%s\n", data->proc[data->j].here_name);
 	return (0);
 }
 

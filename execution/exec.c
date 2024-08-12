@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/11 12:50:08 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 10:04:50 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,27 +75,27 @@ int	exec_proc(t_data *data)
 				exit(EXIT_FAILURE);
 			if (redir_exec(data))
 				exit(EXIT_FAILURE);
+			if (pipe_flag == 1 && data->j == 0)
+				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+			if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
+			{
+				dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO);
+				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+			}
+			if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
+				dup2(data->fd_arr[data->j -1][0], STDIN_FILENO);
+			while (n < data->j)
+			{
+				close(data->fd_arr[n][0]);
+				close(data->fd_arr[n][1]);
+				n++;
+			}
 			if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to builint part line below
 				printf("BUILTIN PART\n");
 			else
 			{
-				if (pipe_flag == 1 && data->j == 0)
-					dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
-				if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
-				{
-					dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO);
-					dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
-				}
-				if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
-					dup2(data->fd_arr[data->j -1][0], STDIN_FILENO);
-				while (n < data->j)
-				{
-					close(data->fd_arr[n][0]);
-					close(data->fd_arr[n][1]);
-					n++;
-				}
 				if (execve(data->proc[data->j].path,
-						data->proc[data->j].cmd, data->temp_env) == -1)
+					data->proc[data->j].cmd, data->temp_env) == -1)
 				{
 					printf("%s: command not found\n", data->proc[data->j].cmd[0]);
 					exit(EXIT_FAILURE);
