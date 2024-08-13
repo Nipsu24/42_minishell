@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/12 11:05:18 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:39:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,56 @@
 
 /*Frees 2d array in reversed order e.g. for failed copy
   of env variable in ft_copy_env function*/
-char	**free_arr_rev(char **av, int i)
+char	**free_arr_rev(char ***av, int i)
 {
-	if (av == NULL)
+	if (*av == NULL)
 		return (NULL);
 	while (i > 0)
 	{
-		free(av[i - 1]);
-		av[i - 1] = NULL;
+		free((*av)[i - 1]);
+		(*av)[i - 1] = NULL;
 		i--;
 	}
-	free(av);
-	av = NULL;
+	free(*av);
+	*av = NULL;
 	return (NULL);
 }
 
 /*Frees 2d array - char version*/
-char	**free_arr(char **arr)
+char	**free_arr(char ***arr)
 {
 	int	j;
 
 	j = 0;
-	if (arr && arr[j])
+	if (*arr == NULL)
+		return (NULL);
+	while ((*arr)[j])
 	{
-		while (arr[j])
-		{
-			free(arr[j]);
-			arr[j] = NULL;
-			j++;
-		}
-		free(arr);
-		arr = NULL;
+		free((*arr)[j]);
+		(*arr)[j] = NULL;
+		j++;
 	}
+	free(*arr);
+	*arr = NULL;
 	return (NULL);
 }
 
 /*Void version of free_arr*/
-void	free_arr_void(char **arr)
+void	free_arr_void(char ***arr)
 {
 	int	j;
 
 	j = 0;
-	if (arr && arr[j])
+	if (*arr == NULL)
+		return ;
+	while ((*arr)[j])
 	{
-		while (arr[j])
-		{
-			free(arr[j]);
-			arr[j] = NULL;
-			j++;
-		}
-		free(arr);
-		arr = NULL;
+		free((*arr)[j]);
+		(*arr)[j] = NULL;
+		j++;
 	}
+	free(*arr);
+	*arr = NULL;
 }
 
 /*Frees string and sets pointer to NULL. Caller function
@@ -91,9 +89,9 @@ void	free_int_arr(int **arr)
 /*Frees 2d int array from the start.*/
 void	free_2d_int_arr(t_data *data, int ***arr)
 {
-	int n;
+	int	n;
 	int	j;
-	
+
 	j = 0;
 	n = data->proc_nbr -1;
 	while (j < n)

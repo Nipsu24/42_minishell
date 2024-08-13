@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/12 11:04:33 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:15:42 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_all(t_data *data, int exit_flag)
 	if (data->input)
 		free_str(&data->input);
 	if (data->tokens && data->tokens[j])
-		free_arr_void(data->tokens);
+		free_arr_void(&data->tokens);
 	if (data->token_list)
 	{
 		free(data->token_list);
@@ -30,6 +30,8 @@ void	free_all(t_data *data, int exit_flag)
 	}
 	if (data->proc_nbr)
 		free_proc_structs(data);
+	if (data->path_arr)
+		free_arr_void(&data->path_arr);
 	if (data->pid_arr)
 		free_int_arr(&data->pid_arr);
 	if (data->fd_arr)
@@ -51,10 +53,10 @@ void	free_proc_structs(t_data *data)
 	{
 		if (data->proc[j].cmd[0] != NULL
 			|| data->proc[j].cmd != NULL)
-			free_arr_void(data->proc[j].cmd);
+			free_arr_void(&data->proc[j].cmd);
 		if (data->proc[j].redir[0] != NULL
 			|| data->proc[j].redir != NULL)
-			free_arr_void(data->proc[j].redir);
+			free_arr_void(&data->proc[j].redir);
 		if (data->proc[j].path != NULL)
 			free_str(&data->proc[j].path);
 		if (data->proc[j].fd != NULL)
@@ -70,7 +72,7 @@ void	free_proc_structs(t_data *data)
 /*Helper function of free_proc_arrays_rev, loops through redir array.*/
 static void	free_redir(t_data *data)
 {
-	while (data->proc[data->j].redir[data->l] > 0)
+	while (data->l > 0)
 	{
 		free(data->proc[data->j].redir[data->l - 1]);
 		data->l--;
@@ -83,10 +85,9 @@ int	free_proc_arr_rev(t_data *data)
 {
 	while (data->j >= 0)
 	{
-		if (data->proc[data->j].cmd[data->k] != NULL
-			|| data->proc[data->j].cmd != NULL)
+		if (data->proc[data->j].cmd != NULL)
 		{
-			while (data->proc[data->j].cmd[data->k] > 0)
+			while (data->k > 0)
 			{
 				free(data->proc[data->j].cmd[data->k - 1]);
 				data->k--;
@@ -94,8 +95,7 @@ int	free_proc_arr_rev(t_data *data)
 			free(data->proc[data->j].cmd);
 			data->proc[data->j].cmd = NULL;
 		}
-		if (data->proc[data->j].redir[data->l] != NULL
-			|| data->proc[data->j].redir != NULL)
+		if (data->proc[data->j].redir != NULL)
 		{
 			free_redir(data);
 			free(data->proc[data->j].redir);
@@ -105,6 +105,8 @@ int	free_proc_arr_rev(t_data *data)
 			free_int_arr(&data->proc[data->j].fd);
 		if (data->proc[data->j].here_name != NULL)
 			free_str(&data->proc[data->j].here_name);
+		if (data->proc[data->j].here_tmp != NULL)
+			free_str(&data->proc[data->j].here_tmp);
 		data->j--;
 	}
 	return (1);

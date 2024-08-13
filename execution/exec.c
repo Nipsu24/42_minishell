@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/12 10:04:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:43:20 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	exec_proc(t_data *data)
 		if (data->pid_arr[data->j] == 0)
 		{
 			if (heredoc_exec(data))
-				exit(EXIT_FAILURE);
+				free_all(data, 1);
 			if (redir_exec(data))
-				exit(EXIT_FAILURE);
+				free_all(data, 1);
 			if (pipe_flag == 1 && data->j == 0)
 				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
 			if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
@@ -90,22 +90,24 @@ int	exec_proc(t_data *data)
 				close(data->fd_arr[n][1]);
 				n++;
 			}
-			if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to builint part line below
+			if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to built-in part line below
 				printf("BUILTIN PART\n");
 			else
 			{
 				if (execve(data->proc[data->j].path,
-					data->proc[data->j].cmd, data->temp_env) == -1)
+						data->proc[data->j].cmd, data->temp_env) == -1)
 				{
 					printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-					exit(EXIT_FAILURE);
+					free_all(data, 1);
 				}
 			}
-			exit(EXIT_SUCCESS);
+			free_all(data, 2);
 		}
+		if ((data->pid_arr[data->j]) > 0)
+			waitpid(data->pid_arr[data->j], NULL, 0);
 		data->j++;
 	}
-	waitpid(data->pid_arr[data->j], NULL, 0);
+	//waitpid(data->pid_arr[data->j], NULL, 0);
 	delete_heredocs(data);
 	dup2(data->save_stdout, STDOUT_FILENO);
 	dup2(data->save_stdin, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/12 11:07:41 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:41:36 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	alloc_here_filename(t_data *data)
 {
 	char	*prefix;
 	char	*suffix;
-	
+
 	data->j = 0;
 	data->i = 0;
 	prefix = ".file_";

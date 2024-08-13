@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:42:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 11:27:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:11:09 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	here_redirect(t_data *data)
 		if (no_other_heredoc(data))
 		{
 			data->proc[data->j].fd[data->k]
-					= open(data->proc[data->j].here_name, O_RDONLY);
+				= open(data->proc[data->j].here_name, O_RDONLY);
 			if (data->proc[data->j].fd[data->k] < 0)
 			{
 				printf("%s: No such file or directory\n",
