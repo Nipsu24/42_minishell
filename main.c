@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 11:29:28 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 11:00:11 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	lexer(t_data *data)
 	while (data->tokens[i])
 	{
 		assign_token_type(data, i);
-		//printf("%s\n", data->tokens[i]);
-		//printf("%d\n", data->token_list[i].type);
+		// printf("%s\n", data->tokens[i]);
+		// printf("%d\n", data->token_list[i].type);
 		i++;
 	}
 	if (remove_quotes(data))
@@ -76,7 +76,7 @@ static int	ft_input(t_data *data)
 	while (1)
 	{
 		data->err_flag = 0;
-		setup_signal();
+		//setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
 		{
@@ -125,6 +125,7 @@ void	init_data(t_data *data)
 	data->input = NULL;
 	data->token_list = NULL;
 	data->count_cmd = 0;
+	data->num_tokens = 0;
 	data->count_other = 0;
 	data->proc_nbr = 0;
 	data->err_flag = 0;

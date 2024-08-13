@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 11:28:25 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:29:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ char	**ft_copy_env(char **env, char **cpy_env)
 	{
 		cpy_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
 		if (!cpy_env[i])
-			return (free_arr_rev(cpy_env, i));
+			return (free_arr_rev(&cpy_env, i));
 		i++;
 	}
+	cpy_env[i] = NULL;
 	return (cpy_env);
 }
 

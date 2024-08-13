@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <mariusmeier@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/08 11:15:39 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/08/13 11:02:00 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ static void	init_token_type(t_data *data, int num_tokens)
 	int	i;
 
 	i = 0;
-	while (num_tokens > 0)
+	while (i < num_tokens)
 	{
 		data->token_list[i].type = INIT_VAL;
-		num_tokens--;
 		i++;
 	}
 }
@@ -33,15 +32,15 @@ static void	init_token_type(t_data *data, int num_tokens)
 
 int	ft_malloc_token(t_data *data)
 {
-	int	num_tokens;
-
-	num_tokens = 0;
-	while (data->tokens[num_tokens])
-		num_tokens++;
-	data->token_list = (t_token *) malloc(num_tokens * sizeof(t_token));
+	data->num_tokens = 0;
+	while (data->tokens[data->num_tokens])
+		data->num_tokens++;
+	if (data->num_tokens == 0)
+		return (0);
+	data->token_list = (t_token *) malloc(data->num_tokens * sizeof(t_token));
 	if (!data->token_list)
 		return (0);
-	init_token_type(data, num_tokens);
+	init_token_type(data, data->num_tokens);
 	return (1);
 }
 

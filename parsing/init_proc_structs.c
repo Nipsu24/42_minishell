@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 09:24:33 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:42:13 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,17 @@ static int	count_pipes(t_data *data)
 
 /*Helper function of alloc_proc_structs, counts needed amount of strings 
   for cmd array and redir array.*/
-static void	count_arrays(t_data *data, int *i)
+static void	count_arrays(t_data *data)
 {
-	// if (data->token_list[*i].type && data->tokens[*i]) // line added
-	// {
-		while (data->token_list[*i].type != PIPE && data->tokens[*i])
-		{
-			if (data->token_list[*i].type == COMMAND)
-				data->count_cmd++;
-			if (data->token_list[*i].type > COMMAND
-				&& data->token_list[*i].type <= RED_OP)
-				data->count_other++;
-			(*i)++;
-		}
-	// }
+	while (data->i < data->num_tokens && data->token_list[data->i].type != PIPE && data->tokens[data->i])
+	{
+		if (data->token_list[data->i].type == COMMAND)
+			data->count_cmd++;
+		if (data->token_list[data->i].type > COMMAND
+			&& data->token_list[data->i].type <= RED_OP)
+			data->count_other++;
+		data->i++;
+	}
 }
 
 /*Allocates memory for the needed fds in each process.*/
@@ -99,7 +96,7 @@ static int	alloc_proc_structs(t_data *data)
 	data->count_other = 0;
 	while (data->j < data->proc_nbr)
 	{
-		count_arrays(data, &data->i);
+		count_arrays(data);
 		data->proc[data->j].cmd
 			= malloc ((data->count_cmd + 1) * sizeof(char *));
 		if (!data->proc[data->j].cmd)
@@ -111,7 +108,7 @@ static int	alloc_proc_structs(t_data *data)
 		data->proc[data->j].fd_amount = data->count_other / 2;
 		if (alloc_fds(data))
 			return (1);
-		if (data->token_list[data->i].type == PIPE)
+		if (data->i < data->num_tokens && data->token_list[data->i].type == PIPE)
 		{
 			data->i++;
 			data->count_cmd = 0;
@@ -157,7 +154,7 @@ static int	fill_proc_structs(t_data *data)
 	data->l = 0;
 	while (data->j < data->proc_nbr)
 	{
-		while (data->token_list[data->i].type != PIPE && data->tokens[data->i])
+		while (data->i < data->num_tokens && data->token_list[data->i].type != PIPE && data->tokens[data->i])
 		{
 			if (fill_data(data))
 				return (1);
@@ -168,7 +165,7 @@ static int	fill_proc_structs(t_data *data)
 		data->proc[data->j].path = NULL;
 		data->proc[data->j].here_tmp = NULL;
 		data->proc[data->j].here_name = NULL;
-		if (data->token_list[data->i].type == PIPE)
+		if (data->i < data->num_tokens && data->token_list[data->i].type == PIPE)
 		{
 			data->i++;
 			data->k = 0;
@@ -209,7 +206,7 @@ static int	fill_proc_structs(t_data *data)
 // 	}
 // 	return (0);
 // }
-	
+
 int	init_proc_structs(t_data *data)
 {
 	if (count_pipes(data))

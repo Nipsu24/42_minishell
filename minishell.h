@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/12 11:06:02 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:07:02 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_data
 	int			count_cmd;
 	int			count_other;
 	int			proc_nbr;
+	int			num_tokens;
 	int			i;
 	int			j;
 	int			k;
@@ -80,7 +81,7 @@ typedef struct s_data
 	int			save_stdin;
 	char		*nl;
 	int			return_val;
-	char 		*tmp;
+	char		*tmp;
 	int			*pid_arr;
 	int			**fd_arr;
 	t_token		*token_list;
@@ -88,10 +89,11 @@ typedef struct s_data
 }				t_data;
 
 /*free functions*/
+
 void	free_all(t_data *data, int exit_flag);
-char	**free_arr_rev(char **av, int j);
-char	**free_arr(char **arr);
-void	free_arr_void(char **arr);
+char	**free_arr_rev(char ***av, int j);
+char	**free_arr(char ***arr);
+void	free_arr_void(char ***arr);
 int		free_proc_arr_rev(t_data *data);
 void	free_proc_structs(t_data *data);
 void	free_str(char **str);
@@ -100,11 +102,13 @@ void	free_2d_int_arr(t_data *data, int ***arr);
 void	free_2d_int_arr_rev(int ***arr, int j);
 
 /*Error check and utils*/
+
 int		not_valid_input(char *str);
 int		between_quotes(char *input, int pos);
 int		is_quote(char c);
 
 /*lexing*/
+
 int		lexer(t_data *data);
 int		insert_space(t_data *data);
 int		ft_expand(t_data *data);
@@ -115,6 +119,7 @@ void	assign_token_type(t_data *tokens, int i);
 int		remove_quotes(t_data *data);
 
 /*parsing*/
+
 int		parsing(t_data *data);
 int		init_proc_structs(t_data *data);
 int		init_path(t_data *data);
@@ -122,6 +127,7 @@ int		alloc_here_filename(t_data *data);
 int		create_heredocs(t_data *data);
 
 /*execution*/
+
 int		exec_proc(t_data *data);
 int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
@@ -135,15 +141,18 @@ int		init_pid_arr(t_data *data);
 int		init_fd_arr(t_data *data);
 
 /*built-ins*/
+
 void	print_env(char **env);
 char	**ft_copy_env(char **env, char **cpy_env);
 // bool	needs_arg(char **comand_array);
 // int		pwd(void);
 
 /*signals*/
+
 void	setup_signal(void);
 
 /*further functions*/
+
 void	init_data(t_data *data);
 void	init_index(t_data *data);
 

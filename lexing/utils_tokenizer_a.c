@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/29 11:48:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/12 14:41:53 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	**ft_iter_quote(char *s, size_t *i, size_t *j, char **arr)
 		(*i)++;
 	arr[*j] = ft_substr(s, start, (*i - start + 1));
 	if (arr[*j] == 0)
-		return (free_arr_rev(arr, *j));
+		return (free_arr_rev(&arr, *j));
 	(*j)++;
 	if (s[*i])
 		(*i)++;
@@ -78,7 +78,7 @@ static char	**ft_iter_str(char *s, size_t *i, size_t *j, char **arr)
 		(*i)++;
 	arr[*j] = ft_substr(s, start, (*i - start));
 	if (arr[*j] == 0)
-		return (free_arr_rev(arr, *j));
+		return (free_arr_rev(&arr, *j));
 	(*j)++;
 	return (arr);
 }
@@ -97,12 +97,12 @@ static char	**ft_store_words(char *s, char **arr)
 		if (is_quote(s[i]))
 		{
 			if (!ft_iter_quote(s, &i, &j, arr))
-				return (free_arr_rev(arr, j));
+				return (free_arr_rev(&arr, j));
 		}
 		if (s[i] && s[i] != ' ' && !is_quote(s[i]))
 		{
 			if (!ft_iter_str(s, &i, &j, arr))
-				return (free_arr_rev(arr, j));
+				return (free_arr_rev(&arr, j));
 		}
 		else if (s[i] && !is_quote(s[i]))
 			i++;

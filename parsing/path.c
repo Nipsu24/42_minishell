@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/05 15:08:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:41:12 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	create_path_arr(t_data *data)
 			data->path_arr = ft_split(data->temp_env[i], ':');
 			if (!data->path_arr)
 				return (1);
+			break ;
 		}
 		i++;
 	}
@@ -76,8 +77,9 @@ static int	join_cmd_path(t_data *data)
 		i = 0;
 		while (data->path_arr[i])
 		{
-			data->proc[j].path = ft_strjoin(data->path_arr[i],
-					data->proc[j].cmd[0]);
+			if (data->path_arr[i])
+				data->proc[j].path
+					= ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);
 			if (!data->proc[j].path)
 				return (1);
 			if (access(data->proc[j].path, F_OK) == 0)

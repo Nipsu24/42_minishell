@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:48:28 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/12 11:05:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:08:40 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 void	delete_heredocs(t_data *data)
 {
 	data->j = 0;
-	while (data->j < data->proc_nbr) 
+	while (data->j < data->proc_nbr)
 	{
-		unlink(data->proc[data->j].here_name);
+		if (data->proc[data->j].here_name != NULL)
+			unlink(data->proc[data->j].here_name);
 		data->j++;
 	}
 }
@@ -30,6 +31,8 @@ int	init_pid_arr(t_data *data)
 	int	i;
 
 	i = 0;
+	if (data->proc_nbr == 0)
+		return (0);
 	data->pid_arr = malloc (sizeof(int) * data->proc_nbr);
 	if (!data->pid_arr)
 		return (1);
@@ -45,7 +48,7 @@ int	init_pid_arr(t_data *data)
   only as many fds as pipes needed. */
 int	init_fd_arr(t_data *data)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (data->proc_nbr < 2)
@@ -65,5 +68,5 @@ int	init_fd_arr(t_data *data)
 		data->fd_arr[j][1] = 1;
 		j++;
 	}
-	return (0);	
+	return (0);
 }

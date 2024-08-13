@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:39:05 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/09 15:45:48 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 14:09:36 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	no_other_redin(t_data *data)
 	}
 	return (1);
 }
+
 /*Checks if there is any other heredoc in a process. If yes,
   returns 0.*/
 int	no_other_heredoc(t_data *data)
