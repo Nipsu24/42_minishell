@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 12:30:35 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 14:04:51 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ int	parsing(t_data *data)
   exec_proc fails (0/void)*/
 static int	ft_input(t_data *data)
 {
-	char		*environment;
+	//char		*environment;
 
-	environment = "env";
+///	environment = "env";
 	while (1)
 	{
 		data->err_flag = 0;
-		//setup_signal();
+//		setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
 		{
@@ -94,8 +94,8 @@ static int	ft_input(t_data *data)
 		{
 			if (lexer(data))
 				free_all(data, 1);
-			if (ft_strncmp(data->input, environment, 3) == 0)
-				print_env(data->temp_env);
+///			if (ft_strncmp(data->input, environment, 3) == 0)
+//				print_env(data->temp_env);
 			// else
 			// 	printf("You entered %s\n", data->input);
 			if (parsing(data))
@@ -138,6 +138,7 @@ void	init_data(t_data *data)
 	data->pid_arr = NULL;
 	data->fd_arr = NULL;
 	init_index(data);
+	data->exit_status = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
@@ -148,7 +149,7 @@ int	main(int ac, char *av[], char *env[])
 	t_data	data;	
 
 	init_data(&data);
-	data.temp_env = ft_copy_env(env, data.temp_env);
+	data.temp_env = ft_copy_env(env, &data);
 	if (!data.temp_env)
 		return (1);
 	if (ac > 1 || av[1])
