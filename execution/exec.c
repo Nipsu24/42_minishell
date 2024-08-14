@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/05 10:17:23 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:05:36 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	exec_proc(t_data *data)
 				data->i++;
 			}
 		}
-		if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to builint part line below
-			printf("BUILTIN PART\n");
+		if (ft_strncmp(data->proc[data->j].cmd[0], "env", 7) == 0) // insert link to builint part line below
+			print_env(data, data->proc[data->j].cmd);
 		else
 		{
 			if (execve(data->proc[data->j].path,
