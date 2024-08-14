@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/14 14:00:55 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:13:23 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,12 @@ int	exec_proc(t_data *data)
 			}
 			if (data->proc[data->j].path != NULL && data->proc[data->j].cmd != NULL)
 			{
-				if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to built-in part line below
-					printf("BUILTIN PART\n");
-				else 
-				{	
-					if (execve(data->proc[data->j].path,
-							data->proc[data->j].cmd, data->temp_env) == -1)
-					{
-						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-						free_all(data, 1);
-					}
+				builtins(data);
+				if (execve(data->proc[data->j].path,
+						data->proc[data->j].cmd, data->temp_env) == -1)
+				{
+					printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+					free_all(data, 1);
 				}
 			}
 			free_all(data, 2);
@@ -154,3 +150,25 @@ int	exec_proc(t_data *data)
 // 	close (data->save_stdin);
 // 	return (0);
 // }
+
+void	child_builtins(t_data *data)
+{
+	if (ft_strncmp(data->proc[data->j].cmd[0], "echo", 5) == 0)
+		echo(data);
+	else if (ft_strncmp(data->proc[data->j].cmd[0], "env", 4) == 0)
+		env(data);
+	else if (ft_strncmp(data->proc[data->j].cmd[0], "pwd", 4) == 0)
+		pwd(data);
+}
+
+void	non_child_builtins(t_data *data)
+{
+	if (ft_strncmp(data->proc[data->j].cmd[0], "cd", 3) == 0)
+		cd(data);
+	else if (ft_strncmp(data->proc[data->j].cmd[0], "exit", 5) == 0)
+		exit_shell(data);
+	else if (ft_strncmp(data->proc[data->j].cmd[0], "export", 7) == 0)
+		export(data);
+	else if (ft_strncmp(data->proc[data->j].cmd[0], "unset", 6) == 0)
+		unset(data);
+}
