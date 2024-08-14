@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/12 14:03:40 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:57:46 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Prints the current working directory */
 int	pwd(void)
 {
-	char	cwd[BUFFER_SIZE];
+	char	cwd[BUFF_SIZE];
 
 	if (getcwd(cwd, sizeof(cwd)))
 	{
