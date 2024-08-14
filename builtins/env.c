@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/31 11:28:25 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 12:31:42 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,58 @@ char	**ft_copy_env(char **env, char **cpy_env)
 			return (free_arr_rev(cpy_env, i));
 		i++;
 	}
+	cpy_env[i] = NULL;
 	return (cpy_env);
 }
 
 /*Prints the envrironmental variable*/
-void	print_env(char **env)
+void	print_env(t_data *data, char **array)
 {
 	int	i;
 
-	i = 0;
-	while (env[i])
+	i = len_array(array);
+	if (!data || !(data->temp_env))
+		return ;
+	if (i > 1)
 	{
-		printf("%s\n", env[i]);
+		data->exit_status = 127;
+		perror(array[1]);
+		free_arr(array);
+	}
+	while (data->temp_env[i])
+	{
+		if (ft_strchr(data->temp_env[i], '='))
+		{
+			if (ft_strncmp(data->temp_env[i], "_=", 2) == 0)
+				printf("_=/usr/bin/env\n");
+			else
+				printf("%s\n", data->temp_env[i]);
+		}
 		i++;
 	}
+	free_arr(array);
+}
+
+int	update_shlvl(t_data *data)
+{
+	int		i;
+	int		j;
+
+	i = find_var(data->temp_env, "SHLVL=");
+	if (i == len_array(data->temp_env))
+	{
+		add_var(data, "SHLVL=1");
+		if (!data->temp_env)
+			return (1);
+	}
+	else
+	{
+		j = ft_atoi(data->temp_env[i] + 6);
+		j++;
+		free(data->temp_env[i]);
+		data->temp_env[i] = ft_strjoin("SHLVL=", ft_itoa(j));
+		if (!data->temp_env[i])
+			return (1);
+	}
+	return (0);
 }
