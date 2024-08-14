@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 13:54:36 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:52:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**ft_copy_env(char **env, t_data *data)
 	{
 		data->temp_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
 		if (!data->temp_env[i])
-			return (free_arr_rev(data->temp_env, i));
+			return (free_arr_rev(&data->temp_env, i));
 		i++;
 	}
 	update_shlvl(data);
@@ -50,7 +50,7 @@ void	print_env(t_data *data, char **array)
 	{
 		data->exit_status = 127;
 		perror(array[1]);
-		free_arr(array);
+		free_arr(&array);
 	}
 	while (data->temp_env[i])
 	{
@@ -63,7 +63,7 @@ void	print_env(t_data *data, char **array)
 		}
 		i++;
 	}
-	free_arr(array);
+	free_arr(&array);
 }
 
 int	update_shlvl(t_data *data)
