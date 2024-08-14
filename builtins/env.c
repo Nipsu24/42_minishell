@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 12:31:42 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:07:41 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Creates copy of env var in order to being able of modifying this copy
   later on in the course of the shell execution*/
-char	**ft_copy_env(char **env, char **cpy_env)
+char	**ft_copy_env(char **env, t_data *data)
 {
 	int	i;
 	int	j;
@@ -23,18 +23,19 @@ char	**ft_copy_env(char **env, char **cpy_env)
 	j = 0;
 	while (env[j])
 		j++;
-	cpy_env = (char **) malloc (sizeof(char *) * (j + 1));
-	if (!cpy_env)
+	data->temp_env = (char **) malloc (sizeof(char *) * (j + 1));
+	if (!data->temp_env)
 		return (NULL);
 	while (env[i])
 	{
-		cpy_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
-		if (!cpy_env[i])
-			return (free_arr_rev(cpy_env, i));
+		data->temp_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
+		if (!data->temp_env[i])
+			return (free_arr_rev(data->temp_env, i));
 		i++;
 	}
-	cpy_env[i] = NULL;
-	return (cpy_env);
+	update_shlvl(data);
+	data->temp_env[i] = NULL;
+	return (data->temp_env);
 }
 
 /*Prints the envrironmental variable*/
