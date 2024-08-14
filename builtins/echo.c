@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:15:44 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/06 11:42:34 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:24:07 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	print_echo(char **args)
 }
 
 /* The echo command. */
-int	echo(char **args)
+int	echo(t_data *data)
 {
-	if (!args[1])
+	if (!(data->proc[data->j].cmd[1]))
 	{
 		ft_printf("\n");
-		free_str(args);
+//		free_arr(data->proc[data->j]);
 		return (0);
 	}
 	print_echo(args);
