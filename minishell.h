@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/13 14:07:02 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 14:06:17 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# define BUFF_SIZE 4096
 
 /*Relevant tokens for lexing and parsing part.
   INIT_VAL for initial initiation when matching
@@ -84,6 +85,9 @@ typedef struct s_data
 	char		*tmp;
 	int			*pid_arr;
 	int			**fd_arr;
+	char		oldpwd[BUFF_SIZE];
+	char		newpwd[BUFF_SIZE];
+	int			exit_status;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -140,12 +144,20 @@ void	delete_heredocs(t_data *data);
 int		init_pid_arr(t_data *data);
 int		init_fd_arr(t_data *data);
 
+/*built-in utils*/
+
+int		len_array(char **array);
+int		find_var(char **env, char *var);
+int		add_var(t_data *data, char *var);
+int		update_var(t_data *data, char *var);
+
 /*built-ins*/
 
-void	print_env(char **env);
-char	**ft_copy_env(char **env, char **cpy_env);
-// bool	needs_arg(char **comand_array);
-// int		pwd(void);
+char	**ft_copy_env(char **env, t_data *data);
+int		cd(char **array, t_data *data);
+void	print_env(t_data *data, char **array);
+int		update_shlvl(t_data *data);
+
 
 /*signals*/
 
