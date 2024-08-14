@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/13 14:41:36 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 11:56:12 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ static int	here_in_prc(t_data *data)
 
 	l = 0;
 	count = 0;
-	while (data->proc[data->j].redir[l])
+	if (data->proc[data->j].redir != NULL)
 	{
-		if (ft_strncmp(data->proc[data->j].redir[l], "<<", 2) == 0)
+		while (data->proc[data->j].redir[l])
 		{
-			count++;
-			break ;
+			if (ft_strncmp(data->proc[data->j].redir[l], "<<", 2) == 0)
+			{
+				count++;
+				break ;
+			}
+			l++;
 		}
-		l++;
 	}
 	return (count);
 }

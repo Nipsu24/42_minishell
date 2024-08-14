@@ -6,11 +6,27 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/13 14:41:12 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 11:43:40 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Checks if any of the cmd arrays is populated with data.
+  If not, returns 1 and init_path function quits directly.*/
+static int	check_for_cmds(t_data *data)
+{
+	int	j;
+	
+	j = 0;
+	while (j < data->proc_nbr)
+	{
+		if (data->proc[j].cmd != NULL)
+			return (0);
+		j++;
+	}
+	return (1);
+}
 
 /*Loops through env variable until "PATH=" is found. Is then splitting
   the directory paths of this env var into data->path_arr.*/
@@ -75,18 +91,22 @@ static int	join_cmd_path(t_data *data)
 	while (j < data->proc_nbr)
 	{
 		i = 0;
-		while (data->path_arr[i])
+		if (data->proc[j].cmd != NULL)
 		{
-			if (data->path_arr[i])
-				data->proc[j].path
-					= ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);
-			if (!data->proc[j].path)
-				return (1);
-			if (access(data->proc[j].path, F_OK) == 0)
-				break ;
-			free(data->proc[j].path);
-			data->proc[j].path = NULL;
-			i++;
+			while (data->path_arr[i])
+			{
+				//printf("PATH ARRAY: %s\n", data->path_arr[i]);
+				if (data->path_arr[i])
+					data->proc[j].path
+						= ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);
+				if (!data->proc[j].path)
+					return (1);
+				if (access(data->proc[j].path, F_OK) == 0)
+					break ;
+				free(data->proc[j].path);
+				data->proc[j].path = NULL;
+				i++;
+			}
 		}
 		j++;
 	}
@@ -95,6 +115,8 @@ static int	join_cmd_path(t_data *data)
 
 int	init_path(t_data *data)
 {
+	if (check_for_cmds(data))
+		return (0);
 	if (create_path_arr(data))
 		return (1);
 	if (join_slash(data))
