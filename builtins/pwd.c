@@ -6,23 +6,26 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/05 13:07:46 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:03:40 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Prints the current working directory */
 int	pwd(void)
 {
-	char	*cwd;
+	char	cwd[BUFFER_SIZE];
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
+	if (getcwd(cwd, sizeof(cwd)))
 	{
-		perror("Error getting cwd");
+		ft_printf("%s\n", cwd);
+		return (0);
+	}
+	else
+	{
+		perror("Error getting cwd, or cwd is too long");
 		return (1);
 	}
-	ft_printf("%s\n", cwd);
-	free_str(&cwd);
 	return (0);
 }
