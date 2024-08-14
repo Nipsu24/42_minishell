@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 09:44:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 12:31:07 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# define BUFF_SIZE 4096
 
 /*Relevant tokens for lexing and parsing part.
   INIT_VAL for initial initiation when matching
@@ -74,6 +75,9 @@ typedef struct s_data
 	char		**path_arr;
 	int			save_stdout;
 	int			save_stdin;
+	char		oldpwd[BUFF_SIZE];
+	char		newpwd[BUFF_SIZE];
+	int			exit_status;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -94,6 +98,7 @@ int		between_quotes(char *input, int pos);
 int		is_quote(char c);
 
 /*lexing*/
+
 int		lexer(t_data *data);
 int		insert_space(t_data *data);
 int		ft_expand(t_data *data);
@@ -104,6 +109,7 @@ void	assign_token_type(t_data *tokens, int i);
 int		remove_quotes(t_data *data);
 
 /*parsing*/
+
 int		parsing(t_data *data);
 int		init_proc_structs(t_data *data);
 int		init_path(t_data *data);
@@ -114,11 +120,20 @@ int		redout_loop(t_data *data);
 int		appendout_loop(t_data *data);
 int		redin_loop(t_data *data);
 
+/*built-in utils*/
+
+int		len_array(char **array);
+int		find_var(char **env, char *var);
+int		add_var(t_data *data, char *var);
+int		update_var(t_data *data, char *var);
+
 /*built-ins*/
-void	print_env(char **env);
+
 char	**ft_copy_env(char **env, char **cpy_env);
-// bool	needs_arg(char **comand_array);
-// int		pwd(void);
+int		cd(char **array, t_data *data);
+void	print_env(t_data *data, char **array);
+int		update_shlvl(t_data *data);
+
 
 /*signals*/
 void	setup_signal(void);

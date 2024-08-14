@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 09:37:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:02:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	free_proc_structs(t_data *data)
 /*Helper function of free_proc_arrays_rev, loops through redir array.*/
 static void	free_redir(t_data *data)
 {
-	while (data->proc[data->j].redir[data->l] > 0)
+	while (data->l > 0)
 	{
 		free(data->proc[data->j].redir[data->l - 1]);
 		data->l--;
@@ -78,7 +78,7 @@ int	free_proc_arr_rev(t_data *data)
 		if (data->proc[data->j].cmd[data->k] != NULL
 			|| data->proc[data->j].cmd != NULL)
 		{
-			while (data->proc[data->j].cmd[data->k] > 0)
+			while (data->k > 0)
 			{
 				free(data->proc[data->j].cmd[data->k - 1]);
 				data->k--;

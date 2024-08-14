@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 10:02:27 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:12:07 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int	parsing(t_data *data)
   exec_proc fails (0/void)*/
 static int	ft_input(t_data *data)
 {
-	char		*environment;
+	//char		*environment;
 
-	environment = "env";
+///	environment = "env";
 	while (1)
 	{
 		data->err_flag = 0;
-		setup_signal();
+//		setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
 		{
@@ -89,8 +89,8 @@ static int	ft_input(t_data *data)
 		{
 			if (lexer(data))
 				free_all(data, 1);
-			if (ft_strncmp(data->input, environment, 3) == 0)
-				print_env(data->temp_env);
+///			if (ft_strncmp(data->input, environment, 3) == 0)
+//				print_env(data->temp_env);
 			// else
 			// 	printf("You entered %s\n", data->input);
 			if (parsing(data))
@@ -117,6 +117,7 @@ void	init_data(t_data *data)
 	data->path_arr = NULL;
 	data->save_stdout = 0;
 	data->save_stdin = 0;
+	data->exit_status = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
