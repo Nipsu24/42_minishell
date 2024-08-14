@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 14:06:17 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:38:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_data
 	char		oldpwd[BUFF_SIZE];
 	char		newpwd[BUFF_SIZE];
 	int			exit_status;
+	int			delim_fst_line;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;

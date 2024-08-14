@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/11 11:26:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 16:03:27 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
   content of tmp (from readline function) gets duplicated
   instead of string joined into empty here_tmp string,
   in order to not cause any issues with the strjoin function
-  when passing a NULL String to it.*/
+  when passing a NULL String to it. 2nd if statement for check
+  if already first line constists of delimiter.*/
 static int	dup_for_empty_here_tmp(t_data *data)
 {
 	data->proc[data->j].here_tmp = ft_strdup(data->tmp);
@@ -25,26 +26,40 @@ static int	dup_for_empty_here_tmp(t_data *data)
 		free_str(&data->tmp);
 		return (1);
 	}
+	if (ft_strncmp(data->tmp, data->proc[data->j].redir[data->l + 1],
+			ft_strlen(data->tmp)) == 0)
+	{
+		free_str(&data->tmp);
+		data->delim_fst_line = 1;
+		return (-1);
+	}
 	return (0);
 }
 
 /*Checks first, if no further heredoc is detected in the process.
   If no further detected, creates temporary heredoc file by giving
   the previously created filename (from alloc_here_filename function)
-  to the 'open' function as argument. Then writes content of here_tmp 
-  string into file and closes fd. Index k is incremented for
-  potential next loop (if further files for other redirects need to
-  be set up).*/
+  or NULL in case delimiter is encountered directly on first line
+  (delim_fst_line == 1 from dup_for_empty_here function) to the 'open'
+  function as argument. Then writes content of here_tmp string into 
+  file and closes fd. Index k is incremented for potential next loop 
+  (if further files for other redirects need to be set up).*/
 static int	file_create_n_write(t_data *data)
 {
 	if (no_other_heredoc(data))
 	{
+		if (!data->proc[data->j].here_tmp)
+			return (1);
 		data->proc[data->j].fd[data->k]
 			= open(data->proc[data->j].here_name,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		write(data->proc[data->j].fd[data->k],
-			data->proc[data->j].here_tmp,
-			ft_strlen(data->proc[data->j].here_tmp));
+		if (data->delim_fst_line == 1)
+			write(data->proc[data->j].fd[data->k],
+				NULL, 0);
+		else
+			write(data->proc[data->j].fd[data->k],
+				data->proc[data->j].here_tmp,
+				ft_strlen(data->proc[data->j].here_tmp));
 		close (data->proc[data->j].fd[data->k]);
 		free_str(&data->tmp);
 		data->k++;
@@ -89,31 +104,39 @@ static int	eof_detected(t_data *data)
 	return (0);
 }
 
+/*Main while loop for writing into here doc*/
+static int	here_while_loop(t_data *data)
+{
+	while (1)
+	{
+		data->tmp = readline("> ");
+		if (!data->tmp)
+			return (1);
+		if (!data->proc[data->j].here_tmp)
+		{
+			if (dup_for_empty_here_tmp(data) == -1)
+				break ;
+		}
+		else
+		{	
+			data->return_val = eof_detected(data);
+			if (data->return_val == -1)
+				break ;
+			if (data->return_val == 1)
+				return (1);
+		}
+		free_str(&data->tmp);
+	}
+	return (0);
+}
+
 /*Handles heredoc creation within a process.*/
 static int	ft_heredoc(t_data *data)
 {
 	if (ft_strncmp(data->proc[data->j].redir[data->l], "<<", 2) == 0)
 	{
-		while (1)
-		{
-			data->tmp = readline("> ");
-			if (!data->tmp)
-				return (1);
-			if (!data->proc[data->j].here_tmp)
-			{
-				if (dup_for_empty_here_tmp(data))
-					return (1);
-			}
-			else
-			{	
-				data->return_val = eof_detected(data);
-				if (data->return_val == -1)
-					break ;
-				if (data->return_val == 1)
-					return (1);
-			}
-			free_str(&data->tmp);
-		}
+		if (here_while_loop(data))
+			return (1);
 		if (file_create_n_write(data))
 			return (1);
 	}

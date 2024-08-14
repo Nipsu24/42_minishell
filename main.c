@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 14:04:51 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:38:35 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void	init_data(t_data *data)
 	data->fd_arr = NULL;
 	init_index(data);
 	data->exit_status = 0;
+	data-> delim_fst_line = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 

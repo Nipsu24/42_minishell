@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/14 12:32:25 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:52:59 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ int	add_var(t_data *data, char *var)
 		new_env[i]
 			= ft_substr(data->temp_env[i], 0, ft_strlen(data->temp_env[i]));
 		if (!new_env[i])
-			free_arr_rev(new_env, i);
+			free_arr_rev(&new_env, i);
 		i++;
 	}
 	new_env[i] = ft_substr(var, 0, ft_strlen(var));
 	if (!new_env[i])
-		free_arr_rev(new_env, i);
+		free_arr_rev(&new_env, i);
 	new_env[i + 1] = NULL;
-	free_arr(data->temp_env);
+	free_arr(&data->temp_env);
 	data->temp_env = new_env;
-	free_arr(new_env);
+	free_arr(&new_env);
 	return (0);
 }
 
