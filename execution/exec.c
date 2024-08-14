@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/13 14:43:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 13:15:20 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,18 @@ int	exec_proc(t_data *data)
 				close(data->fd_arr[n][1]);
 				n++;
 			}
-			if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to built-in part line below
-				printf("BUILTIN PART\n");
-			else
+			if (data->proc[data->j].path != NULL && data->proc[data->j].cmd != NULL)
 			{
-				if (execve(data->proc[data->j].path,
-						data->proc[data->j].cmd, data->temp_env) == -1)
-				{
-					printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-					free_all(data, 1);
+				if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to built-in part line below
+					printf("BUILTIN PART\n");
+				else 
+				{	
+					if (execve(data->proc[data->j].path,
+							data->proc[data->j].cmd, data->temp_env) == -1)
+					{
+						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+						free_all(data, 1);
+					}
 				}
 			}
 			free_all(data, 2);

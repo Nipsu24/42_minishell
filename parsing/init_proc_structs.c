@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/13 14:42:13 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 11:54:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,20 @@ static int	alloc_proc_structs(t_data *data)
 	while (data->j < data->proc_nbr)
 	{
 		count_arrays(data);
-		data->proc[data->j].cmd
-			= malloc ((data->count_cmd + 1) * sizeof(char *));
-		if (!data->proc[data->j].cmd)
-			return (1);
-		data->proc[data->j].redir
-			= malloc ((data->count_other + 1) * sizeof(char *));
-		if (!data->proc[data->j].redir)
-			return (1);
+		if (data->count_cmd)
+		{
+			data->proc[data->j].cmd
+				= malloc ((data->count_cmd + 1) * sizeof(char *));
+			if (!data->proc[data->j].cmd)
+				return (1);
+		}
+		if (data->count_other)
+		{
+			data->proc[data->j].redir
+				= malloc ((data->count_other + 1) * sizeof(char *));
+			if (!data->proc[data->j].redir)
+				return (1);
+		}
 		data->proc[data->j].fd_amount = data->count_other / 2;
 		if (alloc_fds(data))
 			return (1);
@@ -160,8 +166,14 @@ static int	fill_proc_structs(t_data *data)
 				return (1);
 			data->i++;
 		}
-		data->proc[data->j].cmd[data->k] = NULL;
-		data->proc[data->j].redir[data->l] = NULL;
+		if (data->k)
+			data->proc[data->j].cmd[data->k] = NULL;
+		else
+			data->proc[data->j].cmd = NULL;
+		if (data->l)
+			data->proc[data->j].redir[data->l] = NULL;
+		else
+			data->proc[data->j].redir = NULL;
 		data->proc[data->j].path = NULL;
 		data->proc[data->j].here_tmp = NULL;
 		data->proc[data->j].here_name = NULL;

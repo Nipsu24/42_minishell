@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/13 14:39:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/14 12:12:51 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	free_2d_int_arr(t_data *data, int ***arr)
 
 	j = 0;
 	n = data->proc_nbr -1;
+	if (*arr == NULL)
+		return ;
 	while (j < n)
 	{
 		if ((*arr)[j] != NULL)
@@ -104,7 +106,7 @@ void	free_2d_int_arr(t_data *data, int ***arr)
 		j++;
 	}
 	free(*arr);
-	arr = NULL;
+	*arr = NULL;
 }
 
 /*Frees 2d int array in reversed order in case of malloc failure.*/
