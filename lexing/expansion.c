@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/22 12:29:53 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 16:05:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ static char	*get_expansion(t_data *data, char *tmp)
 		if (ft_strncmp(data->temp_env[j], tmp, len) == 0)
 		{
 			len++;
-			free(tmp);
-			tmp = NULL;
+			ft_free(&tmp);
 			len2 = ft_strlen(data->temp_env[j]) - len;
 			tmp = ft_substr(data->temp_env[j], len, len2);
-			printf("EXPANDED VAR IS: %s\n", tmp);
+			printf("EXPANDED VAR IS:\n%s\n", tmp);
 		}
 		j++;
 	}
@@ -63,14 +62,21 @@ static void	incl_exp_var(t_data *data, int start, char *exp_var, int len)
 	char	*after;
 	int		len2;
 
+	before = NULL;
+	after = NULL;
 	len2 = ft_strlen(data->input) - start + len + 1;
-	before = ft_substr(data->input, 0, start);
-	after = ft_substr(data->input, start + len + 1, len2);
-	free(data->input);
-	data->input = NULL;
-	data->input = ft_strjoin(before, exp_var);
-	data->input = ft_strjoin(data->input, after);
-	printf("NEW EXPANDED COMMAND is: %s\n", data->input);
+	if (start)
+		before = ft_substr(data->input, 0, start);
+	if (data->input[len + 1]) 
+		after = ft_substr(data->input, start + len + 1, len2);
+	ft_free(&data->input);
+	if (before)
+		data->input = ft_ms_strjoin_free_both(before, exp_var);
+	if (after)
+		data->input = ft_ms_strjoin_free_both(data->input, after);
+	else
+		data->input = ft_strdup(exp_var);
+	printf("NEW EXPANDED COMMAND is:\n%s\n", data->input);
 }
 
 /*Cuts out not found $-variable of input string*/

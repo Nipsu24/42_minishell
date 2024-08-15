@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 14:06:38 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:55:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	free_proc_structs(t_data *data)
 			free_str(&data->proc[j].here_name);
 		j++;
 	}
+	free(data->proc);
+	data->proc = NULL;
 }
 
 /*Helper function of free_proc_arrays_rev, loops through redir array.*/
