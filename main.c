@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 15:38:35 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 10:17:13 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,13 @@ int	parsing(t_data *data)
 }
 
 /*The 'readline' function enables writing commands to program during execution. 
-  In case 'env' is typed to shell, env. variables are printed to the terminal, 
-  otherwise command that user inputs is printed. The 'add_history' function 
-  enables visibility of previous inserted commands (using keyboards "arrow up" 
-  after a command has been typed). err_flag prevents going into further
-  functions if not valid input is inserted (flag set to 1). In case any function
-  in err_flag if statement fails, data is freed and exited (1), except when
-  exec_proc fails (0/void)*/
+  The 'add_history' function enables visibility of previous inserted commands
+  (using keyboards "arrow up" after a command has been typed). err_flag prevents
+  going into further functions if not valid input is inserted (flag set to 1).
+  In case any function in err_flag if statement fails, data is freed and exited (1),
+  except when exec_proc fails (0/void)*/
 static int	ft_input(t_data *data)
 {
-	//char		*environment;
-
-///	environment = "env";
 	while (1)
 	{
 		data->err_flag = 0;
@@ -94,10 +89,6 @@ static int	ft_input(t_data *data)
 		{
 			if (lexer(data))
 				free_all(data, 1);
-///			if (ft_strncmp(data->input, environment, 3) == 0)
-//				print_env(data->temp_env);
-			// else
-			// 	printf("You entered %s\n", data->input);
 			if (parsing(data))
 				free_all(data, 1);
 			if (exec_proc(data))
