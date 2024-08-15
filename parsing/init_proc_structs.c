@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 11:54:32 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:11:14 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	count_pipes(t_data *data)
 
 	i = 0;
 	p_cnt = 0;
-	while (data->tokens[i])
+	while (data->tokens[i] && i < data->num_tokens)
 	{
 		if (data->token_list[i].type == PIPE)
 			p_cnt++;

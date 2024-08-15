@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 14:52:04 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 15:30:37 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**ft_copy_env(char **env, t_data *data)
 			return (free_arr_rev(&data->temp_env, i));
 		i++;
 	}
-	update_shlvl(data);
+	//update_shlvl(data);
 	data->temp_env[i] = NULL;
 	return (data->temp_env);
 }

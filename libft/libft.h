@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/05 16:48:33 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 16:04:21 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int		ft_hexconvert_lower(unsigned long long int n, int *cmp);
 int		ft_putptr(void *s, int *cmp);
 char	*ft_ms_strjoin(char *s1, char *s2);
 char	*ft_ms_strjoin_rev_free(char *s1, char *s2);
+char	*ft_ms_strjoin_free_both(char *s1, char *s2);
 char	*get_next_line(int fd);
 char	*ft_free(char **str);
 char	*ft_gnl_strjoin(char *s1, char *s2);
