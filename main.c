@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 10:17:13 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 13:19:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ static int	ft_input(t_data *data)
 				free_all(data, 1);
 			if (exec_proc(data))
 				free_all(data, 0);
-			free_all(data, 0);
 		}
+		free_all(data, 0);
 	}
 	return (0);
 }
