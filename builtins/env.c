@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 14:27:30 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:34:23 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,19 @@ char	**ft_copy_env(char **env, t_data *data)
 }
 
 /*Prints the envrironmental variable*/
-void	print_env(t_data *data, char **array)
+void	print_env(t_data *data)
 {
 	int	i;
 
-	i = len_array(array);
+	i = len_array(data->proc[data->j].cmd);
 	if (!data || !(data->temp_env))
 		return ;
 	if (i > 1)
 	{
 		data->exit_status = 127;
-		perror(array[1]);
-		free_arr(&array);
+		perror(data->proc[data->j].cmd[0]);
+		free_str(&data->proc[data->j].cmd[0]);
+		exit(data->exit_status);
 	}
 	while (data->temp_env[i])
 	{
@@ -63,7 +64,7 @@ void	print_env(t_data *data, char **array)
 		}
 		i++;
 	}
-	free_arr(&array);
+	free_str(&data->proc[data->j].cmd[0]);
 }
 
 int	update_shlvl(t_data *data)
@@ -80,9 +81,9 @@ int	update_shlvl(t_data *data)
 	}
 	else
 	{
-		j = ft_atoi(data->temp_env[i][6]);
+		j = ft_atoi(data->temp_env[i] + 6);
 		j++;
-		if (j > 9999)
+		if (j > 9999 || j < 2)
 			update_var(data, "SHLVL=1");
 		free(data->temp_env[i]);
 		data->temp_env[i] = ft_strjoin("SHLVL=", ft_itoa(j));
