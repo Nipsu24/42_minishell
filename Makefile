@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/14 14:08:51 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/08/15 12:01:22 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBFT = ./libft/
 INCLUDES = -I./
 
 FILES = main.c \
-		check_input/input_check.c \
+		check_input/input_check_a.c \
+		check_input/input_check_b.c \
 		check_input/in_quotes_check.c \
 		lexing/utils_tokenizer_a.c \
 		lexing/utils_tokenizer_b.c \

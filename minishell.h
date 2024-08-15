@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 15:38:05 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/15 13:15:57 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,12 @@ void	free_2d_int_arr_rev(int ***arr, int j);
 /*Error check and utils*/
 
 int		not_valid_input(char *str);
+int		check_quotes(char *input);
 int		between_quotes(char *input, int pos);
+int		write_sytx_error(char *error_str, char error);
+int		check_red_out_app(char *input, int i);
+int		check_heredoc_err(char *input, int i);
+int		check_pipes(char *input);
 int		is_quote(char c);
 
 /*lexing*/
