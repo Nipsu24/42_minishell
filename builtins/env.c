@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 13:34:23 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:48:54 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	**ft_copy_env(char **env, t_data *data)
 			return (free_arr_rev(&data->temp_env, i));
 		i++;
 	}
-	update_shlvl(data);
 	data->temp_env[i] = NULL;
+	update_shlvl(data);
 	return (data->temp_env);
 }
 
@@ -73,22 +73,14 @@ int	update_shlvl(t_data *data)
 	int		j;
 
 	i = find_var(data->temp_env, "SHLVL=");
-	if (i == len_array(data->temp_env))
-	{
-		add_var(data, "SHLVL=1");
-		if (!data->temp_env)
-			return (1);
-	}
+	j = ft_atoi(data->temp_env[i] + 6);
+	if (i == len_array(data->temp_env) || j < 2 || j > 999)
+		update_var(data, "SHLVL=1");
 	else
 	{
-		j = ft_atoi(data->temp_env[i] + 6);
 		j++;
-		if (j > 9999 || j < 2)
-			update_var(data, "SHLVL=1");
-		free(data->temp_env[i]);
+		free_str(&data->temp_env[i]);
 		data->temp_env[i] = ft_strjoin("SHLVL=", ft_itoa(j));
-		if (!data->temp_env[i])
-			return (1);
 	}
 	return (0);
 }
