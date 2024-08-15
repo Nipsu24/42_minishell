@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:15:44 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/14 14:34:57 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:55:39 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,28 @@ static bool	is_newline(const char *str)
 
 /* Prints the arguments given to the echo command. If the -n flag is given,
 the newline character is not printed. */
-void	print_echo(char **args)
+void	print_echo(t_data *data)
 {
 	bool	n_flag;
 	int		i;
 
 	n_flag = false;
 	i = 1;
-	if (args[1] && is_newline(args[1]))
+	if (data->proc[data->j].cmd[1]
+		&& is_newline(data->proc[data->j].cmd[1]))
 	{
 		n_flag = true;
 		i++;
 	}
-	while (args[i])
+	while (data->proc[data->j].cmd[i])
 	{
-		ft_printf("%s", args[i]);
-		if (args[i + 1])
-			ft_printf(" ");
+		printf("%s", data->proc[data->j].cmd[i]);
+		if (data->proc[data->j].cmd[i + 1])
+			printf(" ");
 		i++;
 	}
 	if (!n_flag)
-		ft_printf("\n");
+		printf("\n");
 }
 
 /* The echo command. */
@@ -60,10 +61,10 @@ int	echo(t_data *data)
 	if (!(data->proc[data->j].cmd[1]))
 	{
 		ft_printf("\n");
-//		free_arr(&data->proc[data->j]);
+		free_arr(&data->proc[data->j].cmd);
 		return (0);
 	}
-	print_echo(data->proc[data->j].cmd[1]);
+	print_echo(data);
 	free_str(&data->proc[data->j].cmd[1]);
 	return (0);
 }
