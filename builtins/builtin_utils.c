@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/15 13:09:20 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:44:19 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	find_var(char **env, char *word)
 
 	i = 0;
 	j = len_array(env);
-	if (!env)
+	if (!env || !word || !j)
 		return (0);
 	while ((i < j) && ft_strncmp(word, env[i], ft_strlen(word)))
 		i++;
@@ -59,6 +59,9 @@ int	update_var(t_data *data, char *var)
 {
 	int	i;
 
+	i = 0;
+	if (!data || !data->temp_env || !var)
+		return (1);
 	i = find_var(data->temp_env, var);
 	if (i == len_array(data->temp_env))
 		return (add_var(data, var));
@@ -66,7 +69,7 @@ int	update_var(t_data *data, char *var)
 	data->temp_env[i] = ft_substr(var, 0, ft_strlen(var));
 	if (!data->temp_env[i])
 		return (1);
-	free_str(&var);
+//	free_str(&var);
 	return (0);
 }
 
