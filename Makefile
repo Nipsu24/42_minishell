@@ -6,7 +6,7 @@
 #    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/15 13:12:36 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/08/16 00:12:22 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,8 @@ FILES = main.c \
 		builtins/builtin_utils.c \
 		builtins/pwd.c \
 		builtins/echo.c \
+		builtins/export.c \
+		builtins/unset.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
