@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 16:05:05 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/16 12:33:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ static void	incl_exp_var(t_data *data, int start, char *exp_var, int len)
 
 	before = NULL;
 	after = NULL;
-	len2 = ft_strlen(data->input) - start + len + 1;
+	len2 = ft_strlen(data->input) - (start + len + 1);
 	if (start)
 		before = ft_substr(data->input, 0, start);
 	if (data->input[len + 1]) 
 		after = ft_substr(data->input, start + len + 1, len2);
 	ft_free(&data->input);
 	if (before)
-		data->input = ft_ms_strjoin_free_both(before, exp_var);
+		data->input = ft_strjoin(before, exp_var);
 	if (after)
-		data->input = ft_ms_strjoin_free_both(data->input, after);
+		data->input = ft_strjoin(data->input, after);
 	else
 		data->input = ft_strdup(exp_var);
 	printf("NEW EXPANDED COMMAND is:\n%s\n", data->input);
@@ -108,6 +108,7 @@ static void	def_var(t_data *data, int i)
 	start = i + 1;
 	len = 0;
 	i++;
+	tmp = NULL;
 	while (data->input[i] && data->input[i] != 32 && data->input[i] != '"')
 	{
 		i++;
