@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/15 13:57:28 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:45:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ int	exec_proc(t_data *data)
 					printf("BUILTIN PART\n");
 				else 
 				{	
-					if (execve(data->proc[data->j].path,
-							data->proc[data->j].cmd, data->temp_env) == -1)
+					if (execve(data->proc[data->j].path, data->proc[data->j].cmd, data->temp_env) == -1)
 					{
 						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+						fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
 						free_all(data, 1);
 					}
 				}

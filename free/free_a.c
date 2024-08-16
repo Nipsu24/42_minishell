@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 15:55:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:46:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,7 @@ int	free_proc_arr_rev(t_data *data)
 			free_str(&data->proc[data->j].here_tmp);
 		data->j--;
 	}
+	free(data->proc);
+	data->proc = NULL;
 	return (1);
 }
