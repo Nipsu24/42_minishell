@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/16 10:45:33 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/17 15:13:28 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	exec_proc(t_data *data)
 
 	n = 0;
 	pipe_flag = 0;
+	if (!data->input)
+		return (0);
 	init_index(data);
 	init_pid_arr(data);
 	init_fd_arr(data);
