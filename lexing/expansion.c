@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/16 12:33:32 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/17 16:05:27 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*get_expansion(t_data *data, char *tmp)
 		if (ft_strncmp(data->temp_env[j], tmp, len) == 0)
 		{
 			len++;
-			ft_free(&tmp);
+			free_str(&tmp);
 			len2 = ft_strlen(data->temp_env[j]) - len;
 			tmp = ft_substr(data->temp_env[j], len, len2);
 			printf("EXPANDED VAR IS:\n%s\n", tmp);
@@ -67,15 +67,26 @@ static void	incl_exp_var(t_data *data, int start, char *exp_var, int len)
 	len2 = ft_strlen(data->input) - (start + len + 1);
 	if (start)
 		before = ft_substr(data->input, 0, start);
-	if (data->input[len + 1]) 
+	if (data->input[start + len + 1]) 
 		after = ft_substr(data->input, start + len + 1, len2);
-	ft_free(&data->input);
-	if (before)
-		data->input = ft_strjoin(before, exp_var);
-	if (after)
-		data->input = ft_strjoin(data->input, after);
-	else
+	free_str(&data->input);
+	if (before && !after)
+		data->input = ft_ms_strjoin_free_both(before, exp_var);
+	if (after && !before)
+		data->input = ft_ms_strjoin_free_both(exp_var, after);
+	if (after && before)
+	{
+		if (!data->input)
+			data->input = ft_strdup(before);
+		free_str(&before);
+		data->input = ft_ms_strjoin_free_both(data->input, exp_var);
+		data->input = ft_ms_strjoin_free_both(data->input, after);
+	}
+	if (!after && !before)
+	{
 		data->input = ft_strdup(exp_var);
+		free_str(&exp_var);
+	}
 	printf("NEW EXPANDED COMMAND is:\n%s\n", data->input);
 }
 
@@ -86,12 +97,38 @@ static void	cut_var(t_data *data, int start, int len)
 	char	*after;
 	int		len2;
 
-	len2 = ft_strlen(data->input) - start + len + 1;
-	before = ft_substr(data->input, 0, start - 1);
-	after = ft_substr(data->input, start + len + 1, len2);
-	free(data->input);
-	data->input = NULL;
-	data->input = ft_strjoin(before, after);
+	before = NULL;
+	after = NULL;
+	len2 = ft_strlen(data->input) - (start + len + 1);
+	printf("STRLEN %d\n", len2);
+	if (start == 0 && len2 == 0)
+	{
+		free_str(&data->input);
+		return ;
+	}
+	//if sth comes before $
+	if (start)
+		before = ft_substr(data->input, 0, start);
+	if (data->input[start + len + 1])
+		after = ft_substr(data->input, start + len + 1, len2);
+	free_str(&data->input);
+	if (before && after)
+	{
+		if (!data->input)
+				data->input = ft_strdup(before);
+		free_str(&before);
+		data->input = ft_ms_strjoin_free_both(data->input, after);
+	}
+	else if (before && !after)
+	{
+		data->input = ft_strdup(before);
+		free_str(&before);
+	}
+	else if (!before && after)
+	{
+		data->input = ft_strdup(after);
+		free_str(&after);
+	}	
 	printf("NEW CUT EXPANDED COMMAND is: %s\n", data->input);
 }
 
@@ -109,7 +146,8 @@ static void	def_var(t_data *data, int i)
 	len = 0;
 	i++;
 	tmp = NULL;
-	while (data->input[i] && data->input[i] != 32 && data->input[i] != '"')
+	while (data->input[i] && data->input[i] != 32 && data->input[i] != '"'
+		&& data->input[i] != '$')
 	{
 		i++;
 		len++;
@@ -122,10 +160,11 @@ static void	def_var(t_data *data, int i)
 		incl_exp_var(data, start - 1, tmp, len);
 	}
 	else
+	{
 		cut_var(data, start - 1, len);
-	printf("ENVAR-VAR %s\n", tmp);
-	free(tmp);
-	tmp = NULL;
+		printf("ENVAR-VAR %s\n", tmp); //new
+		free_str(&tmp); //new
+	}
 }
 
 /*Checks if $ is between quotes. If it is between double quotes or
@@ -143,8 +182,12 @@ int	ft_expand(t_data *data)
 		{
 			printf("$ is between double quotes or no quotes\n");
 			def_var(data, i);
+			i = 0;
 		}
+		if (!data->input)
+			break ;
 		i++;
 	}
+	printf("FINAL STRING:\n%s000\n", data->input);
 	return (0);
 }
