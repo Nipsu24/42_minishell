@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/17 15:13:09 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/19 11:14:06 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ static int	ft_input(t_data *data)
 				free_all(data, 1);
 			if (parsing(data))
 				free_all(data, 1);
-			// if (exec_proc(data))
-			// 	free_all(data, 0);
+			if (exec_proc(data))
+				free_all(data, 0);
 		}
-		// printf("TEST1\n");
-		free_all(data, 0);
+		if (!data->input_null)
+			free_all(data, 0);
 	}
 	return (0);
 }
@@ -137,6 +137,7 @@ void	init_data(t_data *data)
 	init_index(data);
 	data->exit_status = 0;
 	data-> delim_fst_line = 0;
+	data->input_null = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
