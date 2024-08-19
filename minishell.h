@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 13:15:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/19 10:38:21 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_data
 	char		newpwd[BUFF_SIZE];
 	int			exit_status;
 	int			delim_fst_line;
+	int			input_null;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;

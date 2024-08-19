@@ -6,12 +6,14 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/17 16:05:27 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/19 11:12:06 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Loops through env array and checks if identified env var is
+  present.*/
 static int	var_exist(t_data *data, char *tmp)
 {
 	int	j;
@@ -28,8 +30,8 @@ static int	var_exist(t_data *data, char *tmp)
 	return (0);
 }
 
-/*Returns a string with the related expansion (text behin '= sign')
-  of respective env. variable (tmp)*/
+/*Returns a string with the related expansion (text behind '= sign')
+  of respective env. variable (tmp). len++ to account for '='.*/
 static char	*get_expansion(t_data *data, char *tmp)
 {
 	int	j;
@@ -47,7 +49,7 @@ static char	*get_expansion(t_data *data, char *tmp)
 			free_str(&tmp);
 			len2 = ft_strlen(data->temp_env[j]) - len;
 			tmp = ft_substr(data->temp_env[j], len, len2);
-			printf("EXPANDED VAR IS:\n%s\n", tmp);
+			//printf("EXPANDED VAR IS:\n%s\n", tmp);
 		}
 		j++;
 	}
@@ -55,7 +57,8 @@ static char	*get_expansion(t_data *data, char *tmp)
 }
 
 /*Cuts input string into before and after parts of the expanded part, then
-  rejoins all parts (incl. expanded part)*/
+  rejoins all parts (incl. expanded part). Certain if conditions in place
+  in order to only allocate memory for before and after part if needed. */
 static void	incl_exp_var(t_data *data, int start, char *exp_var, int len)
 {
 	char	*before;
@@ -67,7 +70,7 @@ static void	incl_exp_var(t_data *data, int start, char *exp_var, int len)
 	len2 = ft_strlen(data->input) - (start + len + 1);
 	if (start)
 		before = ft_substr(data->input, 0, start);
-	if (data->input[start + len + 1]) 
+	if (data->input[start + len + 1])
 		after = ft_substr(data->input, start + len + 1, len2);
 	free_str(&data->input);
 	if (before && !after)
@@ -87,10 +90,12 @@ static void	incl_exp_var(t_data *data, int start, char *exp_var, int len)
 		data->input = ft_strdup(exp_var);
 		free_str(&exp_var);
 	}
-	printf("NEW EXPANDED COMMAND is:\n%s\n", data->input);
+	//printf("NEW EXPANDED COMMAND is:\n%s\n", data->input);
 }
 
-/*Cuts out not found $-variable of input string*/
+/*Cuts out not found $-variable of input string. Certain if conditions in 
+  place in order to only allocate memory for before and after part if
+  needed.*/
 static void	cut_var(t_data *data, int start, int len)
 {
 	char	*before;
@@ -100,13 +105,12 @@ static void	cut_var(t_data *data, int start, int len)
 	before = NULL;
 	after = NULL;
 	len2 = ft_strlen(data->input) - (start + len + 1);
-	printf("STRLEN %d\n", len2);
+	//printf("STRLEN %d\n", len2);
 	if (start == 0 && len2 == 0)
 	{
 		free_str(&data->input);
 		return ;
 	}
-	//if sth comes before $
 	if (start)
 		before = ft_substr(data->input, 0, start);
 	if (data->input[start + len + 1])
@@ -115,7 +119,7 @@ static void	cut_var(t_data *data, int start, int len)
 	if (before && after)
 	{
 		if (!data->input)
-				data->input = ft_strdup(before);
+			data->input = ft_strdup(before);
 		free_str(&before);
 		data->input = ft_ms_strjoin_free_both(data->input, after);
 	}
@@ -129,11 +133,12 @@ static void	cut_var(t_data *data, int start, int len)
 		data->input = ft_strdup(after);
 		free_str(&after);
 	}	
-	printf("NEW CUT EXPANDED COMMAND is: %s\n", data->input);
+	//printf("NEW CUT EXPANDED COMMAND is: %s\n", data->input);
 }
 
 /*Identifies characters behind $-sign and stores them in tmp variable in
-  order to further check if the value can be found within the env variabes.
+  order to further check if the value can be found within the env variabes (stops
+  at null-terminator, space or quotes).
   If it can be found, value gets expanded via incl_exp_var function, otherwise 
   it gets cut out of string with cut_var function.*/
 static void	def_var(t_data *data, int i)
@@ -155,14 +160,14 @@ static void	def_var(t_data *data, int i)
 	tmp = ft_substr(data->input, start, len);
 	if (var_exist(data, tmp))
 	{
-		printf("VAR %s EXISTS\n", tmp);
+		//printf("VAR %s EXISTS\n", tmp);
 		tmp = get_expansion(data, tmp);
 		incl_exp_var(data, start - 1, tmp, len);
 	}
 	else
 	{
 		cut_var(data, start - 1, len);
-		printf("ENVAR-VAR %s\n", tmp); //new
+		//printf("ENVAR-VAR %s\n", tmp); //new
 		free_str(&tmp); //new
 	}
 }
@@ -180,7 +185,7 @@ int	ft_expand(t_data *data)
 		if (data->input[i] == '$' && (!between_quotes(data->input, i)
 				|| between_quotes(data->input, i) == 1))
 		{
-			printf("$ is between double quotes or no quotes\n");
+			//printf("$ is between double quotes or no quotes\n");
 			def_var(data, i);
 			i = 0;
 		}
@@ -188,6 +193,8 @@ int	ft_expand(t_data *data)
 			break ;
 		i++;
 	}
-	printf("FINAL STRING:\n%s000\n", data->input);
+	if (!data->input)
+		data->input_null = 1;
+	//printf("FINAL STRING:\n%s000\n", data->input);
 	return (0);
 }
