@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/17 15:13:28 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/20 15:57:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exec_proc(t_data *data)
 
 	n = 0;
 	pipe_flag = 0;
-	if (!data->input)
+	if (data->err_flag)
 		return (0);
 	init_index(data);
 	init_pid_arr(data);
@@ -64,11 +64,18 @@ int	exec_proc(t_data *data)
 	while (data->j < data->proc_nbr)
 	{
 		pipe_flag = 0;
-		if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
+		if (data->proc_nbr > 1 && data->j != data->proc_nbr -1) //&& data->j > 0)
 		{
 			pipe_flag = 1;
+			printf("fd value: %d\n", data->fd_arr[data->j][0]);
+			printf("fd value: %d\n", data->fd_arr[data->j][1]);
 			if (pipe(data->fd_arr[data->j]) == -1)
 				return (1);
+			else
+			{
+				printf("fd value: %d\n", data->fd_arr[data->j][0]);
+				printf("fd value: %d\n", data->fd_arr[data->j][1]);
+			}
 		}
 		data->pid_arr[data->j] = fork();
 		if (data->pid_arr[data->j] == 0)
@@ -86,13 +93,18 @@ int	exec_proc(t_data *data)
 			}
 			if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
 				dup2(data->fd_arr[data->j -1][0], STDIN_FILENO);
+			n = 0;
 			while (n < data->j)
 			{
+				printf("child fd %d: read open %d\n", data->j, data->fd_arr[n][0]);
 				close(data->fd_arr[n][0]);
+				printf("child fd %d: read closed %d\n", data->j, data->fd_arr[n][0]);
+				printf("child fd %d: write open %d\n", data->j, data->fd_arr[n][1]);
 				close(data->fd_arr[n][1]);
+				printf("child fd %d: write closed %d\n", data->j, data->fd_arr[n][1]);
 				n++;
 			}
-			if (data->proc[data->j].path != NULL && data->proc[data->j].cmd != NULL)
+			if (data->proc[data->j].cmd != NULL)
 			{
 				if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to built-in part line below
 					printf("BUILTIN PART\n");
@@ -106,18 +118,60 @@ int	exec_proc(t_data *data)
 					}
 				}
 			}
-			free_all(data, 2);
+			//free_all(data, 2);
+			return (EXIT_SUCCESS);
 		}
-		if ((data->pid_arr[data->j]) > 0)
-			waitpid(data->pid_arr[data->j], NULL, 0);
+		// if ((data->pid_arr[data->j]) > 0)
+		// {
+		// 	if (pipe_flag)
+		// 	{
+		// 		printf("main fd %d: read open %d\n", data->j, data->fd_arr[data->j][0]);
+		// 		close(data->fd_arr[data->j][0]);
+		// 		printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j][0]);
+		// 		printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+		// 		close(data->fd_arr[data->j][1]);
+		// 		printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+		// 		//waitpid(data->pid_arr[data->j], NULL, 0);
+		// 	}
+		// 	// waitpid(data->pid_arr[data->j], NULL, 0);
+		// 	// printf("waiting successful %d\n", data->pid_arr[data->j]);
+			
+		// 	// if (pipe_flag && data->j == 1)
+		// 	// {
+		// 	// 	printf("5 main closed\n");
+		// 	// 	//close(data->fd_arr[data->j][0]);
+		// 	// 	printf("2 main closed\n");
+		// 	// 	close(data->fd_arr[data->j][1]);
+		// 	// 	waitpid(data->pid_arr[data->j], NULL, 0);
+		// 	// }
+		// 	//waitpid(data->pid_arr[data->j], NULL, 0);
+		// }
 		data->j++;
 	}
-	//waitpid(data->pid_arr[data->j], NULL, 0);
+	//printf("here\n");
 	delete_heredocs(data);
 	dup2(data->save_stdout, STDOUT_FILENO);
 	dup2(data->save_stdin, STDIN_FILENO);
 	close (data->save_stdout);
 	close (data->save_stdin);
+	//printf("here2\n");
+	n = 0;
+	if (pipe_flag)
+	{
+		while (n < data->proc_nbr - 1)
+		{
+			close(data->fd_arr[n][0]);
+			close(data->fd_arr[n][1]);
+			n++;
+		}
+	}
+	n = 0;
+	while (n < data->proc_nbr)
+	{
+		waitpid(data->pid_arr[n], NULL, 0);
+		n++;
+	}
+	
 	return (0);
 }
 
@@ -149,6 +203,87 @@ int	exec_proc(t_data *data)
 // 		exit(EXIT_SUCCESS);
 // 	}
 // 	waitpid(pid, NULL, 0);
+// 	delete_heredocs(data);
+// 	dup2(data->save_stdout, STDOUT_FILENO);
+// 	dup2(data->save_stdin, STDIN_FILENO);
+// 	close (data->save_stdout);
+// 	close (data->save_stdin);
+// 	return (0);
+// }
+
+
+// int	exec_proc(t_data *data)
+// {
+// 	int	pipe_flag;
+// 	int	n;
+
+// 	n = 0;
+// 	pipe_flag = 0;
+// 	if (!data->input)
+// 		return (0);
+// 	init_index(data);
+// 	init_pid_arr(data);
+// 	init_fd_arr(data);
+// 	data->save_stdout = dup(STDOUT_FILENO);
+// 	data->save_stdin = dup(STDIN_FILENO);
+// 	while (data->j < data->proc_nbr)
+// 	{
+// 		pipe_flag = 0;
+// 		if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
+// 		{
+// 			pipe_flag = 1;
+// 			if (pipe(data->fd_arr[data->j]) == -1)
+// 				return (1);
+// 		}
+// 		data->pid_arr[data->j] = fork();
+// 		if (data->pid_arr[data->j] == 0)
+// 		{
+// 			if (heredoc_exec(data))
+// 				free_all(data, 1);
+// 			if (redir_exec(data))
+// 				free_all(data, 1);
+// 			if (pipe_flag == 1 && data->j == 0)
+// 				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+// 			if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
+// 			{
+// 				dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO);
+// 				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+// 			}
+// 			if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
+// 				dup2(data->fd_arr[data->j -1][0], STDIN_FILENO);
+// 			while (n < data->j)
+// 			{
+// 				close(data->fd_arr[n][0]);
+// 				close(data->fd_arr[n][1]);
+// 				n++;
+// 			}
+// 			if (/*data->proc[data->j].path != NULL &&*/ data->proc[data->j].cmd != NULL)
+// 			{
+// 				if (ft_strncmp(data->proc[data->j].cmd[0], "builtin", 7) == 0) // insert link to built-in part line below
+// 					printf("BUILTIN PART\n");
+// 				else 
+// 				{	
+// 					if (execve(data->proc[data->j].path, data->proc[data->j].cmd, data->temp_env) == -1)
+// 					{
+// 						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+// 						fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
+// 						free_all(data, 1);
+// 					}
+// 				}
+// 			}
+// 			// close(data->fd_arr[data->j][0]);
+// 			// close(data->fd_arr[data->j][1]);
+// 			free_all(data, 2);
+// 		}
+// 		if ((data->pid_arr[data->j]) > 0)
+// 		{
+// 			waitpid(data->pid_arr[data->j], NULL, 0);
+// 			// close(data->fd_arr[data->j][0]);
+// 			// close(data->fd_arr[data->j][1]);
+// 		}
+// 		data->j++;
+// 	}
+// 	//waitpid(data->pid_arr[data->j], NULL, 0);
 // 	delete_heredocs(data);
 // 	dup2(data->save_stdout, STDOUT_FILENO);
 // 	dup2(data->save_stdin, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/16 10:46:10 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/20 15:08:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
   Frees relevant parts of the main struct.*/
 void	free_all(t_data *data, int exit_flag)
 {
-	int	j;
-
-	j = 0;
+	if (data->err_flag)
+		return ;
 	if (data->input)
 		free_str(&data->input);
-	if (data->tokens && data->tokens[j])
+	if (data->tokens && data->tokens[0])
 		free_arr_void(&data->tokens);
 	if (data->token_list)
 	{
