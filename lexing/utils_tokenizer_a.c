@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/12 14:41:53 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/20 13:16:08 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,26 @@ static int	ft_wcount(char *s)
 
 	i = 0;
 	count = 0;
-	while (s[i])
+	if (s[i] == '\0')
+		count++;
+	else
 	{
-		if (s[i] && s[i] != ' ')
+		while (s[i])
 		{
-			count++;
-			while (s[i] && s[i] != ' ')
+			if (s[i] && s[i] != ' ')
 			{
-				if ((is_quote(s[i]) && s[i + 1]))
-					w_count_quote_iter(s, &i);
-				if (s[i])
-					i++;
+				count++;
+				while (s[i] && s[i] != ' ')
+				{
+					if ((is_quote(s[i]) && s[i + 1]))
+						w_count_quote_iter(s, &i);
+					if (s[i])
+						i++;
+				}
 			}
+			while (s[i] && s[i] == ' ')
+				i++;
 		}
-		while (s[i] && s[i] == ' ')
-			i++;
 	}
 	return (count);
 }
@@ -92,6 +97,14 @@ static char	**ft_store_words(char *s, char **arr)
 
 	i = 0;
 	j = 0;
+	
+	if (s[i] == '\0')
+	{
+		arr[j] = ft_strdup("");
+		printf("TEST=====");
+		arr[j + 1] = 0;
+		return (arr);
+	}
 	while (s[i])
 	{
 		if (is_quote(s[i]))
@@ -108,6 +121,7 @@ static char	**ft_store_words(char *s, char **arr)
 			i++;
 	}
 	arr[j] = 0;
+	j = 0;
 	return (arr);
 }
 

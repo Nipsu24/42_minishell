@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:57:41 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 13:15:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/20 14:10:15 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int	write_sytx_error(char *error_str, char error)
 	return (0);
 }
 
-/*Checks if there are pipes next to each other in user input, if yes, prints 
-  respective error message.*/
+/*Checks if there are pipes next to each other in user input or empty pipes.
+  If yes, prints respective error message.*/
 int	check_pipes(char *input)
 {
 	int	i;
 
 	i = 0;
-	if (!input && !input[i])
+	if (!input) //&& !input[i])
 		return (0);
 	while (input[i])
 	{
@@ -79,6 +79,8 @@ int	check_pipes(char *input)
 				return (write_sytx_error(NULL, '|'));
 			while (input[i] && input[i] == 32)
 				i++;
+			if (!input[i])
+				return (write_sytx_error(NULL, '|'));
 			if (input[i] && input[i] == '|')
 				return (write_sytx_error(NULL, '|'));
 		}

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/19 11:12:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/20 15:18:13 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,11 @@ static void	cut_var(t_data *data, int start, int len)
 	before = NULL;
 	after = NULL;
 	len2 = ft_strlen(data->input) - (start + len + 1);
-	//printf("STRLEN %d\n", len2);
 	if (start == 0 && len2 == 0)
 	{
 		free_str(&data->input);
+		data->input = ft_strdup("");
+		//printf("TEST FOR DUP\n");
 		return ;
 	}
 	if (start)
@@ -189,12 +190,10 @@ int	ft_expand(t_data *data)
 			def_var(data, i);
 			i = 0;
 		}
-		if (!data->input)
+		if (!data->input || data->input[0] == '\0')
 			break ;
 		i++;
 	}
-	if (!data->input)
-		data->input_null = 1;
 	//printf("FINAL STRING:\n%s000\n", data->input);
 	return (0);
 }

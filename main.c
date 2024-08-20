@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/19 11:14:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/20 16:05:50 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ int	lexer(t_data *data)
 	int	i;
 
 	i = 0;
+	if (data->err_flag)
+		return (0);
 	if (insert_space(data))
 		return (1);
 	if (ft_expand(data))
 		return (1);
-	if (!data->input)
+	if (check_pipes(data->input))
+	{
+		data->err_flag = 1;
+		free_str(&data->input);
 		return (0);
+	}
 	data->tokens = ft_tokenize(data->input);
 	if (!data->tokens)
 		return (1);
@@ -50,7 +56,7 @@ int	lexer(t_data *data)
   path for later execution part and filenames for heredocs.*/
 int	parsing(t_data *data)
 {
-	if (!data->input)
+	if (data->err_flag)
 		return (0);
 	if (init_proc_structs(data))
 		return (1);
@@ -78,28 +84,24 @@ static int	ft_input(t_data *data)
 //		setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
-		{
 			printf("EOF or ERROR");
-			return (1);
-		}
-		if (ft_strlen(data->input) > 0)
-			add_history(data->input);
-		if (not_valid_input(data->input))
+		else
 		{
-			free_str(&data->input);
-			data->err_flag = 1;
-		}
-		if (data->err_flag == 0)
-		{
+			if (ft_strlen(data->input) > 0)
+				add_history(data->input);
+			if (not_valid_input(data->input))
+			{
+				free_str(&data->input);
+				data->err_flag = 1;
+			}
 			if (lexer(data))
 				free_all(data, 1);
 			if (parsing(data))
 				free_all(data, 1);
 			if (exec_proc(data))
 				free_all(data, 0);
-		}
-		if (!data->input_null)
 			free_all(data, 0);
+		}
 	}
 	return (0);
 }
@@ -137,7 +139,6 @@ void	init_data(t_data *data)
 	init_index(data);
 	data->exit_status = 0;
 	data-> delim_fst_line = 0;
-	data->input_null = 0;
 }
 
 /*String array 'env' holds by default environment variables of the system. 
