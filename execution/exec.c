@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/21 10:11:25 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/21 14:25:02 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,17 @@ int	exec_proc(t_data *data)
 		if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
 		{
 			pipe_flag = 1;
-			printf("fd value: %d\n", data->fd_arr[data->j][0]);
-			printf("fd value: %d\n", data->fd_arr[data->j][1]);
+			// printf("fd value before pipe\n");
+			// printf("fd value: %d\n", data->fd_arr[data->j][0]);
+			// printf("fd value: %d\n", data->fd_arr[data->j][1]);
 			if (pipe(data->fd_arr[data->j]) == -1)
 				return (1);
-			else
-			{
-				printf("fd value: %d\n", data->fd_arr[data->j][0]);
-				printf("fd value: %d\n", data->fd_arr[data->j][1]);
-			}
+			// else
+			// {
+			// 	printf("fd value after pipe\n");
+			// 	printf("fd value: %d\n", data->fd_arr[data->j][0]);
+			// 	printf("fd value: %d\n", data->fd_arr[data->j][1]);
+			// }
 		}
 		data->pid_arr[data->j] = fork();
 		if (data->pid_arr[data->j] == 0)
@@ -85,27 +87,30 @@ int	exec_proc(t_data *data)
 			if (redir_exec(data))
 				free_all(data, 1);
 			if (pipe_flag == 1 && data->j == 0)
+			{
+				close(data->fd_arr[data->j][0]);
+					// fprintf(stderr, "child fd %d read closed %d\n", data->j, data->fd_arr[data->j][0]);
 				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+				close(data->fd_arr[data->j][1]);
+					// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
+			}
 			if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
 			{
 				dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO);
+				close(data->fd_arr[data->j - 1][0]);
+					// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+				close(data->fd_arr[data->j][0]);
 				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+				close(data->fd_arr[data->j][1]);
+					// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
 			}
 			if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
-				dup2(data->fd_arr[data->j -1][0], STDIN_FILENO);
-			n = 0;
-			if (pipe_flag)
 			{
-				while (n <= data->j)
-				{
-					fprintf(stderr, "child fd %d: read open %d\n", data->j, data->fd_arr[n][0]);
-					if (close(data->fd_arr[n][0]) == 0)
-						fprintf(stderr, "child fd %d: read closed %d\n", data->j, data->fd_arr[n][0]);
-					fprintf(stderr, "child fd %d: write open %d\n", data->j, data->fd_arr[n][1]);
-					if (close(data->fd_arr[n][1]) == 0)
-						fprintf(stderr, "child fd %d: write closed %d\n", data->j, data->fd_arr[n][1]);
-					n++;
-				}
+				close(data->fd_arr[data->j -1][1]);
+					// fprintf(stderr, "child fd %d write closed %d\n", data->j -1, data->fd_arr[data->j -1][1]);
+				dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO);
+				close(data->fd_arr[data->j - 1][0]);
+					// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
 			}
 			if (data->proc[data->j].cmd != NULL)
 			{
@@ -122,18 +127,39 @@ int	exec_proc(t_data *data)
 				}
 			}
 			free_all(data, 2);
-			// return (EXIT_SUCCESS);
 		}
 		if ((data->pid_arr[data->j]) > 0)
 		{
-			if (pipe_flag)
+			if (pipe_flag && data->j == 0)
 			{
-				printf("main fd %d: read open %d\n", data->j, data->fd_arr[data->j][0]);
-				if (close(data->fd_arr[data->j][0]) == 0)
-					printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j][0]);
-				printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-				if (close(data->fd_arr[data->j][1]) == 0)
-					printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+				// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+				close(data->fd_arr[data->j][1]);
+					// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+			}
+			if (pipe_flag && data->j > 0 && data->j != data->proc_nbr -1)
+			{
+				// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+				close(data->fd_arr[data->j - 1][0]) ;
+					// printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
+				// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+				close(data->fd_arr[data->j][1]);
+					// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+				// if (close(data->fd_arr[data->j - 1][1]) == 0)
+				// 	printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
+			}
+			if (pipe_flag && data->j > 0 && data->j == data->proc_nbr -1)
+			{
+				// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+				close(data->fd_arr[data->j - 1][0]);
+					// printf("main fd %d: read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+				// if (close(data->fd_arr[data->j -1][0]) == 0)
+					//printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
+				// printf("main fd %d: write open %d\n", data->j -1, data->fd_arr[data->j -1][1]);
+				close(data->fd_arr[data->j -1][1]);
+					// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
+			// 	printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+			// 	if (close(data->fd_arr[data->j][1]) == 0)
+			// 		printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
 			}
 		}
 		data->j++;
@@ -142,6 +168,7 @@ int	exec_proc(t_data *data)
 	while (n < data->proc_nbr)
 	{
 		waitpid(data->pid_arr[n], NULL, 0);
+		// printf("parent waited\n");
 		n++;
 	}
 	delete_heredocs(data);
@@ -149,22 +176,6 @@ int	exec_proc(t_data *data)
 	dup2(data->save_stdin, STDIN_FILENO);
 	close (data->save_stdout);
 	close (data->save_stdin);
-	//n = 0;
-	// if (pipe_flag)
-	// {
-	// 	while (n < data->proc_nbr)
-	// 	{
-	// 		close(data->fd_arr[n][0]);
-	// 		close(data->fd_arr[n][1]);
-	// 		n++;
-	// 	}
-	// }
-	// n = 0;
-	// while (n < data->proc_nbr)
-	// {
-	// 	waitpid(data->pid_arr[n], NULL, 0);
-	// 	n++;
-	// }
 	return (0);
 }
 

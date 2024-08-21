@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/16 12:12:44 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/21 14:15:19 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	free_2d_int_arr(t_data *data, int ***arr)
 		if ((*arr)[j] != NULL)
 		{
 			free((*arr)[j]);
-			*arr[j] = NULL;
+			(*arr)[j] = NULL;
 		}
 		j++;
 	}
