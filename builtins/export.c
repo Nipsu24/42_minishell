@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/11 12:51:23 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/17 13:31:52 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,43 @@ void	print_export_env(char **env)
 	}
 	while (env[i])
 	{
-		printf("declare -x ");
-		printf("%s\n", env[i]);
+		printf("declare -x %s\n", env[i]);
 		i++;
 	}
 }
 
-int	export(t_data *data, char *array)
+int	export(t_data *data)
 {
 	int	i;
-	int	ret;
 
-	i = 1;
-	ret = 0;
-	while (array[i])
+	if (!data || !data->proc || !data->proc[data->j].cmd)
 	{
-		if (add_var(data, array[i]))
-			ret = 1;
-		i++;
+		data->exit_status = 1;
+		perror("export command failed");
+		return (data->exit_status);
+	}
+	i = len_array(data->proc[data->j].cmd);
+	if (i > 2)
+	{
+		data->exit_status = 1;
+		perror(data->proc[data->j].cmd[0]);
+		free_str(data->proc[data->j].cmd);
+		return (data->exit_status);
 	}
 	if (i == 1)
+	{
 		print_export_env(data->temp_env);
-	return (ret);
+		return (0);
+	}
+	else
+	{
+		if (update_var(data, data->proc[data->j].cmd[1]) != 0)
+		{
+			data->exit_status = 1;
+			perror(data->proc[data->j].cmd[0]);
+			free_str(data->proc[data->j].cmd);
+			return (data->exit_status);
+		}
+	}
+	return (0);
 }
