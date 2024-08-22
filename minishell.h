@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/16 00:29:56 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:55:35 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,84 +94,85 @@ typedef struct s_data
 
 /*free functions*/
 
-void	free_all(t_data *data, int exit_flag);
-char	**free_arr_rev(char ***av, int j);
-char	**free_arr(char ***arr);
-void	free_arr_void(char ***arr);
-int		free_proc_arr_rev(t_data *data);
-void	free_proc_structs(t_data *data);
-void	free_str(char **str);
-void	free_int_arr(int **arr);
-void	free_2d_int_arr(t_data *data, int ***arr);
-void	free_2d_int_arr_rev(int ***arr, int j);
+void		free_all(t_data *data, int exit_flag);
+char		**free_arr_rev(char ***av, int j);
+char		**free_arr(char ***arr);
+void		free_arr_void(char ***arr);
+int			free_proc_arr_rev(t_data *data);
+void		free_proc_structs(t_data *data);
+void		free_str(char **str);
+void		free_int_arr(int **arr);
+void		free_2d_int_arr(t_data *data, int ***arr);
+void		free_2d_int_arr_rev(int ***arr, int j);
 
 /*Error check and utils*/
 
-int		not_valid_input(char *str);
-int		between_quotes(char *input, int pos);
-int		is_quote(char c);
+int			not_valid_input(char *str);
+int			between_quotes(char *input, int pos);
+int			is_quote(char c);
 
 /*lexing*/
 
-int		lexer(t_data *data);
-int		insert_space(t_data *data);
-int		ft_expand(t_data *data);
-char	**ft_tokenize(char *s);
-void	w_count_quote_iter(char *s, int *i);
-int		ft_malloc_token(t_data *data);
-void	assign_token_type(t_data *tokens, int i);
-int		remove_quotes(t_data *data);
+int			lexer(t_data *data);
+int			insert_space(t_data *data);
+int			ft_expand(t_data *data);
+char		**ft_tokenize(char *s);
+void		w_count_quote_iter(char *s, int *i);
+int			ft_malloc_token(t_data *data);
+void		assign_token_type(t_data *tokens, int i);
+int			remove_quotes(t_data *data);
 
 /*parsing*/
 
-int		parsing(t_data *data);
-int		init_proc_structs(t_data *data);
-int		init_path(t_data *data);
-int		alloc_here_filename(t_data *data);
-int		create_heredocs(t_data *data);
+int			parsing(t_data *data);
+int			init_proc_structs(t_data *data);
+int			init_path(t_data *data);
+int			alloc_here_filename(t_data *data);
+int			create_heredocs(t_data *data);
 
 /*execution*/
 
-int		exec_proc(t_data *data);
-int		redout_loop(t_data *data);
-int		appendout_loop(t_data *data);
-int		redin_loop(t_data *data);
-int		here_redirect(t_data *data);
-int		no_other_redout(t_data *data);
-int		no_other_redin(t_data *data);
-int		no_other_heredoc(t_data *data);
-void	delete_heredocs(t_data *data);
-int		init_pid_arr(t_data *data);
-int		init_fd_arr(t_data *data);
+int			exec_proc(t_data *data);
+int			redout_loop(t_data *data);
+int			appendout_loop(t_data *data);
+int			redin_loop(t_data *data);
+int			here_redirect(t_data *data);
+int			no_other_redout(t_data *data);
+int			no_other_redin(t_data *data);
+int			no_other_heredoc(t_data *data);
+void		delete_heredocs(t_data *data);
+int			init_pid_arr(t_data *data);
+int			init_fd_arr(t_data *data);
 
 /*built-in utils*/
 
-int		len_array(char **array);
-int		find_var(char **env, char *var);
-int		add_var(t_data *data, char *var);
-int		update_var(t_data *data, char *var);
+int			len_array(char **array);
+int			find_var(char **env, char *var);
+int			add_var(t_data *data, char *var);
+int			update_var(t_data *data, char *var);
+const char	*get_env_var(t_data *data, char *var);
 
 /*built-ins*/
 
-char	**ft_copy_env(char **env, t_data *data);
-int		child_builtins(t_data *data);
-void	non_child_builtins(t_data *data);
-int		cd(char **array, t_data *data);
-void	print_env(t_data *data);
-int		update_shlvl(t_data *data);
-int		echo(t_data *data);
-int		pwd(void);
-int		unset(t_data *data);
-int		export(t_data *data);
-
+char		**ft_copy_env(char **env, t_data *data);
+int			child_builtins(t_data *data);
+void		non_child_builtins(t_data *data);
+int			cd(char **array, t_data *data);
+void		print_env(t_data *data);
+int			update_shlvl(t_data *data);
+int			echo(t_data *data);
+int			pwd(void);
+int			unset(t_data *data);
+int			export(t_data *data);
+int			do_exit(t_data *data);
 
 /*signals*/
 
-void	setup_signal(void);
+void		setup_signal(void);
 
 /*further functions*/
 
-void	init_data(t_data *data);
-void	init_index(t_data *data);
+void		init_data(t_data *data);
+void		init_index(t_data *data);
 
 #endif

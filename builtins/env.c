@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 15:48:54 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/16 13:59:08 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ void	print_env(t_data *data)
 	i = len_array(data->proc[data->j].cmd);
 	if (!data || !(data->temp_env))
 		return ;
-	if (i > 1)
+	if (i != 1)
 	{
 		data->exit_status = 127;
 		perror(data->proc[data->j].cmd[0]);
-		free_str(&data->proc[data->j].cmd[0]);
+		free_str(data->proc[data->j].cmd);
 		exit(data->exit_status);
 	}
+	i = 0;
 	while (data->temp_env[i])
 	{
 		if (ft_strchr(data->temp_env[i], '='))
@@ -64,7 +65,7 @@ void	print_env(t_data *data)
 		}
 		i++;
 	}
-	free_str(&data->proc[data->j].cmd[0]);
+	free_arr(&data->proc[data->j].cmd);
 }
 
 int	update_shlvl(t_data *data)
