@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/15 13:48:34 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:50:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	exec_proc(t_data *data)
 	init_fd_arr(data);
 	data->save_stdout = dup(STDOUT_FILENO);
 	data->save_stdin = dup(STDIN_FILENO);
+	if (data->save_stdout == -1 || data->save_stdin == -1)
+		return (1);
 	while (data->j < data->proc_nbr)
 	{
 		pipe_flag = 0;
@@ -68,7 +70,10 @@ int	exec_proc(t_data *data)
 			if (pipe(data->fd_arr[data->j]) == -1)
 				return (1);
 		}
+		non_child_builtins(data);
 		data->pid_arr[data->j] = fork();
+		if (data->pid_arr[data->j] == -1)
+			return (1);
 		if (data->pid_arr[data->j] == 0)
 		{
 			if (heredoc_exec(data))
@@ -76,23 +81,30 @@ int	exec_proc(t_data *data)
 			if (redir_exec(data))
 				free_all(data, 1);
 			if (pipe_flag == 1 && data->j == 0)
-				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+			{
+				if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) == -1)
+					free_all(data, 1);				
+			}
 			if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
 			{
-				dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO);
-				dup2(data->fd_arr[data->j][1], STDOUT_FILENO);
+				if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) == -1)
+					free_all(data, 1);
+				if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) == -1)
+					free_all(data, 1);
 			}
 			if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
-				dup2(data->fd_arr[data->j -1][0], STDIN_FILENO);
+				if (dup2(data->fd_arr[data->j -1][0], STDIN_FILENO) == -1)
+					free_all(data, 1);
 			while (n < data->j)
 			{
 				close(data->fd_arr[n][0]);
 				close(data->fd_arr[n][1]);
 				n++;
 			}
-			if (data->proc[data->j].path != NULL && data->proc[data->j].cmd != NULL)
+			
+			if (!child_builtins(data))
 			{
-				if (!child_builtins(data))
+				if (data->proc[data->j].path != NULL && data->proc[data->j].cmd != NULL)
 				{
 					if (execve(data->proc[data->j].path,
 						data->proc[data->j].cmd, data->temp_env) == -1)
@@ -100,6 +112,7 @@ int	exec_proc(t_data *data)
 						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
 						free_all(data, 1);
 					}
+				
 				}
 			}
 			free_all(data, 2);
@@ -172,16 +185,15 @@ int	child_builtins(t_data *data)
 	}
 	return (0);
 }
-/*
+
 void	non_child_builtins(t_data *data)
 {
 	if (ft_strncmp(data->proc[data->j].cmd[0], "cd", 3) == 0)
-		cd(data);
+		cd(data->proc[data->j].cmd, data);
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "exit", 5) == 0)
-		exit_shell(data);
+		do_exit(data);
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "export", 7) == 0)
 		export(data);
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "unset", 6) == 0)
 		unset(data);
 }
-*/
