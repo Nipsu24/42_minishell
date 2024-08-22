@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/22 11:29:30 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:33:58 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ const char	*get_env_var(t_data *data, char *var);
 
 char		**ft_copy_env(char **env, t_data *data);
 int			child_builtins(t_data *data);
-void		non_child_builtins(t_data *data);
+int			non_child_builtins(t_data *data);
 int			cd(char **array, t_data *data);
 void		print_env(t_data *data);
 int			update_shlvl(t_data *data);
