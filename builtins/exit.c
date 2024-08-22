@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/22 11:09:45 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:15:44 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	do_exit(t_data *data)
 			|| exit_overflow(data->proc[data->j].cmd[1]))
 		{
 			printf("minishell: exit: %s: numeric argument required\n",
-			 data->proc[data->j].cmd[1]);
+				data->proc[data->j].cmd[1]);
 			data->exit_status = 255;
 			return (data->exit_status);
 		}

@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 23:53:35 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/22 11:48:34 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:35:33 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	unset(t_data *data)
 {
 	int		i;
 	char	**tmp;
+//	char	*new_env;
 
+//	new_env = malloc(sizeof(char *) * (len_array(data->temp_env)));
 	tmp = ft_split(data->proc[data->j].cmd[1], '=');
 	i = find_var(data->temp_env, tmp[0]);
 	if (i == len_array(data->temp_env))
@@ -28,5 +30,6 @@ int	unset(t_data *data)
 	}
 	data->temp_env[i] = NULL;
 	free_arr(&tmp);
+	ft_copy_env(data->temp_env, data);
 	return (0);
 }
