@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/22 11:50:46 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:39:08 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ int	add_var(t_data *data, char *var)
 	if (!new_env[i])
 		free_arr_rev(&new_env, i);
 	new_env[i + 1] = NULL;
+	printf("Adding %s\n", var);
 	free_arr(&data->temp_env);
 	data->temp_env = new_env;
+//	free_arr(&new_env);
 	return (0);
 }
 
