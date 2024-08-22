@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/22 13:41:32 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:46:45 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	export(t_data *data)
 	{
 		data->exit_status = 1;
 		perror(data->proc[data->j].cmd[0]);
-		free_str(data->proc[data->j].cmd);
 		return (data->exit_status);
 	}
 	if (i == 1)

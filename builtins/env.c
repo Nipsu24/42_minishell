@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/22 11:22:55 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:21:20 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ int	update_shlvl(t_data *data)
 	int		j;
 
 	i = find_var(data->temp_env, "SHLVL=");
+	if (i == len_array(data->temp_env))
+		update_var(data, "SHLVL=1");
 	j = ft_atoi(data->temp_env[i] + 6);
-	if (i == len_array(data->temp_env) || j < 2 || j > 999)
+	if (j < 2 || j > 999)
 		update_var(data, "SHLVL=1");
 	else
 	{
