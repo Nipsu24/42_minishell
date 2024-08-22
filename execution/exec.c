@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/22 11:35:19 by cesasanc         ###   ########.fr       */
+/*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
+/*   Updated: 2024/08/22 15:18:36 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	exec_proc(t_data *data)
 {
 	int	pipe_flag;
 	int	n;
+	int	status;
 
 	n = 0;
 	pipe_flag = 0;
@@ -117,20 +118,23 @@ int	exec_proc(t_data *data)
 				close(data->fd_arr[data->j - 1][0]);
 					// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
 			}
-			
-			if (child_builtins(data))
-			{
-				if (data->proc[data->j].cmd != NULL)
+			if (data->proc[data->j].cmd != NULL)
+            {
+				if (!child_builtins(data))
 				{
 					if (execve(data->proc[data->j].path,
 						data->proc[data->j].cmd, data->temp_env) == -1)
 					{
 						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-						fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
-						free_all(data, 1);
+						// fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
+						data->exit_status = 127;
+						free_all(data, 0);
+						exit (127);
 					}
+					else
+					 data->exit_status = 0;
 				}
-			}
+            }
 			free_all(data, 2);
 		}
 		if ((data->pid_arr[data->j]) > 0)
@@ -172,7 +176,9 @@ int	exec_proc(t_data *data)
 	n = 0;
 	while (n < data->proc_nbr)
 	{
-		waitpid(data->pid_arr[n], NULL, 0);
+		waitpid(data->pid_arr[n], &status, 0);
+		if (WIFEXITED(status))
+			data->exit_status = WEXITSTATUS(status);		
 		// printf("parent waited\n");
 		n++;
 	}
