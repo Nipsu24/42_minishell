@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
+#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/15 12:01:22 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/22 11:20:09 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,12 @@ FILES = main.c \
 		signal/signals.c \
 		builtins/env.c \
 		builtins/builtin_utils.c \
-#		builtins/pwd.c \
+		builtins/pwd.c \
+		builtins/echo.c \
+		builtins/export.c \
+		builtins/unset.c \
+		builtins/cd.c \
+		builtins/exit.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 

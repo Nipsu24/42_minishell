@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/16 10:27:48 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/22 11:22:55 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,26 @@ char	**ft_copy_env(char **env, t_data *data)
 		i++;
 	}
 	data->temp_env[i] = NULL;
-	//update_shlvl(data);
+	update_shlvl(data);
 	return (data->temp_env);
 }
 
 /*Prints the envrironmental variable*/
-void	print_env(t_data *data, char **array)
+void	print_env(t_data *data)
 {
 	int	i;
 
-	i = len_array(array);
+	i = len_array(data->proc[data->j].cmd);
 	if (!data || !(data->temp_env))
 		return ;
-	if (i > 1)
+	if (i != 1)
 	{
 		data->exit_status = 127;
-		perror(array[1]);
-		free_arr(&array);
+		perror(data->proc[data->j].cmd[0]);
+		free_str(data->proc[data->j].cmd);
+		exit(data->exit_status); // Check later
 	}
+	i = 0;
 	while (data->temp_env[i])
 	{
 		if (ft_strchr(data->temp_env[i], '='))
@@ -64,7 +66,7 @@ void	print_env(t_data *data, char **array)
 		}
 		i++;
 	}
-	free_arr(&array);
+	free_arr(&data->proc[data->j].cmd);
 }
 
 int	update_shlvl(t_data *data)
@@ -73,20 +75,14 @@ int	update_shlvl(t_data *data)
 	int		j;
 
 	i = find_var(data->temp_env, "SHLVL=");
-	if (i == len_array(data->temp_env))
-	{
-		add_var(data, "SHLVL=1");
-		if (!data->temp_env)
-			return (1);
-	}
+	j = ft_atoi(data->temp_env[i] + 6);
+	if (i == len_array(data->temp_env) || j < 2 || j > 999)
+		update_var(data, "SHLVL=1");
 	else
 	{
-		j = ft_atoi(data->temp_env[i] + 6);
 		j++;
-		free(data->temp_env[i]);
+		free_str(&data->temp_env[i]);
 		data->temp_env[i] = ft_strjoin("SHLVL=", ft_itoa(j));
-		if (!data->temp_env[i])
-			return (1);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/20 16:05:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/22 11:27:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ static int	ft_input(t_data *data)
 				free_all(data, 1);
 			if (exec_proc(data))
 				free_all(data, 0);
-			free_all(data, 0);
 		}
+		free_all(data, 0);
 	}
 	return (0);
 }
@@ -136,9 +136,9 @@ void	init_data(t_data *data)
 	data->tmp = NULL;
 	data->pid_arr = NULL;
 	data->fd_arr = NULL;
-	init_index(data);
 	data->exit_status = 0;
 	data-> delim_fst_line = 0;
+	init_index(data);
 }
 
 /*String array 'env' holds by default environment variables of the system. 

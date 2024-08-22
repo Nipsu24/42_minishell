@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/14 11:43:40 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/16 15:59:29 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int	check_for_cmds(t_data *data)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j < data->proc_nbr)
 	{

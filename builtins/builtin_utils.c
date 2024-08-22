@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/14 14:52:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/22 11:20:56 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	len_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (!array)
+		return (0);
+	while (array[i])
+		i++;
+	return (i);
+}
 
 int	find_var(char **env, char *word)
 {
@@ -19,7 +31,7 @@ int	find_var(char **env, char *word)
 
 	i = 0;
 	j = len_array(env);
-	if (!env)
+	if (!env || !word || !j)
 		return (0);
 	while ((i < j) && ft_strncmp(word, env[i], ft_strlen(word)))
 		i++;
@@ -39,13 +51,12 @@ int	add_var(t_data *data, char *var)
 		return (1);
 	while (i < j)
 	{
-		new_env[i]
-			= ft_substr(data->temp_env[i], 0, ft_strlen(data->temp_env[i]));
+		new_env[i] = ft_strdup(data->temp_env[i]);
 		if (!new_env[i])
 			free_arr_rev(&new_env, i);
 		i++;
 	}
-	new_env[i] = ft_substr(var, 0, ft_strlen(var));
+	new_env[i] = ft_strdup(var);
 	if (!new_env[i])
 		free_arr_rev(&new_env, i);
 	new_env[i + 1] = NULL;
@@ -57,27 +68,44 @@ int	add_var(t_data *data, char *var)
 
 int	update_var(t_data *data, char *var)
 {
-	int	i;
+	int		i;
+	char	**tmp;
 
-	i = find_var(data->temp_env, var);
-	if (i == len_array(data->temp_env))
-		return (add_var(data, var));
-	free(data->temp_env[i]);
-	data->temp_env[i] = ft_substr(var, 0, ft_strlen(var));
-	if (!data->temp_env[i])
+	i = 0;
+	if (!data || !data->temp_env || !var)
 		return (1);
-	free_str(&var);
+	tmp = ft_split(var, '=');
+	if (!tmp)
+		return (1);
+	i = find_var(data->temp_env, tmp[0]);
+	if (i == len_array(data->temp_env))
+		add_var(data, var);
+	else
+	{
+		printf("Updating %s\n", var);
+		free_str(&data->temp_env[i]);
+		data->temp_env[i] = ft_strdup(var);
+		if (!data->temp_env[i])
+			return (1);
+	}
+	free_arr(&tmp);
 	return (0);
 }
 
-int	len_array(char **array)
+const char	*get_env_var(t_data *data, char *var)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	if (!array)
-		return (0);
-	while (array[i])
+	len = ft_strlen(var);
+	while (data->temp_env[i])
+	{
+		if (ft_strncmp(data->temp_env[i], var, len) == 0)
+		{
+			return (data->temp_env[i] + len + 1);
+		}
 		i++;
-	return (i);
+	}
+	return (NULL);
 }
