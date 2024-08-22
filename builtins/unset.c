@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 23:53:35 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/16 13:17:28 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:48:34 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	unset(t_data *data)
 		i++;
 	}
 	data->temp_env[i] = NULL;
+	free_arr(&tmp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/22 11:26:29 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:35:19 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	exec_proc(t_data *data)
 					// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
 			}
 			
-			if (!child_builtins(data))
+			if (child_builtins(data))
 			{
 				if (data->proc[data->j].cmd != NULL)
 				{
@@ -240,7 +240,7 @@ int	child_builtins(t_data *data)
 	return (0);
 }
 
-void	non_child_builtins(t_data *data)
+int	non_child_builtins(t_data *data)
 {
 	if (ft_strncmp(data->proc[data->j].cmd[0], "cd", 3) == 0)
 		cd(data->proc[data->j].cmd, data);
@@ -250,4 +250,5 @@ void	non_child_builtins(t_data *data)
 		export(data);
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "unset", 6) == 0)
 		unset(data);
+	return (0);
 }
