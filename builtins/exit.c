@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/22 13:15:44 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:01:21 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ static bool	exit_overflow(const char *str)
 
 int	do_exit(t_data *data)
 {
-	if (!data->proc[data->j].cmd[1])
-	{
-		printf("exit\n");
-		exit(data->exit_status);
-	}
 	if (data->proc[data->j].cmd[1] && data->proc[data->j].cmd[2])
 	{
 		printf("exit: too many arguments\n");
@@ -67,8 +62,8 @@ int	do_exit(t_data *data)
 			return (data->exit_status);
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);
-		printf("exit\n");
-		exit(data->exit_status);
 	}
+	printf("exit\n");
+	exit(data->exit_status);
 	return (data->exit_status);
 }
