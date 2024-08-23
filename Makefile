@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/22 11:20:09 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/08/23 17:14:15 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ FILES = main.c \
 		lexing/utils_tokenizer_a.c \
 		lexing/utils_tokenizer_b.c \
 		lexing/token_handling.c \
-		lexing/expansion.c \
+		lexing/expansion_a.c \
+		lexing/expansion_b.c \
+		lexing/expansion_c.c \
 		lexing/insert_space.c \
 		lexing/remove_quotes.c \
 		parsing/init_proc_structs.c \

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/22 13:53:58 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/23 17:13:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ typedef struct s_data
 	int			exit_status;
 	int			delim_fst_line;
 	int			exit_expand;
+	char		*before;
+	char		*after;
+	int			flag_before;
+	int			flag_after;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -123,6 +127,12 @@ int			is_quote(char c);
 int			lexer(t_data *data);
 int			insert_space(t_data *data);
 int			ft_expand(t_data *data);
+int			cut_var(t_data *data, int start, int len);
+int			incl_exp_var(t_data *data, int start, char *exp_var, int len);
+char		*get_expansion(t_data *data, char *tmp);
+int			var_exist(t_data *data, char *tmp);
+int			create_null_string(t_data *data);
+int 		check_before_after_case(t_data *data);
 char		**ft_tokenize(char *s);
 void		w_count_quote_iter(char *s, int *i);
 int			ft_malloc_token(t_data *data);
