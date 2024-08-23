@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/22 13:54:13 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/23 13:57:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,10 @@ void	init_data(t_data *data)
 	data->exit_status = 0;
 	data-> delim_fst_line = 0;
 	data->exit_expand = 0;
+	data->before = NULL;
+	data->after = NULL;
+	data->flag_before = 0;
+	data->flag_after = 0;
 	init_index(data);
 }
 
