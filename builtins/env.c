@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/22 14:21:20 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:59:10 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	print_env(t_data *data)
 		}
 		i++;
 	}
-	free_arr(&data->proc[data->j].cmd);
+//	free_arr(&data->proc[data->j].cmd);
 }
 
 int	update_shlvl(t_data *data)
