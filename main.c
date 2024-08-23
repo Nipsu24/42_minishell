@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/22 11:27:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:54:16 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	init_data(t_data *data)
 	data->pid_arr = NULL;
 	data->fd_arr = NULL;
 	data->exit_status = 0;
-	data-> delim_fst_line = 0;
+	data->delim_fst_line = 0;
 	init_index(data);
 }
 
