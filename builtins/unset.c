@@ -6,12 +6,15 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 23:53:35 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 16:20:09 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:04:03 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Function to remove a variable from the environment. If the variable is not
+   found, return 0. If the variable is found, remove it from the environment,
+   by shifting the array to the left. */
 int	unset(t_data *data)
 {
 	int		i;

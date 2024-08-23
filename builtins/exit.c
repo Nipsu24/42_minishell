@@ -6,12 +6,13 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 17:01:21 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:02:26 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Checks if the argument is a number. */
 static bool	is_numeric(const char *str)
 {
 	int	i;
@@ -30,6 +31,7 @@ static bool	is_numeric(const char *str)
 	return (true);
 }
 
+/* Checks if the argument is an overflow. */
 static bool	exit_overflow(const char *str)
 {
 	if (ft_strlen(str) > 20)
@@ -43,6 +45,10 @@ static bool	exit_overflow(const char *str)
 	return (false);
 }
 
+/* The exit command. If there are more than 2 arguments, print an error message.
+If there is one argument, check if it is a number and if it is an overflow.
+If it is, print an error message. If it is not, convert the argument to an int
+and exit with that status. If there are no arguments, exit with status 0. */
 int	do_exit(t_data *data)
 {
 	if (data->proc[data->j].cmd[1] && data->proc[data->j].cmd[2])

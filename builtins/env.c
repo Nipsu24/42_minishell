@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 14:59:10 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:01:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,10 @@ void	print_env(t_data *data)
 		}
 		i++;
 	}
-//	free_arr(&data->proc[data->j].cmd);
 }
 
+/*Function to update the shell level variable in the environment, if it is not
+  set, it will be set to 1. If it is set, it will be incremented by 1*/
 int	update_shlvl(t_data *data)
 {
 	int		i;

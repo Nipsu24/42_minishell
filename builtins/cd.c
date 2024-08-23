@@ -6,12 +6,14 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:33:42 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 16:39:38 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:00:53 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Function to change directory to HOME, if HOME is not set, return error. Then
+   update PWD variable with the new path */
 static int	cd_home(t_data *data)
 {
 	const char	*home;
@@ -34,6 +36,9 @@ static int	cd_home(t_data *data)
 	return (0);
 }
 
+/* Function to change directory to the path given in the argument. If the path
+   is not valid, return error. Then update PWD and OLDPWD variables with the new
+   path */
 static int	do_cd(char **array, t_data *data)
 {
 	char	*newpwd;
@@ -62,6 +67,9 @@ static int	do_cd(char **array, t_data *data)
 	return (0);
 }
 
+/* Function to change directory. If no arguments are given, change to HOME. If
+   more than one argument is given, return error. If one argument is given,
+   change to the path given in the argument */
 int	cd(char **array, t_data *data)
 {
 	int	i;
