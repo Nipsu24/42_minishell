@@ -6,12 +6,13 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 16:41:01 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 21:59:40 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Function to find the length of a 2d array */
 int	len_array(char **array)
 {
 	int	i;
@@ -24,6 +25,7 @@ int	len_array(char **array)
 	return (i);
 }
 
+/* Function to find the index of a variable in the environment */
 int	find_var(char **env, char *word)
 {
 	int	i;
@@ -38,6 +40,8 @@ int	find_var(char **env, char *word)
 	return (i);
 }
 
+/* Function to add a variable to the environment, by creating a new array 
+   and copying the old one into it */
 int	add_var(t_data *data, char *var)
 {
 	int		i;
@@ -63,6 +67,8 @@ int	add_var(t_data *data, char *var)
 	return (0);
 }
 
+/* Function to update a variable in the environment, by finding the variable
+   and replacing it with the new value */
 int	update_var(t_data *data, char *var)
 {
 	int		i;
@@ -88,6 +94,8 @@ int	update_var(t_data *data, char *var)
 	return (0);
 }
 
+/* Function to get the value of an environment variable, by finding the variable
+   and returning the value */
 char	*get_env_var(t_data *data, char *var)
 {
 	int	i;

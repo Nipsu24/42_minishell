@@ -6,12 +6,15 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/22 13:46:45 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:03:34 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Function to print the environment variables. If there are no variables, print
+   an error message. If there are variables, print them with the format
+   "declare -x VARIABLE". */
 void	print_export_env(char **env)
 {
 	int	i;
@@ -29,6 +32,8 @@ void	print_export_env(char **env)
 	}
 }
 
+/* Function to update a variable in the environment. If the variable is not
+found, add it to the environment. If the variable is found, update it. */
 int	export(t_data *data)
 {
 	int	i;
