@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:15:44 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/15 13:55:39 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:09:21 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	print_echo(t_data *data)
 		printf("\n");
 }
 
-/* The echo command. */
+/* The echo command. If there are no arguments, print a newline character.
+If there are arguments, print them. */
 int	echo(t_data *data)
 {
 	if (!(data->proc[data->j].cmd[1]))
