@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 16:25:53 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:41:40 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int			cd(char **array, t_data *data);
 void		print_env(t_data *data);
 int			update_shlvl(t_data *data);
 int			echo(t_data *data);
-int			pwd(void);
+int			pwd(t_data *data);
 int			unset(t_data *data);
 int			export(t_data *data);
 int			do_exit(t_data *data);

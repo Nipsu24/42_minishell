@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 21:59:40 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:49:41 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,27 @@ int	len_array(char **array)
 /* Function to find the index of a variable in the environment */
 int	find_var(char **env, char *word)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*tmp;
 
+	if (!env || !word)
+		return (-1);
 	i = 0;
 	j = len_array(env);
-	if (!env || !word || !j)
+	tmp = ft_strjoin(word, "=");
+	if (!tmp)
 		return (0);
-	while ((i < j) && ft_strncmp(word, env[i], ft_strlen(word)))
+	while (i < j)
+	{
+		if (!ft_strncmp(tmp, env[i], ft_strlen(tmp)))
+		{
+			free(tmp);
+			return (i);
+		}
 		i++;
+	}
+	free(tmp);
 	return (i);
 }
 

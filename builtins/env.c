@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 22:01:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:17:40 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	print_env(t_data *data)
 		free_str(data->proc[data->j].cmd);
 		exit(data->exit_status); // Check later
 	}
+	update_shlvl(data);
 	i = 0;
 	while (data->temp_env[i])
 	{
@@ -75,12 +76,18 @@ int	update_shlvl(t_data *data)
 	int		i;
 	int		j;
 
-	i = find_var(data->temp_env, "SHLVL=");
+	i = find_var(data->temp_env, "SHLVL");
 	if (i == len_array(data->temp_env))
-		update_var(data, "SHLVL=1");
+	{
+		update_var(data, "SHLVL=0");
+		return (0);
+	}
 	j = ft_atoi(data->temp_env[i] + 6);
-	if (j < 2 || j > 999)
+	if (j > 999)
+	{
+		printf("warning: shell level (1000) too high, resetting to 1\n");
 		update_var(data, "SHLVL=1");
+	}
 	else
 	{
 		j++;
