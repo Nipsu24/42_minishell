@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:36:01 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/20 12:10:52 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:23:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	init_token_type(t_data *data, int num_tokens)
 int	ft_malloc_token(t_data *data)
 {
 	data->num_tokens = 0;
-	
 	if (data->tokens && data->tokens[0] && data->tokens[0][0] == '\0')
 		data->num_tokens++;
 	else

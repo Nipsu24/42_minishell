@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:50:44 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 17:40:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:18:11 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 static int	malloc_before_after(t_data *data, int start, int len)
 {
 	int	len2;
-	
+
 	data->flag_before = 0;
 	data->flag_after = 0;
 	len2 = ft_strlen(data->input) - (start + len + 1);

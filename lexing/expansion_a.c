@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 17:33:39 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:17:37 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static char	*get_tmp_var(t_data *data, int *i, int *len, int start)
 	}
 	else
 	{
-		while (data->input[*i] && data->input[*i] != 32 && data->input[*i] != '"'
-			&& data->input[*i] != '$')
+		while (data->input[*i] && data->input[*i] != 32
+			&& data->input[*i] != '"' && data->input[*i] != '$')
 		{
 			(*i)++;
 			(*len)++;
@@ -130,7 +130,7 @@ int	ft_expand(t_data *data)
 		if (!data->input || data->input[0] == '\0')
 			break ;
 		if (data->input[i] != '$')
-		i++;
+			i++;
 	}
 	return (0);
 }
