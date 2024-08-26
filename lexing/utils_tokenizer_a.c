@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 15:40:45 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:24:26 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ static char	**ft_store_words(char *s, char **arr)
 
 	i = 0;
 	j = 0;
-	
 	if (s[i] == '\0')
 	{
 		arr[j] = ft_strdup("");

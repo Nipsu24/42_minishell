@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:58:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 17:44:30 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:19:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	create_null_string(t_data *data)
 static int	before_after_cut_var(t_data *data)
 {
 	if (!data->input)
-			data->input = ft_strdup(data->before);
+		data->input = ft_strdup(data->before);
 	if (!data->input)
 		return (1);
 	free_str(&data->before);
@@ -85,7 +85,7 @@ static int	before_after_cut_var(t_data *data)
 
 /*Helper function of cut_var, cuts out not found variable
   depending on where the variable is located in the string.*/
-int check_before_after_case(t_data *data)
+int	check_before_after_case(t_data *data)
 {
 	if (data->flag_before && data->flag_after)
 	{
