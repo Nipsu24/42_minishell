@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/22 14:16:16 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:42:13 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ int	child_builtins(t_data *data)
 	}
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "pwd", 4) == 0)
 	{
-		pwd();
+		pwd(data);
 		return (1);
 	}
 	return (0);
