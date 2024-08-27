@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_heredoc.c                                   :+:      :+:    :+:   */
+/*   create_heredoc_a.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 16:03:27 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/27 15:07:00 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,42 +32,6 @@ static int	dup_for_empty_here_tmp(t_data *data)
 		free_str(&data->tmp);
 		data->delim_fst_line = 1;
 		return (-1);
-	}
-	return (0);
-}
-
-/*Checks first, if no further heredoc is detected in the process.
-  If no further detected, creates temporary heredoc file by giving
-  the previously created filename (from alloc_here_filename function)
-  or NULL in case delimiter is encountered directly on first line
-  (delim_fst_line == 1 from dup_for_empty_here function) to the 'open'
-  function as argument. Then writes content of here_tmp string into 
-  file and closes fd. Index k is incremented for potential next loop 
-  (if further files for other redirects need to be set up).*/
-static int	file_create_n_write(t_data *data)
-{
-	if (no_other_heredoc(data))
-	{
-		if (!data->proc[data->j].here_tmp)
-			return (1);
-		data->proc[data->j].fd[data->k]
-			= open(data->proc[data->j].here_name,
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (data->delim_fst_line == 1)
-			write(data->proc[data->j].fd[data->k],
-				NULL, 0);
-		else
-			write(data->proc[data->j].fd[data->k],
-				data->proc[data->j].here_tmp,
-				ft_strlen(data->proc[data->j].here_tmp));
-		close (data->proc[data->j].fd[data->k]);
-		free_str(&data->tmp);
-		data->k++;
-	}
-	else
-	{
-		free_str(&data->tmp);
-		free_str(&data->proc[data->j].here_tmp);
 	}
 	return (0);
 }

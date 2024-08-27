@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 17:13:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/27 16:04:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int			incl_exp_var(t_data *data, int start, char *exp_var, int len);
 char		*get_expansion(t_data *data, char *tmp);
 int			var_exist(t_data *data, char *tmp);
 int			create_null_string(t_data *data);
-int 		check_before_after_case(t_data *data);
+int			check_before_after_case(t_data *data);
 char		**ft_tokenize(char *s);
 void		w_count_quote_iter(char *s, int *i);
 int			ft_malloc_token(t_data *data);
@@ -143,9 +143,14 @@ int			remove_quotes(t_data *data);
 
 int			parsing(t_data *data);
 int			init_proc_structs(t_data *data);
+int			alloc_proc_structs(t_data *data);
+int			fill_proc_structs(t_data *data);
+int			count_pipes(t_data *data);
+void		helper_alloc_fds(t_data *data);
 int			init_path(t_data *data);
 int			alloc_here_filename(t_data *data);
 int			create_heredocs(t_data *data);
+int			file_create_n_write(t_data *data);
 
 /*execution*/
 
