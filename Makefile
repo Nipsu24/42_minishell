@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/27 14:37:38 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/27 15:52:46 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ FILES = main.c \
 		lexing/expansion_c.c \
 		lexing/insert_space.c \
 		lexing/remove_quotes.c \
-		parsing/init_proc_structs.c \
+		parsing/init_proc_structs_a.c \
+		parsing/init_proc_structs_b.c \
+		parsing/init_proc_structs_c.c \
 		parsing/path.c \
 		parsing/alloc_file_name.c \
 		parsing/create_heredoc_a.c \

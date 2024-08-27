@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/16 15:59:29 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:58:08 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static int	join_cmd_path(t_data *data)
 		{
 			while (data->path_arr[i])
 			{
-				//printf("PATH ARRAY: %s\n", data->path_arr[i]);
 				if (data->path_arr[i])
 					data->proc[j].path
 						= ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);

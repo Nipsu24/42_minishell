@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:57:41 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/20 14:10:15 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/27 15:09:46 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_pipes(char *input)
 	int	i;
 
 	i = 0;
-	if (!input) //&& !input[i])
+	if (!input)
 		return (0);
 	while (input[i])
 	{
