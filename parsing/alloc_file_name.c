@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 11:19:07 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 11:56:12 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/27 14:35:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static int	here_in_prc(t_data *data)
   and suffix into one string for filename creation.*/
 static int	join_file_name(t_data *data, char *prefix, char *suffix)
 {
-	data->proc[data->j].here_name = ft_ms_strjoin_rev_free(prefix, ft_itoa(data->i));
+	data->proc[data->j].here_name
+		= ft_ms_strjoin_rev_free(prefix, ft_itoa(data->i));
 	if (!data->proc[data->j].here_name)
 		return (1);
 	data->i++;
-	data->proc[data->j].here_name = ft_ms_strjoin(data->proc[data->j].here_name, suffix);
+	data->proc[data->j].here_name
+		= ft_ms_strjoin(data->proc[data->j].here_name, suffix);
 	if (!data->proc[data->j].here_name)
 		return (1);
 	return (0);

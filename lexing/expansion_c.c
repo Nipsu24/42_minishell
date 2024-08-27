@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:58:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/26 15:19:41 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/27 14:27:51 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ char	*get_expansion(t_data *data, char *tmp)
 	int	len2;
 
 	j = 0;
+	tmp = ft_ms_strjoin(tmp, "="); //new for handling expansion aa, a
+	if (!tmp)
+		return (NULL);
 	len = ft_strlen(tmp);
 	len2 = 0;
 	while (data->temp_env[j])
 	{
 		if (ft_strncmp(data->temp_env[j], tmp, len) == 0)
 		{
-			len++;
+			//len++; // not needed if strjoin tmp and '='
 			free_str(&tmp);
 			len2 = ft_strlen(data->temp_env[j]) - len;
 			tmp = ft_substr(data->temp_env[j], len, len2);
