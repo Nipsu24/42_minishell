@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/28 11:14:26 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/28 15:40:35 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ FILES = main.c \
 		execution/redirects.c \
 		execution/redirect_utils.c \
 		execution/exec_utils.c \
+		execution/child_exec.c \
+		execution/parent_exec.c \
 		signal/signals.c \
 		builtins/env.c \
 		builtins/builtin_utils.c \
