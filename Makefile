@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/27 15:52:46 by mmeier           ###   ########.fr        #
+#    Updated: 2024/08/28 11:14:26 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ FILES = main.c \
 		parsing/create_heredoc_b.c \
 		free/free_a.c \
 		free/free_b.c \
+		free/free_c.c \
 		execution/exec.c \
 		execution/redirects.c \
 		execution/redirect_utils.c \
