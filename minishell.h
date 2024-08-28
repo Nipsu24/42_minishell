@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 10:55:58 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:15:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int			len_array(char **array);
 int			find_var(char **env, char *var);
 int			add_var(t_data *data, char *var);
 int			update_var(t_data *data, char *var);
-const char	*get_env_var(t_data *data, char *var);
+char		*get_env_var(t_data *data, char *var);
 
 /*built-ins*/
 
@@ -183,7 +183,7 @@ int			cd(char **array, t_data *data);
 void		print_env(t_data *data);
 int			update_shlvl(t_data *data);
 int			echo(t_data *data);
-int			pwd(void);
+int			pwd(t_data *data);
 int			unset(t_data *data);
 int			export(t_data *data);
 int			do_exit(t_data *data);
