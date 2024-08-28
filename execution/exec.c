@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 14:14:06 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:19:20 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int	exec_proc(t_data *data)
 				}
 			}
 			data->j++;
+		}
 	}
 	n = 0;
 	while (n < data->proc_nbr)
