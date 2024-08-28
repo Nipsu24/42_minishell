@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/23 13:57:10 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/28 11:32:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	lexer(t_data *data)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (data->err_flag)
 		return (0);
 	if (insert_space(data))
@@ -39,13 +39,8 @@ int	lexer(t_data *data)
 		return (1);
 	if (!ft_malloc_token(data))
 		return (1);
-	while (data->tokens[i])
-	{
+	while (i++, data->tokens[i])
 		assign_token_type(data, i);
-		// printf("%s\n", data->tokens[i]);
-		// printf("%d\n", data->token_list[i].type);
-		i++;
-	}
 	if (remove_quotes(data))
 		return (1);
 	return (0);
@@ -70,12 +65,13 @@ int	parsing(t_data *data)
 	return (0);
 }
 
-/*The 'readline' function enables writing commands to program during execution. 
-  The 'add_history' function enables visibility of previous inserted commands
-  (using keyboards "arrow up" after a command has been typed). err_flag prevents
-  going into further functions if not valid input is inserted (flag set to 1).
-  In case any function in err_flag if statement fails, data is freed and exited (1),
-  except when exec_proc fails (0/void)*/
+/*The readline function enables writing commands to program 
+  during execution. The 'add_history' function enables visibility
+  of previous inserted commands(using keyboards "arrow up" after
+  a command has been typed). err_flag prevents going into further
+  functions if not valid input is inserted (flag set to 1).
+  In case any function in err_flag if statement fails, data is
+  freed and exited (1), except when exec_proc fails (0/void)*/
 static int	ft_input(t_data *data)
 {
 	while (1)
@@ -137,7 +133,7 @@ void	init_data(t_data *data)
 	data->pid_arr = NULL;
 	data->fd_arr = NULL;
 	data->exit_status = 0;
-	data-> delim_fst_line = 0;
+	data->delim_fst_line = 0;
 	data->exit_expand = 0;
 	data->before = NULL;
 	data->after = NULL;

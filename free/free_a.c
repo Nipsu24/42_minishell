@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/20 15:08:43 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/28 11:19:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,17 @@ static void	free_redir(t_data *data)
 	}
 }
 
+/*Helper function of free_proc_arr_rev*/
+static void	free_rest_rev(t_data *data)
+{
+	if (data->proc[data->j].fd != NULL)
+		free_int_arr(&data->proc[data->j].fd);
+	if (data->proc[data->j].here_name != NULL)
+		free_str(&data->proc[data->j].here_name);
+	if (data->proc[data->j].here_tmp != NULL)
+		free_str(&data->proc[data->j].here_tmp);
+}
+
 /*Frees proc arrays in case of failed memory allocation for either cmd or
   redir arrays*/
 int	free_proc_arr_rev(t_data *data)
@@ -100,12 +111,7 @@ int	free_proc_arr_rev(t_data *data)
 			free(data->proc[data->j].redir);
 			data->proc[data->j].redir = NULL;
 		}
-		if (data->proc[data->j].fd != NULL)
-			free_int_arr(&data->proc[data->j].fd);
-		if (data->proc[data->j].here_name != NULL)
-			free_str(&data->proc[data->j].here_name);
-		if (data->proc[data->j].here_tmp != NULL)
-			free_str(&data->proc[data->j].here_tmp);
+		free_rest_rev(data);
 		data->j--;
 	}
 	free(data->proc);

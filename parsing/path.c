@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/27 15:58:08 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/28 09:56:09 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,29 @@ static int	join_slash(t_data *data)
   (via access function) the path string remains empty (NULL). */
 static int	join_cmd_path(t_data *data)
 {
-	int	j;
-	int	i;
-
-	j = 0;
-	i = 0;
-	while (j < data->proc_nbr)
+	data->j = 0;
+	data->i = 0;
+	while (data->j < data->proc_nbr)
 	{
-		i = 0;
-		if (data->proc[j].cmd != NULL)
+		data->i = 0;
+		if (data->proc[data->j].cmd != NULL)
 		{
-			while (data->path_arr[i])
+			while (data->path_arr[data->i])
 			{
-				if (data->path_arr[i])
-					data->proc[j].path
-						= ft_strjoin(data->path_arr[i], data->proc[j].cmd[0]);
-				if (!data->proc[j].path)
+				if (data->path_arr[data->i])
+					data->proc[data->j].path
+						= ft_strjoin(data->path_arr[data->i],
+							data->proc[data->j].cmd[0]);
+				if (!data->proc[data->j].path)
 					return (1);
-				if (access(data->proc[j].path, F_OK) == 0)
+				if (access(data->proc[data->j].path, F_OK) == 0)
 					break ;
-				free(data->proc[j].path);
-				data->proc[j].path = NULL;
-				i++;
+				free(data->proc[data->j].path);
+				data->proc[data->j].path = NULL;
+				data->i++;
 			}
 		}
-		j++;
+		data->j++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 16:04:10 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/28 10:55:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 typedef enum s_token_type
 {
 	INIT_VAL = -1,
-	COMMAND, //0
-	REDIRECT_IN, //1
-	REDIRECT_OUT, //2
-	HEREDOC, //3
-	REDIRECT_OUT_APP, //4
-	PIPE, //5
-	RED_OP, //6
+	COMMAND,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	HEREDOC,
+	REDIRECT_OUT_APP,
+	PIPE,
+	RED_OP,
 }			t_token_type;
 
 /*Holds information of a single token*/
@@ -53,7 +53,7 @@ typedef struct s_token
 typedef struct s_prc
 {
 	char				**cmd;
-	char				**redir; // < > << >>
+	char				**redir;
 	char				*path;
 	int					*fd;
 	int					fd_amount;
@@ -134,7 +134,7 @@ int			var_exist(t_data *data, char *tmp);
 int			create_null_string(t_data *data);
 int			check_before_after_case(t_data *data);
 char		**ft_tokenize(char *s);
-void		w_count_quote_iter(char *s, int *i);
+int			ft_wcount(char *s);
 int			ft_malloc_token(t_data *data);
 void		assign_token_type(t_data *tokens, int i);
 int			remove_quotes(t_data *data);
