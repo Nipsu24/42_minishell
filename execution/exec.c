@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 13:07:26 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:14:06 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,100 +82,101 @@ int	exec_proc(t_data *data)
 			// 	printf("fd value: %d\n", data->fd_arr[data->j][1]);
 			// }
 		}
-		non_child_builtins(data);
-		data->pid_arr[data->j] = fork();
-		if (data->pid_arr[data->j] == -1)
-			return (1);
-		if (data->pid_arr[data->j] == 0)
+		if (!non_child_builtins(data))
 		{
-			if (heredoc_exec(data))
-				free_all(data, 1);
-			if (redir_exec(data))
-				free_all(data, 1);
-			if (pipe_flag == 1 && data->j == 0)
+			data->pid_arr[data->j] = fork();
+			if (data->pid_arr[data->j] == -1)
+				return (1);
+			if (data->pid_arr[data->j] == 0)
 			{
-				close(data->fd_arr[data->j][0]);
-					// fprintf(stderr, "child fd %d read closed %d\n", data->j, data->fd_arr[data->j][0]);
-				if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
+				if (heredoc_exec(data))
 					free_all(data, 1);
-				close(data->fd_arr[data->j][1]);
-					// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
-			}
-			if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
-			{
-				if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
+				if (redir_exec(data))
 					free_all(data, 1);
-				close(data->fd_arr[data->j - 1][0]);
-					// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-				close(data->fd_arr[data->j][0]);
-				if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
-					free_all(data, 1);
-				close(data->fd_arr[data->j][1]);
-					// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
-			}
-			if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
-			{
-				close(data->fd_arr[data->j -1][1]);
-					// fprintf(stderr, "child fd %d write closed %d\n", data->j -1, data->fd_arr[data->j -1][1]);
-				if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
-					free_all(data, 1);
-				close(data->fd_arr[data->j - 1][0]);
-					// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-			}
-			if (data->proc[data->j].cmd != NULL)
-            {
-				if (!child_builtins(data))
+				if (pipe_flag == 1 && data->j == 0)
 				{
-					if (execve(data->proc[data->j].path,
-						data->proc[data->j].cmd, data->temp_env) == -1)
-					{
-						printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-						// fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
-						data->exit_status = 127;
-						free_all(data, 0);
-						exit (127);
-					}
-					else
-					 data->exit_status = 0;
+					close(data->fd_arr[data->j][0]);
+						// fprintf(stderr, "child fd %d read closed %d\n", data->j, data->fd_arr[data->j][0]);
+					if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
+						free_all(data, 1);
+					close(data->fd_arr[data->j][1]);
+						// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
 				}
-            }
-			free_all(data, 2);
-		}
-		if ((data->pid_arr[data->j]) > 0)
-		{
-			if (pipe_flag && data->j == 0)
-			{
-				// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-				close(data->fd_arr[data->j][1]);
-					// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+				if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
+				{
+					if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
+						free_all(data, 1);
+					close(data->fd_arr[data->j - 1][0]);
+						// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+					close(data->fd_arr[data->j][0]);
+					if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
+						free_all(data, 1);
+					close(data->fd_arr[data->j][1]);
+						// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
+				}
+				if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
+				{
+					close(data->fd_arr[data->j -1][1]);
+						// fprintf(stderr, "child fd %d write closed %d\n", data->j -1, data->fd_arr[data->j -1][1]);
+					if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
+						free_all(data, 1);
+					close(data->fd_arr[data->j - 1][0]);
+						// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+				}
+				if (data->proc[data->j].cmd != NULL)
+				{
+					if (!child_builtins(data))
+					{
+						if (execve(data->proc[data->j].path,
+							data->proc[data->j].cmd, data->temp_env) == -1)
+						{
+							printf("%s: command not found\n", data->proc[data->j].cmd[0]);
+							// fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
+							data->exit_status = 127;
+							free_all(data, 0);
+							exit (127);
+						}
+						else
+						data->exit_status = 0;
+					}
+				}
+				free_all(data, 2);
 			}
-			if (pipe_flag && data->j > 0 && data->j != data->proc_nbr -1)
+			if ((data->pid_arr[data->j]) > 0)
 			{
-				// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-				close(data->fd_arr[data->j - 1][0]) ;
-					// printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
-				// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-				close(data->fd_arr[data->j][1]);
-					// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
-				// if (close(data->fd_arr[data->j - 1][1]) == 0)
-				// 	printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
+				if (pipe_flag && data->j == 0)
+				{
+					// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+					close(data->fd_arr[data->j][1]);
+						// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+				}
+				if (pipe_flag && data->j > 0 && data->j != data->proc_nbr -1)
+				{
+					// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+					close(data->fd_arr[data->j - 1][0]) ;
+						// printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
+					// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+					close(data->fd_arr[data->j][1]);
+						// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+					// if (close(data->fd_arr[data->j - 1][1]) == 0)
+					// 	printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
+				}
+				if (pipe_flag && data->j > 0 && data->j == data->proc_nbr -1)
+				{
+					// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+					close(data->fd_arr[data->j - 1][0]);
+						// printf("main fd %d: read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
+					// if (close(data->fd_arr[data->j -1][0]) == 0)
+						//printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
+					// printf("main fd %d: write open %d\n", data->j -1, data->fd_arr[data->j -1][1]);
+					close(data->fd_arr[data->j -1][1]);
+						// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
+				// 	printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
+				// 	if (close(data->fd_arr[data->j][1]) == 0)
+				// 		printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
+				}
 			}
-			if (pipe_flag && data->j > 0 && data->j == data->proc_nbr -1)
-			{
-				// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-				close(data->fd_arr[data->j - 1][0]);
-					// printf("main fd %d: read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-				// if (close(data->fd_arr[data->j -1][0]) == 0)
-					//printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
-				// printf("main fd %d: write open %d\n", data->j -1, data->fd_arr[data->j -1][1]);
-				close(data->fd_arr[data->j -1][1]);
-					// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
-			// 	printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-			// 	if (close(data->fd_arr[data->j][1]) == 0)
-			// 		printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
-			}
-		}
-		data->j++;
+			data->j++;
 	}
 	n = 0;
 	while (n < data->proc_nbr)
@@ -196,6 +197,8 @@ int	exec_proc(t_data *data)
 
 int	child_builtins(t_data *data)
 {
+	if (!data->proc[data->j].cmd)
+		return (0);
 	if (ft_strncmp(data->proc[data->j].cmd[0], "echo", 5) == 0)
 	{
 		echo(data);
@@ -208,7 +211,7 @@ int	child_builtins(t_data *data)
 	}
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "pwd", 4) == 0)
 	{
-		pwd();
+		pwd(data);
 		return (1);
 	}
 	return (0);
@@ -216,14 +219,28 @@ int	child_builtins(t_data *data)
 
 int	non_child_builtins(t_data *data)
 {
+	if (!data->proc[data->j].cmd)
+		return (0);
 	if (ft_strncmp(data->proc[data->j].cmd[0], "cd", 3) == 0)
+	{
 		cd(data->proc[data->j].cmd, data);
+		return (1);
+	}
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "exit", 5) == 0)
+	{
 		do_exit(data);
+		return (1);
+	}
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "export", 7) == 0)
+	{
 		export(data);
+		return (1);
+	}
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "unset", 6) == 0)
+	{
 		unset(data);
+		return (1);
+	}
 	return (0);
 }
 
