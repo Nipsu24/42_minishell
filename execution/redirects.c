@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:42:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/14 14:03:14 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:51:36 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	redin_loop(t_data *data)
 		}
 		if (no_other_redin(data))
 		{
-			dup2(data->proc[data->j].fd[data->k], STDIN_FILENO);
+			if (dup2(data->proc[data->j].fd[data->k], STDIN_FILENO) < 0)
+				return (1);
 			close(data->proc[data->j].fd[data->k]);
 			if (data->proc[data->j].redir[data->i + 2] != NULL)
 				data->proc[data->j].fd[data->k]++;
@@ -66,7 +67,8 @@ int	appendout_loop(t_data *data)
 		}
 		if (no_other_redout(data))
 		{
-			dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO);
+			if (dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO) < 0)
+				return (1);
 			close(data->proc[data->j].fd[data->k]);
 			if (data->proc[data->j].redir[data->i + 2] != NULL)
 				data->proc[data->j].fd[data->k]++;
@@ -98,7 +100,8 @@ int	redout_loop(t_data *data)
 			return (1);
 		if (no_other_redout(data))
 		{
-			dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO);
+			if (dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO) < 0)
+				return (1);
 			close(data->proc[data->j].fd[data->k]);
 			if (data->proc[data->j].redir[data->i + 2] != NULL)
 				data->proc[data->j].fd[data->k]++;
@@ -128,7 +131,8 @@ int	here_redirect(t_data *data)
 					data->proc[data->j].here_name);
 				return (1);
 			}
-			dup2(data->proc[data->j].fd[data->k], STDIN_FILENO);
+			if (dup2(data->proc[data->j].fd[data->k], STDIN_FILENO) < 0)
+				return (1);
 			close(data->proc[data->j].fd[data->k]);
 			if (data->proc[data->j].redir[data->l + 2] != NULL)
 				data->proc[data->j].fd[data->k]++;
