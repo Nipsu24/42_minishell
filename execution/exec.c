@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 14:19:20 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:55:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Handles redirection of heredoc content.*/
-static int	heredoc_exec(t_data *data)
+int	heredoc_exec(t_data *data)
 {
 	if (data->proc[data->j].redir && data->proc[data->j].redir[data->i])
 	{
@@ -29,7 +29,7 @@ static int	heredoc_exec(t_data *data)
 
 /*Handles redirect operants <, > and >>.*/
 
-static int	redir_exec(t_data *data)
+int	redir_exec(t_data *data)
 {
 	if (data->proc[data->j].redir && data->proc[data->j].redir[data->i])
 	{
@@ -49,12 +49,6 @@ static int	redir_exec(t_data *data)
   restores the initial state of stdout/-in in the parent process.*/
 int	exec_proc(t_data *data)
 {
-	int	pipe_flag;
-	int	n;
-	int	status;
-
-	n = 0;
-	pipe_flag = 0;
 	if (data->err_flag)
 		return (0);
 	init_index(data);
@@ -66,21 +60,12 @@ int	exec_proc(t_data *data)
 		return (1);
 	while (data->j < data->proc_nbr)
 	{
-		pipe_flag = 0;
+		data->pipe_flag = 0;
 		if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
 		{
-			pipe_flag = 1;
-			// printf("fd value before pipe\n");
-			// printf("fd value: %d\n", data->fd_arr[data->j][0]);
-			// printf("fd value: %d\n", data->fd_arr[data->j][1]);
+			data->pipe_flag = 1;
 			if (pipe(data->fd_arr[data->j]) == -1)
 				return (1);
-			// else
-			// {
-			// 	printf("fd value after pipe\n");
-			// 	printf("fd value: %d\n", data->fd_arr[data->j][0]);
-			// 	printf("fd value: %d\n", data->fd_arr[data->j][1]);
-			// }
 		}
 		if (!non_child_builtins(data))
 		{
@@ -89,110 +74,21 @@ int	exec_proc(t_data *data)
 				return (1);
 			if (data->pid_arr[data->j] == 0)
 			{
-				if (heredoc_exec(data))
+				if (child_procs(data))
 					free_all(data, 1);
-				if (redir_exec(data))
-					free_all(data, 1);
-				if (pipe_flag == 1 && data->j == 0)
+				if (child_exec(data))
 				{
-					close(data->fd_arr[data->j][0]);
-						// fprintf(stderr, "child fd %d read closed %d\n", data->j, data->fd_arr[data->j][0]);
-					if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
-						free_all(data, 1);
-					close(data->fd_arr[data->j][1]);
-						// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
-				}
-				if (pipe_flag == 1 && data->j != 0 && data->j != data->proc_nbr -1)
-				{
-					if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
-						free_all(data, 1);
-					close(data->fd_arr[data->j - 1][0]);
-						// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-					close(data->fd_arr[data->j][0]);
-					if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
-						free_all(data, 1);
-					close(data->fd_arr[data->j][1]);
-						// fprintf(stderr, "child fd %d duped write closed %d\n", data->j, data->fd_arr[data->j][1]);
-				}
-				if (data->proc_nbr > 1 && data->j != 0 && data->j == data->proc_nbr -1)
-				{
-					close(data->fd_arr[data->j -1][1]);
-						// fprintf(stderr, "child fd %d write closed %d\n", data->j -1, data->fd_arr[data->j -1][1]);
-					if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
-						free_all(data, 1);
-					close(data->fd_arr[data->j - 1][0]);
-						// fprintf(stderr, "child fd %d duped read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-				}
-				if (data->proc[data->j].cmd != NULL)
-				{
-					if (!child_builtins(data))
-					{
-						if (execve(data->proc[data->j].path,
-							data->proc[data->j].cmd, data->temp_env) == -1)
-						{
-							printf("%s: command not found\n", data->proc[data->j].cmd[0]);
-							// fprintf(stderr, "%s\n", data->proc[data->j].cmd[0]);
-							data->exit_status = 127;
-							free_all(data, 0);
-							exit (127);
-						}
-						else
-						data->exit_status = 0;
-					}
+					free_all(data, 0);
+					exit(data->exit_status);
 				}
 				free_all(data, 2);
 			}
 			if ((data->pid_arr[data->j]) > 0)
-			{
-				if (pipe_flag && data->j == 0)
-				{
-					// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-					close(data->fd_arr[data->j][1]);
-						// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
-				}
-				if (pipe_flag && data->j > 0 && data->j != data->proc_nbr -1)
-				{
-					// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-					close(data->fd_arr[data->j - 1][0]) ;
-						// printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
-					// printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-					close(data->fd_arr[data->j][1]);
-						// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
-					// if (close(data->fd_arr[data->j - 1][1]) == 0)
-					// 	printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
-				}
-				if (pipe_flag && data->j > 0 && data->j == data->proc_nbr -1)
-				{
-					// printf("main fd %d: read open %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-					close(data->fd_arr[data->j - 1][0]);
-						// printf("main fd %d: read closed %d\n", data->j -1, data->fd_arr[data->j -1][0]);
-					// if (close(data->fd_arr[data->j -1][0]) == 0)
-						//printf("main fd %d: read closed %d\n", data->j, data->fd_arr[data->j -1][0]);
-					// printf("main fd %d: write open %d\n", data->j -1, data->fd_arr[data->j -1][1]);
-					close(data->fd_arr[data->j -1][1]);
-						// printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j -1][1]);
-				// 	printf("main fd %d: write open %d\n", data->j, data->fd_arr[data->j][1]);
-				// 	if (close(data->fd_arr[data->j][1]) == 0)
-				// 		printf("main fd %d: write closed %d\n", data->j, data->fd_arr[data->j][1]);
-				}
-			}
+				parent_close_fds(data);
 			data->j++;
 		}
 	}
-	n = 0;
-	while (n < data->proc_nbr)
-	{
-		waitpid(data->pid_arr[n], &status, 0);
-		if (WIFEXITED(status))
-			data->exit_status = WEXITSTATUS(status);		
-		// printf("parent waited\n");
-		n++;
-	}
-	delete_heredocs(data);
-	dup2(data->save_stdout, STDOUT_FILENO);
-	dup2(data->save_stdin, STDIN_FILENO);
-	close (data->save_stdout);
-	close (data->save_stdin);
+	parent_wait_n_cleanup(data);
 	return (0);
 }
 
@@ -244,7 +140,6 @@ int	non_child_builtins(t_data *data)
 	}
 	return (0);
 }
-
 
 /*old exec_proc version*/
 // int	exec_proc(t_data *data)

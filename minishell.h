@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 14:15:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:48:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_data
 	char		*after;
 	int			flag_before;
 	int			flag_after;
+	int			pipe_flag;
 	t_token		*token_list;
 	t_prc		*proc;
 }				t_data;
@@ -165,6 +166,12 @@ int			no_other_heredoc(t_data *data);
 void		delete_heredocs(t_data *data);
 int			init_pid_arr(t_data *data);
 int			init_fd_arr(t_data *data);
+int			child_procs(t_data *data);
+int			child_exec(t_data *data);
+int			heredoc_exec(t_data *data);
+int			redir_exec(t_data *data);
+void		parent_close_fds(t_data *data);
+void		parent_wait_n_cleanup(t_data *data);
 
 /*built-in utils*/
 
