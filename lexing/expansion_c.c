@@ -6,14 +6,15 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:58:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 14:27:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:49:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Returns a string with the related expansion (text behind '= sign')
-  of respective env. variable (tmp). len++ to account for '='.*/
+  of respective env. variable (tmp). Before compares to be expanded
+  variable until '=' sign with respective env var.*/
 char	*get_expansion(t_data *data, char *tmp)
 {
 	int	j;
@@ -21,7 +22,7 @@ char	*get_expansion(t_data *data, char *tmp)
 	int	len2;
 
 	j = 0;
-	tmp = ft_ms_strjoin(tmp, "="); //new for handling expansion aa, a
+	tmp = ft_ms_strjoin(tmp, "=");
 	if (!tmp)
 		return (NULL);
 	len = ft_strlen(tmp);
@@ -30,7 +31,6 @@ char	*get_expansion(t_data *data, char *tmp)
 	{
 		if (ft_strncmp(data->temp_env[j], tmp, len) == 0)
 		{
-			//len++; // not needed if strjoin tmp and '='
 			free_str(&tmp);
 			len2 = ft_strlen(data->temp_env[j]) - len;
 			tmp = ft_substr(data->temp_env[j], len, len2);

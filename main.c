@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 14:59:51 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:38:59 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	ft_input(t_data *data)
 		{
 			if (ft_strlen(data->input) > 0)
 				add_history(data->input);
-			if (not_valid_input(data->input))
+			if (not_valid_input(data->input, data))
 			{
 				free_str(&data->input);
 				data->err_flag = 1;

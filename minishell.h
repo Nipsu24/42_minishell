@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 15:48:04 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/29 15:04:25 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void		free_2d_int_arr_rev(int ***arr, int j);
 
 /*Error check and utils*/
 
-int			not_valid_input(char *str);
+int			not_valid_input(char *str, t_data *data);
 int			check_quotes(char *input);
 int			between_quotes(char *input, int pos);
 int			write_sytx_error(char *error_str, char error);
