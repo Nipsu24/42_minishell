@@ -6,12 +6,13 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 15:54:31 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/29 15:17:17 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Contains logic of closing not needed fds of the several pipes.*/
 void	parent_close_fds(t_data *data)
 {
 	if (data->pipe_flag && data->j == 0)
@@ -28,6 +29,8 @@ void	parent_close_fds(t_data *data)
 	}
 }
 
+/*Extracts exit_status from child processes, deletes heredocs
+  and resets stdin and stdout fds.*/
 void	parent_wait_n_cleanup(t_data *data)
 {
 	int	n;
