@@ -6,7 +6,7 @@
 #    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/22 11:20:09 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/08/29 18:51:52 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ FILES = main.c \
 		execution/redirects.c \
 		execution/redirect_utils.c \
 		execution/exec_utils.c \
-		signal/signals.c \
+		signals/signals.c \
+		signals/termios.c \
 		builtins/env.c \
 		builtins/builtin_utils.c \
 		builtins/pwd.c \
@@ -48,7 +49,7 @@ FILES = main.c \
 		builtins/export.c \
 		builtins/unset.c \
 		builtins/cd.c \
-		builtins/exit.c
+		builtins/exit.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -73,7 +74,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)parsing
 	@mkdir -p $(OBJ_DIR)execution
 	@mkdir -p $(OBJ_DIR)free
-	@mkdir -p $(OBJ_DIR)signal
+	@mkdir -p $(OBJ_DIR)signals
 
 clean:
 	make clean -C $(LIBFT)
