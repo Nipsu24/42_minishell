@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 12:35:52 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/30 16:49:06 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int			heredoc_exec(t_data *data);
 int			redir_exec(t_data *data);
 void		parent_close_fds(t_data *data);
 void		parent_wait_n_cleanup(t_data *data);
+int			parent_builtin_check(t_data *data);
 
 /*built-in utils*/
 

@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 12:38:12 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/30 16:47:40 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,13 @@ int	exec_proc(t_data *data)
 {
 	if (data->err_flag)
 		return (0);
+	if (parent_builtin_check(data) && data->proc_nbr > 1)
+		return (0);
 	if (init_exec(data))
 		return (1);
 	if (exec_loop(data))
 		return (1);
-	parent_wait_n_cleanup(data);
+	if (!parent_builtin_check(data))
+		parent_wait_n_cleanup(data);
 	return (0);
 }
