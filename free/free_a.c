@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 11:19:04 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/29 12:11:55 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	free_all(t_data *data, int exit_flag)
 		exit(EXIT_FAILURE);
 	if (exit_flag == 2)
 		exit(EXIT_SUCCESS);
-	return ;
+	if (exit_flag == data->exit_status && exit_flag != 0)
+		exit(data->exit_status);
 }
 
 /*Frees all proc_structs in order.*/

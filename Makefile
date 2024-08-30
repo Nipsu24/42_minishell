@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/30 12:27:20 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/08/30 12:31:51 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,10 @@ FILES = main.c \
 		execution/exec_utils.c \
 		signals/signals.c \
 		signals/termios.c \
+		execution/child_exec.c \
+		execution/parent_exec.c \
+		execution/exec_builtins.c \
+		execution/child_here_red.c \
 		builtins/env.c \
 		builtins/builtin_utils.c \
 		builtins/pwd.c \
