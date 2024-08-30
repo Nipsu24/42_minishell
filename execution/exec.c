@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:10:18 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/28 10:56:45 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:40:24 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	exec_proc(t_data *data)
 		return (1);
 	while (data->j < data->proc_nbr)
 	{
+		handle_signals(1);
 		pipe_flag = 0;
 		if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
 		{
@@ -84,6 +85,7 @@ int	exec_proc(t_data *data)
 		if (!non_child_builtins(data))
 		{
 			data->pid_arr[data->j] = fork();
+			handle_signals(2);
 			if (data->pid_arr[data->j] == -1)
 				return (1);
 			if (data->pid_arr[data->j] == 0)

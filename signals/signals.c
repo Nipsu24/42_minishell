@@ -6,33 +6,40 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:15:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/29 18:56:28 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:47:50 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*void	handle_signals(int sig)
+static void	sig_int_handler(int sig)
 {
 	if (sig == SIGINT)
+		printf("\n");
+}
+
+void	handle_signals(int flag)
+{
+	if (flag == 1)
 	{
 		signal(SIGINT, SIG_IGN);
-		ioctl(0, TIOCSTI, "\n");
+		signal(SIGINT, sig_int_handler);
 	}
-	else if (sig == SIGQUIT)
+	else if (flag == 2)
 	{
-		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 	}
-}*/
+}
 
 static void	ignore(int sig)
 {
 	if (sig == SIGINT)
 	{
-	rl_replace_line("", 1);
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
