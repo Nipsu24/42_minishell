@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/29 18:50:27 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:49:42 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ static int	ft_input(t_data *data)
 		setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
-			printf("EOF or ERROR");
+		{
+			printf("exit\n");
+			break ;
+		}
 		else
 		{
 			if (ft_strlen(data->input) > 0)
