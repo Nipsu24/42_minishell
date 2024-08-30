@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/26 19:17:40 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 12:18:20 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	update_shlvl(t_data *data)
 	{
 		j++;
 		free_str(&data->temp_env[i]);
-		data->temp_env[i] = ft_strjoin("SHLVL=", ft_itoa(j));
+		data->temp_env[i] = ft_ms_strjoin_rev_free("SHLVL=", ft_itoa(j));
 	}
 	return (0);
 }
