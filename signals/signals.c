@@ -6,30 +6,45 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:15:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/05/31 11:58:26 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:47:50 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*static void	handle_this(int sig)
+static void	sig_int_handler(int sig)
 {
-	(void)sig;
-	ft_printf("\nminishell>");
-}*/
+	if (sig == SIGINT)
+		printf("\n");
+}
+
+void	handle_signals(int flag)
+{
+	if (flag == 1)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, sig_int_handler);
+	}
+	else if (flag == 2)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
+}
+
+static void	ignore(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
 
 void	setup_signal(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_flags = SA_RESTART | SA_SIGINFO;
-	if (sigemptyset(&sa.sa_mask) == -1)
-	{
-		perror("sigemptyset");
-		exit(EXIT_FAILURE);
-	}
-	if (sigaction(SIGQUIT, &sa, NULL))
-		sa.sa_handler = SIG_IGN;
-	if (sigaction(SIGINT, &sa, NULL))
-		ft_printf("\nminishell>");
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ignore);
 }

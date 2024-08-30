@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 14:15:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 12:28:12 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "./libft/libft.h"
 # include <signal.h>
+# include <termios.h>
+# include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
@@ -190,7 +192,9 @@ int			do_exit(t_data *data);
 
 /*signals*/
 
+void		handle_signals(int sig);
 void		setup_signal(void);
+void		setup_termios(int mode);
 
 /*further functions*/
 
