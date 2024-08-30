@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:45:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/15 13:16:17 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:41:25 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,22 @@ static int	check_redirects(char *input)
 }
 
 /*Checks for any syntax errors within the user input.*/
-int	not_valid_input(char *input)
+int	not_valid_input(char *input, t_data *data)
 {
 	if (check_quotes(input))
+	{
+		data->exit_status = 2;
 		return (1);
+	}
 	if (check_pipes(input))
+	{
+		data->exit_status = 2;
 		return (1);
+	}
 	if (check_redirects(input))
+	{
+		data->exit_status = 2;
 		return (1);
+	}
 	return (0);
 }

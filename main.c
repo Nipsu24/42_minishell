@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 12:28:01 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/08/30 12:35:19 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,13 @@ static int	ft_input(t_data *data)
 			printf("exit\n");
 			break ;
 		}
+		if (!data->input[0])
+			data->err_flag = 1;
 		else
 		{
 			if (ft_strlen(data->input) > 0)
 				add_history(data->input);
-			if (not_valid_input(data->input))
+			if (not_valid_input(data->input, data))
 			{
 				free_str(&data->input);
 				data->err_flag = 1;
@@ -99,8 +101,8 @@ static int	ft_input(t_data *data)
 				free_all(data, 1);
 			if (exec_proc(data))
 				free_all(data, 0);
+			free_all(data, 0);
 		}
-		free_all(data, 0);
 	}
 	return (0);
 }
@@ -142,6 +144,7 @@ void	init_data(t_data *data)
 	data->after = NULL;
 	data->flag_before = 0;
 	data->flag_after = 0;
+	data->pipe_flag = 0;
 	init_index(data);
 }
 
