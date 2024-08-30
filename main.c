@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 12:35:19 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/30 17:11:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	ft_input(t_data *data)
 			break ;
 		}
 		if (!data->input[0])
-			data->err_flag = 1;
+			free_str(&data->input);
 		else
 		{
 			if (ft_strlen(data->input) > 0)
