@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/29 14:38:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/08/30 12:04:40 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static int	ft_input(t_data *data)
 		data->input = readline("minishell> ");
 		if (!data->input)
 			printf("EOF or ERROR");
+		if (!data->input[0])
+			data->err_flag = 1;
 		else
 		{
 			if (ft_strlen(data->input) > 0)
@@ -96,8 +98,8 @@ static int	ft_input(t_data *data)
 				free_all(data, 1);
 			if (exec_proc(data))
 				free_all(data, 0);
+			free_all(data, 0);
 		}
-		free_all(data, 0);
 	}
 	return (0);
 }
