@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/08/30 12:31:51 by mmeier           ###   ########.fr        #
+#    Updated: 2024/09/02 13:49:59 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS = -lreadline
 SRC_DIR = ./
 OBJ_DIR = ./obj/
 LIBFT = ./libft/
-INCLUDES = -I./
+INCLUDES = -I/usr/local/opt/readline/include -I./
 
 FILES = main.c \
 		check_input/input_check_a.c \

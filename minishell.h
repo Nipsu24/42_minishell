@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 16:49:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/02 14:17:01 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "./libft/libft.h"
+# include <stdio.h>
 # include <signal.h>
 # include <termios.h>
 # include <sys/ioctl.h>
@@ -23,6 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <errno.h>
 # define BUFF_SIZE 4096
 
 /*Relevant tokens for lexing and parsing part.
@@ -175,6 +177,7 @@ int			redir_exec(t_data *data);
 void		parent_close_fds(t_data *data);
 void		parent_wait_n_cleanup(t_data *data);
 int			parent_builtin_check(t_data *data);
+int 		check_value_of_errno(t_data *data, char *file_name);
 
 /*built-in utils*/
 
