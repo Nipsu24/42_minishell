@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/02 14:17:01 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/03 15:37:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_data
 	int			flag_after;
 	int			pipe_flag;
 	t_token		*token_list;
+	int 		flag_cntlr_d;
 	t_prc		*proc;
 }				t_data;
 
