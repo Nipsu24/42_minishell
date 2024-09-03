@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 15:07:00 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:35:12 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	eof_detected(t_data *data)
 	if (!data->proc[data->j].here_tmp)
 		return (1);
 	if (ft_strncmp(data->tmp, data->proc[data->j].redir[data->l + 1],
-			ft_strlen(data->tmp)) == 0)
+			ft_strlen(data->tmp)) == 0 || EOF)
 	{
 		free_str(&data->tmp);
 		return (-1);
@@ -73,9 +73,14 @@ static int	here_while_loop(t_data *data)
 {
 	while (1)
 	{
+		data->flag_cntlr_d = 0;
 		data->tmp = readline("> ");
 		if (!data->tmp)
-			return (1);
+		{
+			printf("TEST\n");
+			data->flag_cntlr_d = 1;
+			return (0);
+		}
 		if (!data->proc[data->j].here_tmp)
 		{
 			if (dup_for_empty_here_tmp(data) == -1)
@@ -101,6 +106,8 @@ static int	ft_heredoc(t_data *data)
 	{
 		if (here_while_loop(data))
 			return (1);
+		if (data->flag_cntlr_d)
+			return (0);
 		if (file_create_n_write(data))
 			return (1);
 	}
