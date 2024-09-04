@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/04 10:20:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:04:21 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	do_exit(t_data *data)
 {
 	if (data->proc[data->j].cmd[1] && data->proc[data->j].cmd[2])
 	{
-		printf("exit: too many arguments\n");
+		write(STDERR_FILENO, "exit: too many arguments\n", 25);
 		data->exit_status = 1;
 		return (data->exit_status);
 	}
