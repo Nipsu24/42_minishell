@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 22:02:26 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:20:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ static bool	is_numeric(const char *str)
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!str || !str[i])
 		return (false);
 	if (str[i] == '-' || str[i] == '+')
+	{
 		i++;
+		if (!str[i])
+			return (false);
+	}
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -62,14 +66,15 @@ int	do_exit(t_data *data)
 		if (!is_numeric(data->proc[data->j].cmd[1])
 			|| exit_overflow(data->proc[data->j].cmd[1]))
 		{
-			printf("minishell: exit: %s: numeric argument required\n",
-				data->proc[data->j].cmd[1]);
+			write(STDERR_FILENO, "minishell: exit: , ", 19);
+			write(STDERR_FILENO, data->proc[data->j].cmd[1],
+				ft_strlen(data->proc[data->j].cmd[1]));
+			write(STDERR_FILENO, ": numeric argument required\n", 29);
 			data->exit_status = 255;
 			return (data->exit_status);
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);
 	}
-	printf("exit\n");
+	write(STDERR_FILENO, "exit\n", 5);
 	exit(data->exit_status);
-	return (data->exit_status);
 }

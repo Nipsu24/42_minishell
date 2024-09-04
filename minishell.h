@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 16:49:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/04 12:29:35 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # define BUFF_SIZE 4096
+
+extern bool	g_sigint;
 
 /*Relevant tokens for lexing and parsing part.
   INIT_VAL for initial initiation when matching
@@ -190,6 +192,7 @@ char		**ft_copy_env(char **env, t_data *data);
 int			child_builtins(t_data *data);
 int			non_child_builtins(t_data *data);
 int			cd(char **array, t_data *data);
+int			cd_home(t_data *data);
 void		print_env(t_data *data);
 int			update_shlvl(t_data *data);
 int			echo(t_data *data);
@@ -203,6 +206,7 @@ int			do_exit(t_data *data);
 void		handle_signals(int sig);
 void		setup_signal(void);
 void		setup_termios(int mode);
+void		here_sig_int(int sig);
 
 /*further functions*/
 

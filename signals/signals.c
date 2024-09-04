@@ -3,33 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:15:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/30 16:10:29 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/04 13:45:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	sig_int_handler(int sig)
+static void	sig_int(int sig)
 {
 	if (sig == SIGINT)
 		printf("\n");
-}
-
-void	handle_signals(int flag)
-{
-	if (flag == 1)
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGINT, sig_int_handler);
-	}
-	else if (flag == 2)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-	}
 }
 
 static void	ignore(int sig)
@@ -43,8 +29,30 @@ static void	ignore(int sig)
 	}
 }
 
+void	handle_signals(int flag)
+{
+	if (flag == 1)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, sig_int);
+	}
+	else if (flag == 2)
+	{
+		signal(SIGINT, SIG_DFL);
+	}
+}
+
 void	setup_signal(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ignore);
+}
+
+void	here_sig_int(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		g_sigint = true;
+	}
 }
