@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:03:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 15:07:21 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/04 13:16:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ int	file_create_n_write(t_data *data)
 {
 	if (no_other_heredoc(data))
 	{
-		if (!data->proc[data->j].here_tmp)
-			return (1);
 		data->proc[data->j].fd[data->k]
 			= open(data->proc[data->j].here_name,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (data->delim_fst_line == 1)
+		if (data->delim_fst_line == 1 || data->flag_cntlr_d)
 			write(data->proc[data->j].fd[data->k],
 				NULL, 0);
 		else

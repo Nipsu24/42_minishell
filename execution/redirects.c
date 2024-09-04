@@ -6,24 +6,11 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:42:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/29 15:24:14 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/04 11:05:49 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*Helper function of redin_loop, redirects input of fd.
-  FD index is moved further in case there are further redirect
-  operants in array*/
-static int	conduct_redin(t_data *data)
-{
-	if (dup2(data->proc[data->j].fd[data->k], STDIN_FILENO) < 0)
-		return (1);
-	close(data->proc[data->j].fd[data->k]);
-	if (data->proc[data->j].redir[data->i + 2] != NULL)
-		data->proc[data->j].fd[data->k]++;
-	return (0);
-}
 
 /*Checks for '<' and redirects respective file's input to command in case 
   there is no further redin file in redir array. If further redin file in
@@ -36,16 +23,16 @@ int	redin_loop(t_data *data)
 		data->proc[data->j].fd[data->k]
 			= open(data->proc[data->j].redir[data->i + 1], O_RDONLY);
 		if (data->proc[data->j].fd[data->k] < 0)
-		{
-			printf("%s: No such file or directory\n",
-				data->proc[data->j].redir[data->i + 1]);
-			data->exit_status = 1;
-			return (1);
-		}
+			return (check_value_of_errno(data,
+					data->proc[data->j].redir[data->i + 1]));
 		if (no_other_redin(data))
 		{
-			if (conduct_redin(data))
+			if (dup2(data->proc[data->j].fd[data->k], STDIN_FILENO) < 0)
 				return (1);
+			close(data->proc[data->j].fd[data->k]);
+			if (data->proc[data->j].redir[data->i + 2] != NULL)
+				data->proc[data->j].fd[data->k]++;
+			return (0);
 		}
 		else
 		{
@@ -69,7 +56,8 @@ int	appendout_loop(t_data *data)
 			= open(data->proc[data->j].redir[data->i + 1],
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (data->proc[data->j].fd[data->k] < 0)
-			return (1);
+			return (check_value_of_errno(data,
+					data->proc[data->j].redir[data->i + 1]));
 		if (no_other_redout(data))
 		{
 			if (dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO) < 0)
@@ -102,7 +90,8 @@ int	redout_loop(t_data *data)
 			= open(data->proc[data->j].redir[data->i + 1],
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (data->proc[data->j].fd[data->k] < 0)
-			return (1);
+			return (check_value_of_errno(data,
+					data->proc[data->j].redir[data->i + 1]));
 		if (no_other_redout(data))
 		{
 			if (dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO) < 0)
