@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:54:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 16:03:04 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:17:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	alloc_proc_structs(t_data *data)
 			if (!data->proc[data->j].cmd)
 				return (1);
 		}
+		else
+			data->proc[data->j].cmd = NULL;
 		if (data->count_other)
 		{
 			if (alloc_redir_array(data))

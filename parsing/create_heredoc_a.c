@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_heredoc_a.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:05 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:32:22 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,14 @@ static int	here_while_loop(t_data *data)
 	stdin_fd = dup(STDIN_FILENO);
 	while (1)
 	{
+		data->flag_cntlr_d = 0;
+		data->delim_fst_line = 0;
 		data->tmp = readline("> ");
 		if (!data->tmp)
-			return (1);
+		{
+			data->flag_cntlr_d = 1;
+			return (0);
+		}
 		if (g_sigint)
 		{
 			printf("TEST\n");

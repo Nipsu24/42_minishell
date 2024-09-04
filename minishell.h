@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 12:29:35 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:30:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "./libft/libft.h"
+# include <stdio.h>
 # include <signal.h>
 # include <termios.h>
 # include <sys/ioctl.h>
@@ -23,6 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <errno.h>
 # define BUFF_SIZE 4096
 
 extern bool	g_sigint;
@@ -100,6 +102,7 @@ typedef struct s_data
 	int			flag_after;
 	int			pipe_flag;
 	t_token		*token_list;
+	int 		flag_cntlr_d;
 	t_prc		*proc;
 }				t_data;
 
@@ -177,6 +180,7 @@ int			redir_exec(t_data *data);
 void		parent_close_fds(t_data *data);
 void		parent_wait_n_cleanup(t_data *data);
 int			parent_builtin_check(t_data *data);
+int 		check_value_of_errno(t_data *data, char *file_name);
 
 /*built-in utils*/
 
