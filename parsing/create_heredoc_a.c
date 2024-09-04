@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_heredoc_a.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 14:32:22 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/04 15:47:17 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,18 @@ static int	here_while_loop(t_data *data)
 	stdin_fd = dup(STDIN_FILENO);
 	while (1)
 	{
+		g_sigint = false;
 		data->flag_cntlr_d = 0;
 		data->delim_fst_line = 0;
 		data->tmp = readline("> ");
+		if (g_sigint)
+			break ;
 		if (!data->tmp)
 		{
-			data->flag_cntlr_d = 1;
-			return (0);
-		}
-		if (g_sigint)
-		{
-			printf("TEST\n");
 			dup2(stdin_fd, STDIN_FILENO);
-			free_str(&data->tmp);
 			close(stdin_fd);
-			setup_signal();
-			g_sigint = false;
-			return (-1);
+			data->flag_cntlr_d = 1;
+			break ;
 		}
 		if (!data->proc[data->j].here_tmp)
 		{
@@ -110,6 +105,8 @@ static int	here_while_loop(t_data *data)
 		}
 		free_str(&data->tmp);
 	}
+	dup2(stdin_fd, STDIN_FILENO);
+	close(stdin_fd);
 	return (0);
 }
 

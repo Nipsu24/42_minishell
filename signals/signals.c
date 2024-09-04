@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:15:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/04 13:45:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:29:45 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	here_sig_int(int sig)
 	{
 		printf("\n");
 		g_sigint = true;
+		close(STDIN_FILENO);
 	}
 }
