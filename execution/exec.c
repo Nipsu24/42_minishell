@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 16:47:40 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/02 20:51:29 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static int	exec_loop(t_data *data)
 {
 	while (data->j < data->proc_nbr)
 	{
-		handle_signals(1);
+		handle_signals(2);
 		if (create_pipe(data))
 			return (1);
 		if (!non_child_builtins(data))
 		{
 			if (fork_procs(data))
 				return (1);
-			handle_signals(2);
+			handle_signals(1);
 			if (data->pid_arr[data->j] == 0)
 			{
 				if (child_procs(data))

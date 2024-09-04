@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_heredoc_a.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 15:07:00 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/04 14:09:05 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	eof_detected(t_data *data)
 		= ft_ms_strjoin(data->proc[data->j].here_tmp, data->nl);
 	if (!data->proc[data->j].here_tmp)
 		return (1);
-	if (ft_strncmp(data->tmp, data->proc[data->j].redir[data->l + 1],
-			ft_strlen(data->tmp)) == 0)
+	if (!ft_strncmp(data->tmp, data->proc[data->j].redir[data->l + 1],
+			ft_strlen(data->tmp)))
 	{
 		free_str(&data->tmp);
 		return (-1);
@@ -71,18 +71,32 @@ static int	eof_detected(t_data *data)
 /*Main while loop for writing into here doc*/
 static int	here_while_loop(t_data *data)
 {
+	int		stdin_fd;
+
+	signal(SIGINT, here_sig_int);
+	stdin_fd = dup(STDIN_FILENO);
 	while (1)
 	{
 		data->tmp = readline("> ");
 		if (!data->tmp)
 			return (1);
+		if (g_sigint)
+		{
+			printf("TEST\n");
+			dup2(stdin_fd, STDIN_FILENO);
+			free_str(&data->tmp);
+			close(stdin_fd);
+			setup_signal();
+			g_sigint = false;
+			return (-1);
+		}
 		if (!data->proc[data->j].here_tmp)
 		{
 			if (dup_for_empty_here_tmp(data) == -1)
 				break ;
 		}
 		else
-		{	
+		{
 			data->return_val = eof_detected(data);
 			if (data->return_val == -1)
 				break ;
