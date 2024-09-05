@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/02 20:51:29 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/05 22:53:48 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static int	init_exec(t_data *data)
 	data->save_stdout = dup(STDOUT_FILENO);
 	data->save_stdin = dup(STDIN_FILENO);
 	if (data->save_stdout == -1 || data->save_stdin == -1)
+	{
+		data->exit_status = 1;
 		return (1);
+	}
 	return (0);
 }
 
@@ -33,7 +36,10 @@ static int	create_pipe(t_data *data)
 	{
 		data->pipe_flag = 1;
 		if (pipe(data->fd_arr[data->j]) == -1)
+		{
+			data->exit_status = 1;
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -43,7 +49,10 @@ static int	fork_procs(t_data *data)
 {
 	data->pid_arr[data->j] = fork();
 	if (data->pid_arr[data->j] == -1)
+	{
+		data->exit_status = 1;
 		return (1);
+	}
 	return (0);
 }
 

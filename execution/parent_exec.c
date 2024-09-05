@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/29 15:17:17 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:57:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ void	parent_wait_n_cleanup(t_data *data)
 {
 	int	n;
 	int	status;
+	int	child_exit_status;
 
 	n = 0;
+	child_exit_status = 0;
 	while (n < data->proc_nbr)
 	{
 		waitpid(data->pid_arr[n], &status, 0);
 		if (WIFEXITED(status))
-			data->exit_status = WEXITSTATUS(status);
+		{
+			child_exit_status = WEXITSTATUS(status);
+			if (child_exit_status != 0)
+				data->exit_status = child_exit_status;
+		}
 		n++;
 	}
 	delete_heredocs(data);

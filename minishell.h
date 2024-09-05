@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 14:30:43 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 23:30:31 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,16 @@ typedef struct s_data
 	int			flag_after;
 	int			pipe_flag;
 	t_token		*token_list;
-	int 		flag_cntlr_d;
+	int			flag_cntlr_d;
 	t_prc		*proc;
 }				t_data;
 
-/*free functions*/
+/* Utils */
+
+void		print_error(char *cmd, char *str);
+int			update_exit_status(t_data *data, int status, char *cmd, char *msg);
+
+/* Free functions */
 
 void		free_all(t_data *data, int exit_flag);
 char		**free_arr_rev(char ***av, int j);
@@ -119,7 +124,7 @@ void		free_int_arr(int **arr);
 void		free_2d_int_arr(t_data *data, int ***arr);
 void		free_2d_int_arr_rev(int ***arr, int j);
 
-/*Error check and utils*/
+/* Error check and utils */
 
 int			not_valid_input(char *str, t_data *data);
 int			check_quotes(char *input);
@@ -130,7 +135,7 @@ int			check_heredoc_err(char *input, int i);
 int			check_pipes(char *input);
 int			is_quote(char c);
 
-/*lexing*/
+/* Lexing */
 
 int			lexer(t_data *data);
 int			insert_space(t_data *data);
@@ -147,7 +152,7 @@ int			ft_malloc_token(t_data *data);
 void		assign_token_type(t_data *tokens, int i);
 int			remove_quotes(t_data *data);
 
-/*parsing*/
+/* Parsing */
 
 int			parsing(t_data *data);
 int			init_proc_structs(t_data *data);
@@ -160,7 +165,8 @@ int			alloc_here_filename(t_data *data);
 int			create_heredocs(t_data *data);
 int			file_create_n_write(t_data *data);
 
-/*execution*/
+
+/* Execution */
 
 int			exec_proc(t_data *data);
 int			redout_loop(t_data *data);
@@ -180,9 +186,9 @@ int			redir_exec(t_data *data);
 void		parent_close_fds(t_data *data);
 void		parent_wait_n_cleanup(t_data *data);
 int			parent_builtin_check(t_data *data);
-int 		check_value_of_errno(t_data *data, char *file_name);
+int			check_value_of_errno(t_data *data, char *file_name);
 
-/*built-in utils*/
+/* Built-in utils */
 
 int			len_array(char **array);
 int			find_var(char **env, char *var);
@@ -190,7 +196,7 @@ int			add_var(t_data *data, char *var);
 int			update_var(t_data *data, char *var);
 char		*get_env_var(t_data *data, char *var);
 
-/*built-ins*/
+/* Built-ins */
 
 char		**ft_copy_env(char **env, t_data *data);
 int			child_builtins(t_data *data);
@@ -205,14 +211,14 @@ int			unset(t_data *data);
 int			export(t_data *data);
 int			do_exit(t_data *data);
 
-/*signals*/
+/* Signals */
 
 void		handle_signals(int sig);
 void		setup_signal(void);
 void		setup_termios(int mode);
 void		here_sig_int(int sig);
 
-/*further functions*/
+/* Further functions */
 
 void		init_data(t_data *data);
 void		init_index(t_data *data);

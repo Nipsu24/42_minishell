@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:15:44 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 22:09:21 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:35:52 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	echo(t_data *data)
 {
 	if (!(data->proc[data->j].cmd[1]))
 	{
-		ft_printf("\n");
+		printf("\n");
 		free_arr(&data->proc[data->j].cmd);
 		return (0);
 	}

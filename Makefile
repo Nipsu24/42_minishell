@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
+#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/09/02 13:49:59 by mmeier           ###   ########.fr        #
+#    Updated: 2024/09/05 21:40:14 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ LIBFT = ./libft/
 INCLUDES = -I/usr/local/opt/readline/include -I./
 
 FILES = main.c \
+		utils.c \
 		check_input/input_check_a.c \
 		check_input/input_check_b.c \
 		check_input/in_quotes_check.c \

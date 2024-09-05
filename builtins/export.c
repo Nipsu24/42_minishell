@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/23 22:03:34 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/05 22:38:24 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_export_env(char **env)
 	i = 0;
 	if (!env)
 	{
-		printf("Error: No environment variables found\n");
+		print_error("export", "No environment variables found");
 		return ;
 	}
 	while (env[i])
@@ -40,15 +40,13 @@ int	export(t_data *data)
 
 	if (!data || !data->proc || !data->proc[data->j].cmd)
 	{
-		data->exit_status = 1;
-		perror("export command failed");
+		update_exit_status(data, 1, "Error", "export command not found");
 		return (data->exit_status);
 	}
 	i = len_array(data->proc[data->j].cmd);
 	if (i > 2)
 	{
-		data->exit_status = 1;
-		perror(data->proc[data->j].cmd[0]);
+		update_exit_status(data, 1, "Error", "Too many arguments");
 		return (data->exit_status);
 	}
 	if (i == 1)

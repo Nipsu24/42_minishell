@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:39:05 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/02 14:50:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:42:47 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,13 @@ int	no_other_heredoc(t_data *data)
 
 /*Is checking specific errno code and prints respective error message
   in course of redirection handling.*/
-int check_value_of_errno(t_data *data, char *file_name)
+int	check_value_of_errno(t_data *data, char *file_name)
 {
 	if (errno == EACCES)
-	{
-		printf("minishell: %s: Permission denied\n", file_name);
-		data->exit_status = 1;
-	}
+		update_exit_status(data, 1, "minishell", "Permission denied");
 	if (errno == EISDIR)
-	{
-		printf("minishell: %s: Is a directory\n", file_name);
-		data->exit_status = 1;
-	}
+		update_exit_status(data, 1, "minishell", "Is a directory");
 	if (errno == ENOENT)
-	{
-		printf("minishell: %s: No such file or directory\n", file_name);
-		data->exit_status = 1;
-	}
+		update_exit_status(data, 1, file_name, "No such file or directory");
 	return (1);
 }

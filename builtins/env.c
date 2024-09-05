@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 12:32:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:36:57 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ void	print_env(t_data *data)
 		return ;
 	if (i != 1)
 	{
-		data->exit_status = 127;
-		perror(data->proc[data->j].cmd[0]);
+		update_exit_status(data, 127, NULL, "Error: Too many arguments");
 		free_str(data->proc[data->j].cmd);
-		exit(data->exit_status); // Check later
+		exit(data->exit_status);
 	}
 	update_shlvl(data);
 	i = 0;
@@ -85,7 +84,8 @@ int	update_shlvl(t_data *data)
 	j = ft_atoi(data->temp_env[i] + 6);
 	if (j > 999)
 	{
-		printf("warning: shell level (1000) too high, resetting to 1\n");
+		print_error("env",
+			"Warning. Shell level too high (1000). Resetting to 1");
 		update_var(data, "SHLVL=1");
 	}
 	else

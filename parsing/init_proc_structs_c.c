@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_proc_structs_c.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:54:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/03 16:17:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 23:16:40 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	alloc_proc_structs(t_data *data)
 		if (data->count_cmd)
 		{
 			data->proc[data->j].cmd
-				= malloc ((data->count_cmd + 1) * sizeof(char *));
+				= malloc((data->count_cmd + 1) * sizeof(char *));
 			if (!data->proc[data->j].cmd)
 				return (1);
 		}
