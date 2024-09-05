@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/28 09:56:09 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 16:19:26 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,15 @@ static int	join_cmd_path(t_data *data)
 		{
 			while (data->path_arr[data->i])
 			{
-				if (data->path_arr[data->i])
+				if (data->path_arr[data->i]
+					&& data->proc[data->j].cmd[0][0] != '.'
+					&& data->proc[data->j].cmd[0][0] != '/')
 					data->proc[data->j].path
 						= ft_strjoin(data->path_arr[data->i],
 							data->proc[data->j].cmd[0]);
+				else
+					data->proc[data->j].path
+						= ft_strdup(data->proc[data->j].cmd[0]);
 				if (!data->proc[data->j].path)
 					return (1);
 				if (access(data->proc[data->j].path, F_OK) == 0)
