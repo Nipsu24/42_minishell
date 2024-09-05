@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check_b.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:57:41 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/29 14:35:31 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:15:18 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_quotes(char *input)
 	}
 	if (quote)
 	{
-		printf("minishell: syntax error, unclosed quotes\n");
+		print_error("minishell", "syntax error, unclosed quotes");
 		return (1);
 	}
 	return (0);
@@ -47,13 +47,16 @@ int	write_sytx_error(char *error_str, char error)
 {
 	if (error_str == NULL)
 	{
-		printf("minishell: syntax error near unexpected token `%c'\n", error);
+		print_error("syntax error", "error near unexpected token:");
+		write(STDERR_FILENO, &error, 1);
+		write(STDERR_FILENO, "\n", 1);
 		return (1);
 	}
 	if (!error)
 	{
-		printf("minishell: syntax error near unexpected token `%s'\n",
-			error_str);
+		print_error("syntax error", "error near unexpected token:");
+		write(STDERR_FILENO, error_str, ft_strlen(error_str));
+		write(STDERR_FILENO, "\n", 1);
 		return (1);
 	}
 	return (0);

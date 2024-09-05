@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:48:28 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/13 14:08:40 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:52:17 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	delete_heredocs(t_data *data)
 	while (data->j < data->proc_nbr)
 	{
 		if (data->proc[data->j].here_name != NULL)
-			unlink(data->proc[data->j].here_name);
+			if (unlink(data->proc[data->j].here_name) == -1)
+				update_exit_status(data, 1, "Error",
+					"Error deleting heredoc file");
 		data->j++;
 	}
 }
@@ -35,7 +37,10 @@ int	init_pid_arr(t_data *data)
 		return (0);
 	data->pid_arr = malloc (sizeof(int) * data->proc_nbr);
 	if (!data->pid_arr)
+	{
+		data->exit_status = 1;
 		return (1);
+	}
 	while (i < data->proc_nbr)
 	{
 		data->pid_arr[i] = -1;
@@ -55,13 +60,17 @@ int	init_fd_arr(t_data *data)
 		return (0);
 	data->fd_arr = malloc (sizeof(int *) * (data->proc_nbr - 1));
 	if (!data->fd_arr)
+	{
+		data->exit_status = 1;
 		return (1);
+	}
 	while (j < data->proc_nbr -1)
 	{
 		data->fd_arr[j] = malloc (sizeof(int) * 2);
 		if (!data->fd_arr[j])
 		{
 			free_2d_int_arr_rev(&data->fd_arr, j);
+			data->exit_status = 1;
 			return (1);
 		}
 		data->fd_arr[j][0] = 0;

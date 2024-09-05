@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_here_red.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:00:26 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/29 15:17:30 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:48:30 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	heredoc_exec(t_data *data)
 		while (data->proc[data->j].redir[data->l])
 		{
 			if (here_redirect(data))
+			{
+				data->exit_status = 1;
 				return (1);
+			}
 			data->l++;
 		}
 	}
@@ -36,7 +39,10 @@ int	redir_exec(t_data *data)
 		{
 			if (redout_loop(data) || redin_loop(data)
 				|| appendout_loop(data))
+			{
+				data->exit_status = 1;
 				return (1);
+			}
 			data->i++;
 		}
 	}

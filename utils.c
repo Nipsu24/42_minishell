@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/05 22:38:59 by cesasanc         ###   ########.fr       */
+/*   Created: 2024/09/04 21:45:25 by cesasanc          #+#    #+#             */
+/*   Updated: 2024/09/05 22:36:39 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Prints the current working directory */
-int	pwd(t_data *data)
+void	print_error(char *cmd, char *str)
 {
-	char	cwd[BUFF_SIZE];
+	if (cmd)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+	}
+	if (str)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+	}
+	ft_putstr_fd("\n", STDERR_FILENO);
+}
 
-	if (getcwd(cwd, sizeof(cwd)))
-	{
-		printf("%s\n", cwd);
-		return (0);
-	}
-	else
-	{
-		update_exit_status(data, 1, "Error",
-			"Error getting current working directory");
-		exit(data->exit_status);
-	}
-	return (0);
+int	update_exit_status(t_data *data, int status, char *cmd, char *msg)
+{
+	if (cmd || msg)
+		print_error(cmd, msg);
+	data->exit_status = status;
+	return (status);
 }

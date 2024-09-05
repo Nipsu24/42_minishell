@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/04 15:04:21 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/05 22:45:12 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ int	do_exit(t_data *data)
 {
 	if (data->proc[data->j].cmd[1] && data->proc[data->j].cmd[2])
 	{
-		write(STDERR_FILENO, "exit: too many arguments\n", 25);
-		data->exit_status = 1;
+		update_exit_status(data, 1, "Error", "Too many arguments");
 		return (data->exit_status);
 	}
 	if (data->proc[data->j].cmd[1])
@@ -66,11 +65,7 @@ int	do_exit(t_data *data)
 		if (!is_numeric(data->proc[data->j].cmd[1])
 			|| exit_overflow(data->proc[data->j].cmd[1]))
 		{
-			write(STDERR_FILENO, "minishell: exit: , ", 19);
-			write(STDERR_FILENO, data->proc[data->j].cmd[1],
-				ft_strlen(data->proc[data->j].cmd[1]));
-			write(STDERR_FILENO, ": numeric argument required\n", 29);
-			data->exit_status = 255;
+			update_exit_status(data, 255, "Error", "Numeric argument required");
 			return (data->exit_status);
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);

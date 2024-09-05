@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 15:47:17 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/05 23:30:36 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ static int	eof_detected(t_data *data)
 }
 
 /*Main while loop for writing into here doc*/
-static int	here_while_loop(t_data *data)
+int	here_while_loop(t_data *data)
 {
 	int		stdin_fd;
 
 	signal(SIGINT, here_sig_int);
 	stdin_fd = dup(STDIN_FILENO);
+	if (stdin_fd == -1)
+		return (1);
 	while (1)
 	{
 		g_sigint = false;
@@ -101,7 +103,11 @@ static int	here_while_loop(t_data *data)
 			if (data->return_val == -1)
 				break ;
 			if (data->return_val == 1)
+			{
+				dup2(stdin_fd, STDIN_FILENO);
+				close(stdin_fd);
 				return (1);
+			}
 		}
 		free_str(&data->tmp);
 	}

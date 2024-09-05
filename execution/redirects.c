@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:42:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 11:05:49 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 22:43:14 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,7 @@ int	here_redirect(t_data *data)
 				= open(data->proc[data->j].here_name, O_RDONLY);
 			if (data->proc[data->j].fd[data->k] < 0)
 			{
-				printf("%s: No such file or directory\n",
-					data->proc[data->j].here_name);
+				print_error("minishell", "heredoc file not found");
 				return (1);
 			}
 			if (dup2(data->proc[data->j].fd[data->k], STDIN_FILENO) < 0)

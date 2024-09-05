@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:33:42 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/04 12:55:55 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:35:17 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,10 @@ int	cd_home(t_data *data)
 
 	home = get_env_var(data, "HOME");
 	if (!home || !*home)
-	{
-		write(STDERR_FILENO, "Error: HOME environment variable not set\n", 41);
-		return (1);
-	}
+		return (print_error("cd",
+				"Error: HOME environment variable not set"), 1);
 	if (chdir(home) == -1)
-	{
-		write(STDERR_FILENO, "Error changing directory to HOME", 32);
-		return (1);
-	}
+		return (print_error("cd", "Error changing directory"), 1);
 	pwd = ft_strjoin("PWD=", home);
 	update_var(data, pwd);
 	free_str(&pwd);
@@ -48,14 +43,11 @@ static int	do_cd(char **array, t_data *data)
 	oldpwd = NULL;
 	ft_strlcpy(data->newpwd, array[1], sizeof(data->newpwd));
 	if (chdir(data->newpwd) == -1)
-	{
-		write(STDERR_FILENO, "Error changing directory", 25);
-		return (1);
-	}
+		return (print_error("cd", "Error changing directory"), 1);
 	newpwd = ft_strjoin("PWD=", data->newpwd);
 	if (!newpwd)
 	{
-		write(STDERR_FILENO, "Error memory allocation", 24);
+		print_error("cd", "Error memory allocation while changing directory");
 		free(newpwd);
 		return (1);
 	}
@@ -76,17 +68,12 @@ int	cd(char **array, t_data *data)
 
 	i = len_array(array);
 	if (!getcwd(data->oldpwd, sizeof(data->oldpwd)))
-	{
-		write(STDERR_FILENO, "Error getting cwd", 17);
-		return (1);
-	}
+		return (print_error("cd",
+				"Error getting current working directory"), 1);
 	if (i == 1)
 		return (cd_home(data));
 	else if (i == 2)
 		return (do_cd(array, data));
 	else
-	{
-		write(STDERR_FILENO, "cd: too many arguments", 22);
-		return (1);
-	}
+		return (print_error("cd", "Too many arguments"), 1);
 }
