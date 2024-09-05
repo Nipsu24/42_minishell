@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 15:41:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 14:57:38 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,10 @@ void	parent_close_fds(t_data *data)
 	{
 		close(data->fd_arr[data->j - 1][0]);
 		close(data->fd_arr[data->j - 1][1]);
+		close(data->fd_arr[data->j][0]); //new
+		close(data->fd_arr[data->j][1]); //new
 	}
 }
-
-
-// static void check_fd(int fd) {
-//     // Attempt to get file descriptor flags
-//     int flags = fcntl(fd, F_GETFD);
-    
-//     if (flags == -1) {
-//         // If fcntl returns -1, the file descriptor is not open
-//         printf("File descriptor %d is not open.\n", fd);
-//     } else {
-//         // If fcntl does not return -1, the file descriptor is open
-//         printf("File descriptor %d is open.\n", fd);
-//     }
-// }
 
 /*Extracts exit_status from child processes, deletes heredocs
   and resets stdin and stdout fds.*/
@@ -63,8 +51,5 @@ void	parent_wait_n_cleanup(t_data *data)
 	dup2(data->save_stdin, STDIN_FILENO);
 	close (data->save_stdout);
 	close (data->save_stdin);
-	// check_fd(0);  // stdin
-    // check_fd(1);  // stdout
-    // check_fd(2);  // stderr
 }
 

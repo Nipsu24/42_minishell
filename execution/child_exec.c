@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:52:40 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 15:56:53 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 15:23:29 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 static int	child_first_pipe(t_data *data)
 {
 	close(data->fd_arr[data->j][0]);
-	if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
+	if (data->proc_nbr > 1) // new
+	{
+		if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
 		return (1);
+	}
 	close(data->fd_arr[data->j][1]);
 	close(data->save_stdout); // new
 	close(data->save_stdin); //new
@@ -34,6 +37,8 @@ static int	child_middle_pipes(t_data *data)
 	if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
 		return (1);
 	close(data->fd_arr[data->j][1]);
+	close(data->save_stdout); // new
+	close(data->save_stdin); // new
 	return (0);
 }
 
@@ -41,10 +46,11 @@ static int	child_middle_pipes(t_data *data)
 static int	child_last_pipe(t_data *data)
 {
 	close(data->fd_arr[data->j - 1][1]);
-	close(data->fd_arr[data->j - 1][1]); // new
 	if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
 		return (1);
 	close(data->fd_arr[data->j - 1][0]);
+	close(data->fd_arr[data->j][0]); //new
+	close(data->fd_arr[data->j][1]); //new
 	close(data->save_stdout); // new
 	close(data->save_stdin); // new
 	return (0);
