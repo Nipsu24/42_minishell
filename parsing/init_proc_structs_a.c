@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:28:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/27 15:57:14 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/06 11:14:11 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	init_proc_structs(t_data *data)
 {
 	if (count_pipes(data))
 		return (1);
+	data->j = 0;
 	if (alloc_proc_structs(data))
 		return (1);
 	if (fill_proc_structs(data))

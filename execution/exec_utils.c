@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:48:28 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 22:52:17 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:51:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ int	init_fd_arr(t_data *data)
 	int	j;
 
 	j = 0;
-	if (data->proc_nbr < 2)
-		return (0);
-	data->fd_arr = malloc (sizeof(int *) * (data->proc_nbr - 1));
+	// if (data->proc_nbr < 2)
+	// 	return (0);
+	data->fd_arr = malloc (sizeof(int *) * (data->proc_nbr)); //- 1));
 	if (!data->fd_arr)
 	{
 		data->exit_status = 1;
 		return (1);
 	}
-	while (j < data->proc_nbr -1)
+	while (j < data->proc_nbr) //-1)
 	{
 		data->fd_arr[j] = malloc (sizeof(int) * 2);
 		if (!data->fd_arr[j])
