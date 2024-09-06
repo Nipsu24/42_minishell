@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/09/02 13:49:59 by mmeier           ###   ########.fr        #
+#    Updated: 2024/09/06 10:33:11 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ FILES = main.c \
 		parsing/init_proc_structs_a.c \
 		parsing/init_proc_structs_b.c \
 		parsing/init_proc_structs_c.c \
-		parsing/path.c \
+		parsing/path_a.c \
+		parsing/path_b.c \
 		parsing/alloc_file_name.c \
 		parsing/create_heredoc_a.c \
 		parsing/create_heredoc_b.c \
