@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/28 11:13:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/05 15:31:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_2d_int_arr(t_data *data, int ***arr)
 	int	j;
 
 	j = 0;
-	n = data->proc_nbr -1;
+	n = data->proc_nbr; //-1;
 	if (*arr == NULL)
 		return ;
 	while (j < n)

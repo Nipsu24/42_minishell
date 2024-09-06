@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 22:53:48 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:47:20 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ static int	init_exec(t_data *data)
 static int	create_pipe(t_data *data)
 {
 	data->pipe_flag = 0;
-	if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
-	{
+	// if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
+	// {
 		data->pipe_flag = 1;
 		if (pipe(data->fd_arr[data->j]) == -1)
 		{
 			data->exit_status = 1;
 			return (1);
 		}
-	}
 	return (0);
 }
 
@@ -74,6 +73,8 @@ static int	exec_loop(t_data *data)
 			handle_signals(1);
 			if (data->pid_arr[data->j] == 0)
 			{
+				close(data->save_stdout); // new
+				close(data->save_stdin); //new
 				if (child_procs(data))
 					free_all(data, data->exit_status);
 				if (child_exec(data))

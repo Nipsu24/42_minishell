@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/09/05 21:40:14 by cesasanc         ###   ########.fr        #
+#    Updated: 2024/09/06 11:44:52 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ FILES = main.c \
 		parsing/init_proc_structs_a.c \
 		parsing/init_proc_structs_b.c \
 		parsing/init_proc_structs_c.c \
-		parsing/path.c \
+		parsing/path_a.c \
+		parsing/path_b.c \
 		parsing/alloc_file_name.c \
 		parsing/create_heredoc_a.c \
 		parsing/create_heredoc_b.c \

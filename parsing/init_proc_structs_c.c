@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_proc_structs_c.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:54:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 23:16:40 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:52:47 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static int	helper_alloc_proc_structs(t_data *data)
 int	alloc_proc_structs(t_data *data)
 {
 	data->i = 0;
-	data->j = 0;
 	data->count_cmd = 0;
 	data->count_other = 0;
 	while (data->j < data->proc_nbr)

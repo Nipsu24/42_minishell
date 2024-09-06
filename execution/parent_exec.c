@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 22:57:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:52:02 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	parent_close_fds(t_data *data)
 	if (data->pipe_flag && data->j > 0 && data->j == data->proc_nbr -1)
 	{
 		close(data->fd_arr[data->j - 1][0]);
-		close(data->fd_arr[data->j -1][1]);
+		close(data->fd_arr[data->j - 1][1]);
+		close(data->fd_arr[data->j][0]); //new
+		close(data->fd_arr[data->j][1]); //new
 	}
 }
 
@@ -56,3 +58,4 @@ void	parent_wait_n_cleanup(t_data *data)
 	close (data->save_stdout);
 	close (data->save_stdin);
 }
+

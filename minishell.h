@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 23:30:31 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:52:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int			fill_proc_structs(t_data *data);
 int			count_pipes(t_data *data);
 void		helper_alloc_fds(t_data *data);
 int			init_path(t_data *data);
+int			join_cmd_path(t_data *data);
 int			alloc_here_filename(t_data *data);
 int			create_heredocs(t_data *data);
 int			file_create_n_write(t_data *data);
