@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/06 11:52:02 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/08 21:47:35 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	parent_wait_n_cleanup(t_data *data)
 			if (child_exit_status != 0)
 				data->exit_status = child_exit_status;
 		}
+		else if (WIFSIGNALED(status))
+			data->exit_status = 128 + WTERMSIG(status);
 		n++;
 	}
 	delete_heredocs(data);
@@ -58,4 +60,3 @@ void	parent_wait_n_cleanup(t_data *data)
 	close (data->save_stdout);
 	close (data->save_stdin);
 }
-

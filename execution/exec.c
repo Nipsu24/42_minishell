@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/06 11:47:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/08 21:48:10 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,12 @@ static int	init_exec(t_data *data)
 /*Creates pipes within exec_loop function.*/
 static int	create_pipe(t_data *data)
 {
-	data->pipe_flag = 0;
-	// if (data->proc_nbr > 1 && data->j != data->proc_nbr -1)
-	// {
-		data->pipe_flag = 1;
-		if (pipe(data->fd_arr[data->j]) == -1)
-		{
-			data->exit_status = 1;
-			return (1);
-		}
+	data->pipe_flag = 1;
+	if (pipe(data->fd_arr[data->j]) == -1)
+	{
+		data->exit_status = 1;
+		return (1);
+	}
 	return (0);
 }
 
@@ -63,14 +60,13 @@ static int	exec_loop(t_data *data)
 {
 	while (data->j < data->proc_nbr)
 	{
-		handle_signals(2);
+		handle_signals(1);
 		if (create_pipe(data))
 			return (1);
 		if (!non_child_builtins(data))
 		{
 			if (fork_procs(data))
 				return (1);
-			handle_signals(1);
 			if (data->pid_arr[data->j] == 0)
 			{
 				close(data->save_stdout); // new

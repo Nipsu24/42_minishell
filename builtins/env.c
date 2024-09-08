@@ -6,14 +6,14 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/06 11:56:40 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/08 21:41:55 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Creates copy of env var in order to being able of modifying this copy
-  later on in the course of the shell execution*/
+/* Creates copy of env var in order to being able of modifying this copy
+  later on in the course of the shell execution */
 char	**ft_copy_env(char **env, t_data *data)
 {
 	int	i;
@@ -39,7 +39,8 @@ char	**ft_copy_env(char **env, t_data *data)
 	return (data->temp_env);
 }
 
-/*Prints the envrironmental variable*/
+/* Prints the envrironmental variable. If there are arguments, return error.
+   If there are no arguments, print the environment variables */
 void	print_env(t_data *data)
 {
 	int	i;
@@ -67,8 +68,9 @@ void	print_env(t_data *data)
 	}
 }
 
-/*Function to update the shell level variable in the environment, if it is not
-  set, it will be set to 1. If it is set, it will be incremented by 1*/
+/* Function to update the shell level variable in the environment, if it is not
+  set, it will be set to 0. If it is set, it will be incremented by 1. If the
+  shell level is higher than 999, it will be reset to 1 */
 int	update_shlvl(t_data *data)
 {
 	int		i;

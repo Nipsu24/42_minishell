@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
+#    By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/09/06 11:44:52 by mmeier           ###   ########.fr        #
+#    Updated: 2024/09/08 14:08:09 by cesasanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ $(NAME): $(OBJ_FILES) $(LIBFT)
 	@echo "\033[32m MINISHELL has been built successfully!\033[0m"
 
 fsanitize: 
-	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -L$(LIBFT) $(INCLUDES) -lft -g -fsanitize=address -static-libsan 
+	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -L$(LIBFT) $(INCLUDES) -lft -g -fsanitize=address -static-libasan 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)minishell.h | $(OBJ_DIR) 
 	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
