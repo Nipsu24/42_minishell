@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:52:40 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/06 11:46:03 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/08 21:49:04 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	child_first_pipe(t_data *data)
 	if (data->proc_nbr > 1) // new
 	{
 		if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
-		return (1);
+			return (1);
 	}
 	close(data->fd_arr[data->j][1]);
 	close(data->save_stdout); // new
@@ -60,6 +60,7 @@ static int	child_last_pipe(t_data *data)
   fds for respective pipes.*/
 int	child_procs(t_data *data)
 {
+	handle_signals(2);
 	if (heredoc_exec(data))
 		return (1);
 	if (redir_exec(data))
@@ -91,8 +92,8 @@ int	child_exec(t_data *data)
 		{
 			if (!data->proc[data->j].path)
 			{
-				update_exit_status(data, 127, data->proc[data->j].cmd[0],
-					"command not found");
+				update_exit_status(data, 127, NULL,
+					"Command not found");
 				return (1);
 			}
 			else
@@ -100,8 +101,8 @@ int	child_exec(t_data *data)
 				if (execve(data->proc[data->j].path,
 						data->proc[data->j].cmd, data->temp_env) == -1)
 				{
-					update_exit_status(data, 126, data->proc[data->j].cmd[0],
-						"command not executable");
+					update_exit_status(data, 126, NULL,
+						"Command not executable");
 					return (1);
 				}
 				else

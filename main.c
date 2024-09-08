@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 14:30:24 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/08 21:46:43 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool g_sigint = false;
+bool	g_sigint = false;
 
 /*Holds all relevant functions related to the lexing part.
   Inserts space before and after operants, expands $, splits
@@ -170,5 +170,6 @@ int	main(int ac, char *av[], char *env[])
 	else
 		if (ft_input(&data))
 			return (1);
+	free_arr(&data.temp_env);
 	return (0);
 }

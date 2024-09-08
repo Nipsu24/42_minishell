@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 12:48:28 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/06 11:51:31 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/06 15:04:29 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	delete_heredocs(t_data *data)
 	{
 		if (data->proc[data->j].here_name != NULL)
 			if (unlink(data->proc[data->j].here_name) == -1)
-				update_exit_status(data, 1, "Error",
+				update_exit_status(data, 1, NULL,
 					"Error deleting heredoc file");
 		data->j++;
 	}

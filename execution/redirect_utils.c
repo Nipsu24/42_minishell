@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:39:05 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/05 22:42:47 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:05:11 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	no_other_heredoc(t_data *data)
 int	check_value_of_errno(t_data *data, char *file_name)
 {
 	if (errno == EACCES)
-		update_exit_status(data, 1, "minishell", "Permission denied");
+		update_exit_status(data, 1, "Error", "Permission denied");
 	if (errno == EISDIR)
-		update_exit_status(data, 1, "minishell", "Is a directory");
+		update_exit_status(data, 1, "Error", "Is a directory");
 	if (errno == ENOENT)
 		update_exit_status(data, 1, file_name, "No such file or directory");
 	return (1);
