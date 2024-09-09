@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/08 21:47:17 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:06:33 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,9 @@ int			join_cmd_path(t_data *data);
 int			alloc_here_filename(t_data *data);
 int			create_heredocs(t_data *data);
 int			file_create_n_write(t_data *data);
+int			here_while_loop(t_data *data);
+int			eof_detected(t_data *data);
+int			dup_for_empty_here_tmp(t_data *data);
 
 /* Execution */
 
