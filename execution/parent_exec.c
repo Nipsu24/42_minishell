@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 13:07:34 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/09 13:29:42 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,18 @@ void	parent_close_fds(t_data *data)
 		close(data->fd_arr[data->j][1]); //new
 	}
 }
+
 /* Checks if the child process has been terminated by SIGQUIT signal. If so,
 it checks its status and prints the correct quit message */
 void	handle_quit(int status)
 {
 	int	sig;
-	
-	sig = WTERMSIG(status); 
-    if (sig == SIGQUIT)
-    {
-        if (WCOREDUMP(status)) 
-			print_error(NULL, "Quit (core dumped)"); 
+
+	sig = WTERMSIG(status);
+	if (sig == SIGQUIT)
+	{
+		if (WCOREDUMP(status))
+			print_error(NULL, "Quit (core dumped)");
 		else
 			print_error(NULL, "Quit");
 	}
