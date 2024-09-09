@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:52:40 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 16:04:44 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/09 16:18:49 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	child_exec(t_data *data)
 		{
 			if (!data->proc[data->j].path)
 			{
-				update_exit_status(data, 127, NULL,
+				update_exit_status(data, 127, data->proc[data->j].cmd[0],
 					"Command not found");
 				return (1);
 			}
