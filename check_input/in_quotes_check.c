@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:12:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/18 15:31:10 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/09 11:14:18 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,3 +121,6 @@ int	between_quotes(char *input, int pos)
 	else
 		return (0);
 }
+
+// echo "$USER"
+// echo '$USER'

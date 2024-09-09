@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   input_check_a.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:45:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 22:09:47 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/09 10:32:39 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Checks if only spaces are present in input and returns in
+  this case 1.*/
+static int	check_spaces(char *input)
+{
+	int	i;
+	
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 /*Checks for errors related to red_out operant
   with different constellations of operants, 
@@ -86,6 +102,11 @@ static int	check_redirects(char *input)
 /*Checks for any syntax errors within the user input.*/
 int	not_valid_input(char *input, t_data *data)
 {
+	if (check_spaces(input))
+	{
+		data->exit_status = 2;
+		return (1);
+	}
 	if (check_quotes(input))
 	{
 		data->exit_status = 2;

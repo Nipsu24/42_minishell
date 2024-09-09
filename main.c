@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 13:47:29 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:13:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	input_extra(t_data *data)
 		data->err_flag = 1;
 	}
 	if (lexer(data))
-		return (free_all(data, 1), 1);
+		return (free_all(data, 0), 1);
 	if (parsing(data))
-		return (free_all(data, 1), 1);
+		return (free_all(data, 0), 1);
 	if (exec_proc(data))
 		free_all(data, 0);
 	free_all(data, 0);
@@ -60,7 +60,10 @@ static int	ft_input(t_data *data)
 			return_val = input_extra(data);
 	}		
 	if (return_val)
+	{
+		free_arr(&data->temp_env);
 		exit (data->exit_status);
+	}
 	return (0);
 }
 
