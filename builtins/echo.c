@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:15:44 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/05 21:35:52 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:46:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int	echo(t_data *data)
 		return (0);
 	}
 	print_echo(data);
-	free_str(&data->proc[data->j].cmd[1]);
+	// free_str(&data->proc[data->j].cmd[1]);
 	return (0);
 }

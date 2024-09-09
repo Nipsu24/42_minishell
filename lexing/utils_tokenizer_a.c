@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 11:55:09 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/09 15:34:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,14 @@ static char	**ft_iter_quote(char *s, size_t *i, size_t *j, char **arr)
 	start = *i;
 	(*i)++;
 	while (!is_quote(s[*i]) && s[*i])
+	{
 		(*i)++;
+		if (s[*i])
+		{
+			if (is_quote(s[*i]) && is_quote(s[*i + 1]))
+				(*i) = (*i) + 2;
+		}
+	}
 	arr[*j] = ft_substr(s, start, (*i - start + 1));
 	if (arr[*j] == 0)
 		return (free_arr_rev(&arr, *j));
@@ -94,7 +101,7 @@ static char	**ft_store_words(char *s, char **arr)
 	}
 	if (!ft_create_strings_arr(s, &i, &j, arr))
 		return (NULL);
-	arr[j] = 0;
+	arr[j] = NULL;
 	j = 0;
 	return (arr);
 }
