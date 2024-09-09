@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 16:03:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/09 16:24:01 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**ft_copy_env(char **env, t_data *data)
 	while (env[i])
 	{
 		data->temp_env[i] = NULL;
-		data->temp_env[i] = ft_substr(env[i], 0, ft_strlen(env[i]));
+		data->temp_env[i] = ft_strdup(env[i]);
 		if (!data->temp_env[i])
 			return (free_arr_rev(&data->temp_env, i));
 		i++;
