@@ -6,11 +6,28 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/06 10:36:13 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/09 10:55:59 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Checks for path in env variables. If no path present, returns 1
+  and init_path function quits directly.*/
+static int	path_unset(t_data *data)
+{
+	int	i;
+	
+	i = 0;
+	while (data->temp_env[i])
+	{
+		if (data->temp_env[i]
+			&& ft_strnstr(data->temp_env[i], "PATH=", 5))
+				return (0);
+		i++;
+	}
+	return (1);
+}
 
 /*Checks if any of the cmd arrays is populated with data.
   If not, returns 1 and init_path function quits directly.*/
@@ -78,6 +95,8 @@ static int	join_slash(t_data *data)
 
 int	init_path(t_data *data)
 {
+	if (path_unset(data))
+		return (0);
 	if (check_for_cmds(data))
 		return (0);
 	if (create_path_arr(data))

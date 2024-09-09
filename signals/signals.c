@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:15:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/04 15:29:45 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:49:14 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	handle_signals(int flag)
 	else if (flag == 2)
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 	}
 }
 

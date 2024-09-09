@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:52:40 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/06 11:46:03 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/06 12:04:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	child_exec(t_data *data)
 				if (execve(data->proc[data->j].path,
 						data->proc[data->j].cmd, data->temp_env) == -1)
 				{
-					update_exit_status(data, 126, data->proc[data->j].cmd[0],
+					update_exit_status(data, 126, NULL,
 						"command not executable");
 					return (1);
 				}
