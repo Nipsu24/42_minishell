@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 13:04:56 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/09 13:07:34 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	parent_wait_n_cleanup(t_data *data)
 	int	child_exit_status;
 
 	n = 0;
-	child_exit_status = 0;
 	while (n < data->proc_nbr)
 	{
 		waitpid(data->pid_arr[n], &status, 0);
