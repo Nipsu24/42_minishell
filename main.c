@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/04 14:30:24 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/06 12:10:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,6 @@ int	main(int ac, char *av[], char *env[])
 	else
 		if (ft_input(&data))
 			return (1);
+	free_arr(&data.temp_env);
 	return (0);
 }

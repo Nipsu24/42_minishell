@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 22:36:57 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:57:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	print_env(t_data *data)
 		free_str(data->proc[data->j].cmd);
 		exit(data->exit_status);
 	}
-	update_shlvl(data);
 	i = 0;
 	while (data->temp_env[i])
 	{
