@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 23:53:35 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/08/26 18:35:39 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:47:50 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ int	unset(t_data *data)
 		return (0);
 	while (data->temp_env[i])
 	{
+		free_str(&data->temp_env[i]);
 		data->temp_env[i] = data->temp_env[i + 1];
 		i++;
 	}
-	free(data->temp_env[i]);
-	data->temp_env[i] = NULL;
 	return (0);
 }

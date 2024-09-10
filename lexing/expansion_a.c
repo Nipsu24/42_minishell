@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 11:13:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/10 11:08:07 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,15 @@ int	ft_expand(t_data *data)
 	{
 		if (data->input[i] == '$' && (!between_quotes(data->input, i)
 				|| between_quotes(data->input, i) == 1))
-		{
-			if (def_var(data, i))
-				return (1);
-			i = 0;
+		{		
+			if (data->input[i + 1] != 32 && data->input[i + 1] != '"' && data->input[i + 1] != '\0')
+			{
+				if (def_var(data, i))
+					return (1);
+				i = 0;
+			}
+			else
+				i++;
 		}
 		if (!data->input || data->input[0] == '\0')
 			break ;

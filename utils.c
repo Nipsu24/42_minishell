@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 21:45:25 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/09 13:23:29 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:08:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	init_index(t_data *data)
 int	lexer(t_data *data)
 {
 	int	i;
+	int	j;
 
 	i = -1;
+	j = -1;
 	if (data->err_flag)
 		return (0);
 	if (insert_space(data))
@@ -70,9 +72,12 @@ int	lexer(t_data *data)
 		free_str(&data->input);
 		return (0);
 	}
+	printf("INPUT: %s\n", data->input);
 	data->tokens = ft_tokenize(data->input);
 	if (!data->tokens)
 		return (1);
+	while(j++, data->tokens[j])
+		printf("%s\n", data->tokens[j]);
 	if (!ft_malloc_token(data))
 		return (1);
 	while (i++, data->tokens[i])
