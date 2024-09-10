@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:21:38 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 15:36:17 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/10 16:34:10 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,48 +20,40 @@ int	is_quote(char c)
 	return (c == '"' || c == '\'');
 }
 
-/*Helper function of ft_wcount, iterates through quoted part of string*/
-static void	w_count_quote_iter(char *s, int *i)
-{
-	(*i)++;
-	while (s[*i] && !is_quote(s[*i]))
-		(*i)++;
-}
-
-/*Helper function of ft_wcount*/
-static void	iter_quotes_n_non_quotes(char *s, int *i)
-{
-	while (s[*i] && s[*i] != ' ')
-	{
-		if ((is_quote(s[*i]) && s[*i + 1]))
-			w_count_quote_iter(s, i);
-		if (s[*i])
-			(*i)++;
-	}
-}
-
-/*Counts words (and strings in quotes as one single word)*/
+/*Counts words in the input string split by spaces which are not in single
+  or double quotation marks. sq/dq flags are set on/off depending on if 
+  being in a quoted section. E.g. if in double quoted section (dq==1) and
+  another '"' is encountered, dq is reset to 0.*/
 int	ft_wcount(char *s)
 {
-	int		i;
-	int		count;
+	int	i;
+	int	count;
+	int	dq;
+	int	sq;
 
 	i = 0;
 	count = 0;
+	dq = 0;
+	sq = 0;
 	if (s[i] == '\0')
-		count++;
-	else
+		return (1);
+	while (s[i])
 	{
-		while (s[i])
+		while (s[i] == ' ' && sq == 0 && dq == 0)
+			i++;
+		if (s[i])
 		{
-			if (s[i] && s[i] != ' ')
+			count++;
+			while (s[i] && (s[i] != ' ' || sq == 1 || dq == 1))
 			{
-				count++;
-				iter_quotes_n_non_quotes(s, &i);
-			}
-			while (s[i] && s[i] == ' ')
+				if (s[i] == '\'' && dq == 0)
+					sq = !sq;
+				else if (s[i] == '"' && sq == 0)
+					dq = !dq;
 				i++;
+			}
 		}
 	}
+	printf("WORD COUNT: %d\n", count);
 	return (count);
-}
+}	
