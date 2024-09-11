@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:45:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 10:32:39 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:22:06 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int	check_spaces(char *input)
 {
 	int	i;
-	
+
 	i = 0;
 	while (input[i])
 	{
