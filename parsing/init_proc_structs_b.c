@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:44:37 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 15:36:54 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:04:38 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ static int	fill_data(t_data *data)
 	if (data->token_list[data->i].type == COMMAND)
 	{
 		data->proc[data->j].cmd[data->k] = ft_strdup(data->tokens[data->i]);
-		// printf("DATA TOKENS: %s\n", data->tokens[data->i]);
-		// // // printf("TOKEN TYPE: %d\n", data->token_list[data->i].type);
-		// printf("CMD Struct: %s\n", data->proc[data->j].cmd[data->k]);
 		if (!data->proc[data->j].cmd[data->k])
 			return (free_proc_arr_rev(data));
 		data->k++;

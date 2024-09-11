@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/09 10:55:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:05:17 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 static int	path_unset(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (data->temp_env[i])
 	{
 		if (data->temp_env[i]
 			&& ft_strnstr(data->temp_env[i], "PATH=", 5))
-				return (0);
+			return (0);
 		i++;
 	}
 	return (1);

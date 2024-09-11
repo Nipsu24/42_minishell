@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/09/10 11:22:06 by mmeier           ###   ########.fr        #
+#    Updated: 2024/09/11 16:36:44 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ FILES = main.c \
 		check_input/input_check_a.c \
 		check_input/input_check_b.c \
 		check_input/in_quotes_check.c \
-		lexing/utils_tokenizer_a.c \
-		lexing/utils_tokenizer_b.c \
+		lexing/utils_tokenizer.c \
 		lexing/token_handling.c \
-		lexing/expansion_a.c \
+		lexing/expansion_a_1.c \
+		lexing/expansion_a_2.c \
 		lexing/expansion_b.c \
 		lexing/expansion_c.c \
 		lexing/insert_space.c \

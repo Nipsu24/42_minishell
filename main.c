@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 16:13:07 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:21:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	input_extra(t_data *data)
 static int	ft_input(t_data *data)
 {
 	int	return_val;
-	
+
+	return_val = 0;
 	while (1)
 	{
 		data->err_flag = 0;
@@ -102,6 +103,8 @@ void	init_data(t_data *data)
 	data->flag_after = 0;
 	data->pipe_flag = 0;
 	data->flag_cntlr_d = 0;
+	data->sq = 0;
+	data->dq = 0;
 	init_index(data);
 }
 

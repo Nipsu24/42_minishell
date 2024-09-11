@@ -6,121 +6,105 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 14:07:00 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/08/21 10:49:58 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:24:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Helper function of remove_quotes_inside, populates previously memory allocated
-  strings with characters of original strings except if they are single or
-  double quotes.*/
-static int	create_str_w_o_quotations(t_data *data, char *tmp, int count)
+static int	only_quotes_in_str(t_data *data, int j, char *tmp)
 {
-	tmp = malloc(sizeof(char) * (ft_strlen(data->tokens[data->j]) - count + 1));
+	tmp = ft_strdup("");
 	if (!tmp)
 		return (1);
+	free_str(&data->tokens[j]);
+	data->tokens[j] = tmp;
+	return (0);
+}
+
+static int	cut_quotes_str(t_data *data, int j, int first, int second)
+{
+	char	*tmp;
+
 	data->i = 0;
 	data->k = 0;
-	while (data->tokens[data->j][data->i])
+	tmp = NULL;
+	if (ft_strlen(data->tokens[j]) == 2)
 	{
-		if (data->tokens[data->j][data->i] != '"'
-			&& data->tokens[data->j][data->i] != '\'')
-			tmp[data->k++] = data->tokens[data->j][data->i];
+		if (only_quotes_in_str(data, j, tmp))
+			return (1);
+		else
+			return (0);
+	}
+	tmp = malloc(sizeof(char) * (ft_strlen(data->tokens[j]) - 2 + 1));
+	if (!tmp)
+		return (1);
+	while (data->tokens[j][data->i])
+	{
+		if (data->i != first && data->i != second)
+			tmp[data->k++] = data->tokens[j][data->i];
 		data->i++;
 	}
 	tmp[data->k] = '\0';
-	free_str(&data->tokens[data->j]);
-	data->tokens[data->j] = tmp;
+	free_str(&data->tokens[j]);
+	data->tokens[j] = tmp;
 	return (0);
 }
 
-/*Counts amount of quotation marks remaining in the strings of the 2d array and 
-  substracts this amount from the respective string lenghts in order to allocate
-  memory for strings where these quotation marks are 'cut out'.*/
-static int	remove_quotes_inside(t_data *data)
+static int	remove_quotes_str(t_data *data, int j)
 {
-	char	*tmp;
-	int		count;
+	int		i;
+	char	quote;
+	int		first;
+	int		second;
 
-	count = 0;
-	init_index(data);
-	while (data->tokens[data->j])
+	i = 0;
+	first = -1;
+	second = -1;
+	quote = 'a';
+	while (data->tokens[j][i])
 	{
-		tmp = NULL;
-		count = 0;
-		data->i = 0;
-		while (data->tokens[data->j][data->i])
+		if (data->tokens[j][i] == '"' || data->tokens[j][i] == '\'')
 		{
-			if (data->tokens[data->j][data->i] == '"'
-				|| data->tokens[data->j][data->i] == '\'')
-				count++;
-			data->i++;
+			quote = data->tokens[j][i];
+			first = i;
+			i++;
+			while (data->tokens[j][i])
+			{
+				if (quote == data->tokens[j][i])
+				{
+					second = i;
+					break ;
+				}
+				i++;
+			}
+			if (first >= 0 && second >= 0)
+			{
+				if (cut_quotes_str(data, j, first, second))
+					return (1);
+				first = -1;
+				second = -1;
+				i = 0;
+			}
 		}
-		if (count)
-		{
-			if (create_str_w_o_quotations(data, tmp, count))
-				return (1);
-		}
-		data->j++;
+		else
+			i++;
 	}
 	return (0);
 }
 
-/*Helper function of remove_quotes, removes double quotes from
-  beginning and end of data->tokens strings.*/
-static int	trim_double_quotes(t_data *data, char *tmp, int *j)
-{
-	tmp = ft_strtrim(data->tokens[*j], "\"");
-	if (!tmp)
-		return (1);
-	free(data->tokens[*j]);
-	data->tokens[*j] = NULL;
-	data->tokens[*j] = tmp;
-	return (0);
-}
-
-/*Helper function of remove_quotes, removes single quotes from
-  beginning and end of data->tokens strings.*/
-static int	trim_single_quotes(t_data *data, char *tmp, int *j)
-{
-	tmp = ft_strtrim(data->tokens[*j], "\'");
-	if (!tmp)
-		return (1);
-	free(data->tokens[*j]);
-	data->tokens[*j] = NULL;
-	data->tokens[*j] = tmp;
-	return (0);
-}
-
-/*Removes single and double quotes of beginning and end ofdata->tokens strings.
-  Double or single quotes which are next to each other (e.g. "") are excluded 
-  from this operation.*/
 int	remove_quotes(t_data *data)
 {
 	int		j;
-	int		i;
 	char	*tmp;
 
 	j = 0;
-	i = 0;
 	tmp = NULL;
 	while (data->tokens[j])
 	{
-		tmp = NULL;
-		if (data->tokens[j][i] == '"' && data->tokens[j][i + 1] != '"')
-		{
-			if (trim_double_quotes(data, tmp, &j))
-				return (1);
-		}
-		if (data->tokens[j][i] == '\'' && data->tokens[j][i + 1] != '\'')
-		{
-			if (trim_single_quotes(data, tmp, &j))
-				return (1);
-		}
+		if (remove_quotes_str(data, j))
+			return (1);
 		j++;
 	}
-	if (remove_quotes_inside(data))
-		return (1);
 	return (0);
 }

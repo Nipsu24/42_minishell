@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 14:06:33 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:35:32 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct s_data
 	t_token		*token_list;
 	int			flag_cntlr_d;
 	t_prc		*proc;
+	int			sq;
+	int			dq;
 }				t_data;
 
 /* Utils */
@@ -146,11 +148,11 @@ char		*get_expansion(t_data *data, char *tmp);
 int			var_exist(t_data *data, char *tmp);
 int			create_null_string(t_data *data);
 int			check_before_after_case(t_data *data);
-char		**ft_tokenize(char *s);
-int			ft_wcount(char *s);
+char		**ft_tokenize(char *s, t_data *data);
 int			ft_malloc_token(t_data *data);
 void		assign_token_type(t_data *tokens, int i);
 int			remove_quotes(t_data *data);
+void		helper_ft_expand(t_data *data, int *i);
 
 /* Parsing */
 
