@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/12 15:10:11 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:18:18 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,45 @@ static void	print_export_env(char **env)
 	}
 }
 
+/* Function to check if a string is alphanumeric. If the string is
+alphanumeric, return true. If the string is not alphanumeric, return false. */
 static bool	is_str_alpha(char *str)
 {
-    int i;
-	
+	int	i;
+
 	i = 0;
-    if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
-        return (false);
-    i++;
-    while (str[i])
-    {
-        if (!ft_isalnum(str[i]) && str[i] != '_')
-            return (false);
-        i++;
-    }
-    return (true);
+	if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
+		return (false);
+	i++;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
+/* Function to check if the variable to be exported is valid. If the variable
+   is not valid, print an error message and return false. If the variable is
+   valid, return true. */
 static bool	valid_export(t_data *data, char *var)
 {
 	char	**tmp;
 
 	tmp = ft_split(var, '=');
 	if (!tmp || !tmp[0])
-        return (update_exit_status(data, 1, NULL, "Not a valid identifier"), false);
-    if (!is_str_alpha(tmp[0]))
-        return (update_exit_status(data, 1, NULL, "Not a valid identifier"), false);
-    if (tmp[1] && is_str_alpha(tmp[0])) 
-        return (true);
-    free_arr(&tmp);
-    return (false);
-	
+		return (update_exit_status(data, 1, NULL,
+				"Not a valid identifier"), false);
+	if (!is_str_alpha(tmp[0]))
+		return (update_exit_status(data, 1, NULL,
+				"Not a valid identifier"), false);
+	if (tmp[1] && is_str_alpha(tmp[0]))
+		return (true);
+	free_arr(&tmp);
+	return (false);
 }
+
 /* Function to update a variable in the environment. If the variable is not
 found, add it to the environment. If the variable is found, update it. */
 int	export(t_data *data)
