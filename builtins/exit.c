@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/05 22:45:12 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:41:37 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	do_exit(t_data *data)
 		if (!is_numeric(data->proc[data->j].cmd[1])
 			|| exit_overflow(data->proc[data->j].cmd[1]))
 		{
-			update_exit_status(data, 255, "Error", "Numeric argument required");
+			update_exit_status(data, 2, "Error", "Numeric argument required");
 			return (data->exit_status);
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);

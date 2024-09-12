@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 23:53:35 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/10 15:47:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:54:39 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,26 @@
 int	unset(t_data *data)
 {
 	int		i;
+	int		k = 0;
+	int		m = 0;
+	char	**tmp;
 
+	
 	i = find_var(data->temp_env, data->proc[data->j].cmd[1]);
 	if (i == len_array(data->temp_env))
 		return (0);
-	while (data->temp_env[i])
+	tmp = malloc(sizeof(char*) * len_array(data->temp_env));
+	if (!tmp)
+		return (1);
+	while (data->temp_env[m])
 	{
-		free_str(&data->temp_env[i]);
-		data->temp_env[i] = data->temp_env[i + 1];
-		i++;
+		if (m != i)
+			tmp[k++] = ft_strdup(data->temp_env[m]);
+		m++;
 	}
+	tmp[k] = NULL;
+	free_arr(&data->temp_env);
+	data->temp_env = tmp;
 	return (0);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 16:24:01 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/12 15:42:26 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	print_env(t_data *data)
   shell level is higher than 999, it will be reset to 1 */
 int	update_shlvl(t_data *data)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = find_var(data->temp_env, "SHLVL");
 	if (i == len_array(data->temp_env))

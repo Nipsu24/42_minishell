@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/05 22:38:59 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:38:15 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pwd(t_data *data)
 	{
 		update_exit_status(data, 1, "Error",
 			"Error getting current working directory");
-		exit(data->exit_status);
+		return(data->exit_status);
 	}
 	return (0);
 }

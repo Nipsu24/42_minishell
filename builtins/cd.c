@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:33:42 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/08 21:40:32 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:45:15 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	do_cd(char **array, t_data *data)
 	oldpwd = NULL;
 	ft_strlcpy(data->newpwd, array[1], sizeof(data->newpwd));
 	if (chdir(data->newpwd) == -1)
-		return (print_error("cd", "Error changing directory"), 1);
+		return (update_exit_status(data, 1, "cd", "No such file or directory"), 1);
 	newpwd = ft_strjoin("PWD=", data->newpwd);
 	if (!newpwd)
 	{
@@ -95,5 +95,5 @@ int	cd(char **array, t_data *data)
 	else if (i == 2)
 		return (do_cd(array, data));
 	else
-		return (print_error("cd", "Too many arguments"), 1);
+		return (update_exit_status(data, 1, "cd", "Too many arguments"), 1);
 }

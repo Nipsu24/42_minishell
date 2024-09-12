@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:54:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 15:46:23 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/12 12:49:38 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	non_child_builtins(t_data *data)
 	}
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "unset", 6) == 0)
 	{
+		if (!data->proc[data->j].cmd[1])
+		{
+			update_exit_status(data, 0, NULL, NULL);
+			return (-1);
+		}
 		unset(data);
 		return (1);
 	}
