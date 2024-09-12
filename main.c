@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/11 16:21:32 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:54:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	init_data(t_data *data)
 	data->flag_cntlr_d = 0;
 	data->sq = 0;
 	data->dq = 0;
+	data->first = 0;
+	data->second = 0;
 	init_index(data);
 }
 
