@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_c.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:58:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/08/30 12:04:15 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/12 15:25:51 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	create_null_string(t_data *data)
 {
 	free_str(&data->input);
 	data->input = ft_strdup("");
+	data->err_flag = 1;
 	if (!data->input)
 		return (1);
 	return (0);

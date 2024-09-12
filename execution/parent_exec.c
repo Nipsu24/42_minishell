@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 13:29:42 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:37:00 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parent_close_fds(t_data *data)
 
 /* Checks if the child process has been terminated by SIGQUIT signal. If so,
 it checks its status and prints the correct quit message */
-void	handle_quit(int status)
+static void	handle_quit(int status)
 {
 	int	sig;
 
@@ -64,8 +64,7 @@ void	parent_wait_n_cleanup(t_data *data)
 		if (WIFEXITED(status))
 		{
 			child_exit_status = WEXITSTATUS(status);
-			if (child_exit_status != 0)
-				data->exit_status = child_exit_status;
+			data->exit_status = child_exit_status;
 		}
 		else if (WIFSIGNALED(status))
 			data->exit_status = 128 + WTERMSIG(status);
