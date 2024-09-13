@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 15:04:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:43:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ typedef struct s_data
 	int			dq;
 	int			first;
 	int			second;
-	int			redir_flag;
 }				t_data;
 
 /* Utils */
