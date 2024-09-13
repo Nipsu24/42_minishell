@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_a.c                                      :+:      :+:    :+:   */
+/*   expansion_a_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/11 16:34:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:52:52 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	ft_expand(t_data *data)
 	{
 		if (data->input[i] == '$' && (!between_quotes(data->input, i)
 				|| between_quotes(data->input, i) == 1))
-		{		
+		{
 			if (data->input[i + 1] != 32 && data->input[i + 1] != '"'
 				&& data->input[i + 1])
 			{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:20:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/11 15:58:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:47:11 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	ft_wcount(char *s)
 		}
 	}
 	return (count);
-}	
+}
 
 /*Populates strings in 2d token array. Strings are split by spaces
   which are not in quotes.*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 11:43:48 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:50:59 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	g_sigint = false;
 
+/* Function to handle the input of the user. If the input is not valid, return 1
+If the input is valid, call the lexer, parser and executor functions. */
 static int	input_extra(t_data *data)
 {
 	if (ft_strlen(data->input) > 0)
@@ -68,6 +70,7 @@ static int	ft_input(t_data *data)
 	return (0);
 }
 
+/*Initialise all relevant arrays of the main data struct*/
 void	init_arrays(t_data *data)
 {
 	data->temp_env = NULL;

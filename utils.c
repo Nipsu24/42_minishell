@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 21:45:25 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/11 15:57:45 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:51:23 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	update_exit_status(t_data *data, int status, char *cmd, char *msg)
 	return (status);
 }
 
+/* Function to initialize the index variables. */
 void	init_index(t_data *data)
 {
 	data->j = 0;

@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/12 15:10:11 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:39:24 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ static void	print_export_env(char **env)
 
 static bool	is_str_alpha(char *str)
 {
-    int i;
-	
+	int	i;
+
 	i = 0;
-    if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
-        return (false);
-    i++;
-    while (str[i])
-    {
-        if (!ft_isalnum(str[i]) && str[i] != '_')
-            return (false);
-        i++;
-    }
-    return (true);
+	if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
+		return (false);
+	i++;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 static bool	valid_export(t_data *data, char *var)
@@ -55,15 +55,17 @@ static bool	valid_export(t_data *data, char *var)
 
 	tmp = ft_split(var, '=');
 	if (!tmp || !tmp[0])
-        return (update_exit_status(data, 1, NULL, "Not a valid identifier"), false);
-    if (!is_str_alpha(tmp[0]))
-        return (update_exit_status(data, 1, NULL, "Not a valid identifier"), false);
-    if (tmp[1] && is_str_alpha(tmp[0])) 
-        return (true);
-    free_arr(&tmp);
-    return (false);
-	
+		return (update_exit_status(data, 1, NULL,
+				"Not a valid identifier"), false);
+	if (!is_str_alpha(tmp[0]))
+		return (update_exit_status(data, 1, NULL,
+				"Not a valid identifier"), false);
+	if (tmp[1] && is_str_alpha(tmp[0]))
+		return (true);
+	free_arr(&tmp);
+	return (false);
 }
+
 /* Function to update a variable in the environment. If the variable is not
 found, add it to the environment. If the variable is found, update it. */
 int	export(t_data *data)

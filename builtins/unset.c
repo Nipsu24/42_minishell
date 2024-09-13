@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 23:53:35 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/12 13:54:39 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:51:46 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 int	unset(t_data *data)
 {
 	int		i;
-	int		k = 0;
-	int		m = 0;
+	int		k;
+	int		m;
 	char	**tmp;
 
-	
+	k = 0;
+	m = 0;
 	i = find_var(data->temp_env, data->proc[data->j].cmd[1]);
 	if (i == len_array(data->temp_env))
 		return (0);
-	tmp = malloc(sizeof(char*) * len_array(data->temp_env));
+	tmp = malloc(sizeof(char) * len_array(data->temp_env));
 	if (!tmp)
 		return (1);
 	while (data->temp_env[m])
@@ -40,4 +41,3 @@ int	unset(t_data *data)
 	data->temp_env = tmp;
 	return (0);
 }
-
