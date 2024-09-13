@@ -6,40 +6,24 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:52:40 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 16:34:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:49:45 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	contains_redouts(char **arr)
-{
-	int	j;
-
-	j = 0;
-	while (arr[j])
-	{
-		if (ft_strncmp(arr[j], ">", 1))
-			return (1);
-		j++;
-	}
-	return (0);
-}
-
 /*Hanldes opening/closing of pipe fd for first process*/
 static int	child_first_pipe(t_data *data)
 {
 	close(data->fd_arr[data->j][0]);
-	if (data->proc_nbr > 1 && !contains_redouts(data->proc[data->j].redir)) // new
+	if (data->proc_nbr > 1)
 	{
 		if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
 			return (1);
 	}
-	// fprintf(stderr, "#FD PIPE Write OPEN: %d\n", data->fd_arr[data->j][1]);
 	close(data->fd_arr[data->j][1]);
-	// fprintf(stderr, "#FD PIPE Write CLOSED: %d\n", data->fd_arr[data->j][1]);
-	close(data->save_stdout); // new
-	close(data->save_stdin); //new
+	close(data->save_stdout);
+	close(data->save_stdin);
 	return (0);
 }
 
@@ -53,8 +37,8 @@ static int	child_middle_pipes(t_data *data)
 	if (dup2(data->fd_arr[data->j][1], STDOUT_FILENO) < 0)
 		return (1);
 	close(data->fd_arr[data->j][1]);
-	close(data->save_stdout); // new
-	close(data->save_stdin); // new
+	close(data->save_stdout);
+	close(data->save_stdin);
 	return (0);
 }
 
@@ -65,10 +49,10 @@ static int	child_last_pipe(t_data *data)
 	if (dup2(data->fd_arr[data->j - 1][0], STDIN_FILENO) < 0)
 		return (1);
 	close(data->fd_arr[data->j - 1][0]);
-	close(data->fd_arr[data->j][0]); //new
-	close(data->fd_arr[data->j][1]); //new
-	close(data->save_stdout); // new
-	close(data->save_stdin); // new
+	close(data->fd_arr[data->j][0]);
+	close(data->fd_arr[data->j][1]);
+	close(data->save_stdout);
+	close(data->save_stdin);
 	return (0);
 }
 
@@ -77,10 +61,6 @@ static int	child_last_pipe(t_data *data)
 int	child_procs(t_data *data)
 {
 	handle_signals(2);
-	if (heredoc_exec(data))
-		return (1);
-	if (redir_exec(data))
-		return (1);
 	if (data->pipe_flag == 1 && data->j == 0)
 	{
 		if (child_first_pipe(data))
@@ -96,6 +76,10 @@ int	child_procs(t_data *data)
 		if (child_last_pipe(data))
 			return (1);
 	}
+	if (heredoc_exec(data))
+		return (1);
+	if (redir_exec(data))
+		return (1);
 	return (0);
 }
 

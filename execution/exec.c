@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 16:19:11 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/13 11:48:01 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static int	exec_loop(t_data *data)
 				return (1);
 			if (data->pid_arr[data->j] == 0)
 			{
-				close(data->save_stdout); // new
-				close(data->save_stdin); //new
+				close(data->save_stdout);
+				close(data->save_stdin);
 				if (child_procs(data))
 					free_all(data, data->exit_status);
 				if (child_exec(data))
