@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:35:14 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/11 16:05:17 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:48:35 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ static int	join_slash(t_data *data)
 	return (0);
 }
 
+/*Joins the path_arr with the cmd array to create a full path. If the
+  path is found, the function returns 0 and the path is stored in
+  data->proc[data->j].path.*/
 int	init_path(t_data *data)
 {
 	if (path_unset(data))
