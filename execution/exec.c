@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:18:32 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 11:48:01 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 15:54:45 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,20 @@ static int	exec_loop(t_data *data)
 		handle_signals(1);
 		if (create_pipe(data))
 			return (1);
-		if (!non_child_builtins(data))
+		if (fork_procs(data))
+			return (1);
+		if (data->pid_arr[data->j] == 0)
 		{
-			if (fork_procs(data))
-				return (1);
-			if (data->pid_arr[data->j] == 0)
-			{
-				close(data->save_stdout);
-				close(data->save_stdin);
-				if (child_procs(data))
-					free_all(data, data->exit_status);
-				if (child_exec(data))
-					free_all(data, data->exit_status);
-				free_all(data, 2);
-			}
-			if ((data->pid_arr[data->j]) > 0)
-				parent_close_fds(data);
+			close(data->save_stdout);
+			close(data->save_stdin);
+			if (child_procs(data))
+				free_all(data, data->exit_status);
+			if (child_exec(data))
+				free_all(data, data->exit_status);
+			free_all(data, 2);
 		}
+		if ((data->pid_arr[data->j]) > 0)
+			parent_close_fds(data);
 		data->j++;
 	}
 	return (0);
@@ -92,13 +89,14 @@ int	exec_proc(t_data *data)
 {
 	if (data->err_flag)
 		return (0);
-	if (parent_builtin_check(data) && data->proc_nbr > 1)
-		return (update_exit_status(data, 1, NULL, NULL), 0);
+	if (parent_builtin_check(data) && data->proc_nbr < 2)
+	{
+		return (non_child_builtins(data), 0);
+	}
 	if (init_exec(data))
 		return (1);
 	if (exec_loop(data))
 		return (1);
-	if (!parent_builtin_check(data))
-		parent_wait_n_cleanup(data);
+	parent_wait_n_cleanup(data);
 	return (0);
 }

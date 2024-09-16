@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/09/11 16:36:44 by mmeier           ###   ########.fr        #
+#    Updated: 2024/09/16 16:04:46 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ INCLUDES = -I/usr/local/opt/readline/include -I./
 
 FILES = main.c \
 		utils.c \
+		utils_extra.c \
 		check_input/input_check_a.c \
 		check_input/input_check_b.c \
 		check_input/in_quotes_check.c \

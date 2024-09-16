@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:45:02 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/11 16:22:06 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:05:04 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	red_in_check(char *input, int *i)
 }
 
 /*Checks several syntax errors related to all redirect operants.*/
-static int	check_redirects(char *input)
+int	check_redirects(char *input)
 {
 	int	i;
 
