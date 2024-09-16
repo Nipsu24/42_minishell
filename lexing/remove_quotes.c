@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 14:07:00 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/12 11:49:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:52:06 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,8 @@ static int	remove_quotes_str(t_data *data, int j)
 int	remove_quotes(t_data *data)
 {
 	int		j;
-	char	*tmp;
 
 	j = 0;
-	tmp = NULL;
 	while (data->tokens[j])
 	{
 		if (remove_quotes_str(data, j))
