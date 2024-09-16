@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/12 14:20:28 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:39:33 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	add_var(t_data *data, char *var)
 	new_env[i + 1] = NULL;
 	free_arr(&data->temp_env);
 	data->temp_env = new_env;
-//	free_arr(&new_env);
 	return (0);
 }
 

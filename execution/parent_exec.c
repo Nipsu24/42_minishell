@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 15:37:00 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/13 11:48:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	parent_close_fds(t_data *data)
 	{
 		close(data->fd_arr[data->j - 1][0]);
 		close(data->fd_arr[data->j - 1][1]);
-		close(data->fd_arr[data->j][0]); //new
-		close(data->fd_arr[data->j][1]); //new
+		close(data->fd_arr[data->j][0]);
+		close(data->fd_arr[data->j][1]);
 	}
 }
 

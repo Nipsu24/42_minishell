@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:42:18 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 16:30:18 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:45:26 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	redout_loop(t_data *data)
 	if (ft_strncmp(data->proc[data->j].redir[data->i], ">", 1)
 		== 0 && !data->proc[data->j].redir[data->i][1])
 	{
-	// printf("TESTTEST!!!\n");
 		data->proc[data->j].fd[data->k]
 			= open(data->proc[data->j].redir[data->i + 1],
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -97,9 +96,7 @@ int	redout_loop(t_data *data)
 		{
 			if (dup2(data->proc[data->j].fd[data->k], STDOUT_FILENO) < 0)
 				return (1);
-			// printf("#FD REDIR OUT OPEN: %d\n", data->proc[data->j].fd[data->k]);
 			close(data->proc[data->j].fd[data->k]);
-			// printf("#FD REDIR OUT CLOSED: %d\n", data->proc[data->j].fd[data->k]);
 			if (data->proc[data->j].redir[data->i + 2] != NULL)
 				data->proc[data->j].fd[data->k]++;
 			return (0);
