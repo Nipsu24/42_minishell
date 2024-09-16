@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/12 12:41:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:56:50 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ int	do_exit(t_data *data)
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);
 	}
-	write(STDERR_FILENO, "exit\n", 5);
 	exit(data->exit_status);
 }

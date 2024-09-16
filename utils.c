@@ -3,50 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 21:45:25 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/13 12:51:23 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:04:24 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Function to print an error message. If cmd is not NULL, print the command
-   name. If str is not NULL, print the error message. */
-void	print_error(char *cmd, char *str)
+/*Helper function for lexer (needed for norm reasons)*/
+static void	helper_lexer(t_data *data)
 {
-	if (cmd)
-	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(cmd, STDERR_FILENO);
-	}
-	if (str)
-	{
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd(str, STDERR_FILENO);
-	}
-	ft_putstr_fd("\n", STDERR_FILENO);
-}
+	int	i;
 
-/* Function to update the exit status. If cmd or msg is not NULL, print the
-error message. Then update the exit status with the given status. */
-int	update_exit_status(t_data *data, int status, char *cmd, char *msg)
-{
-	if (cmd || msg)
-		print_error(cmd, msg);
-	data->exit_status = status;
-	return (status);
-}
-
-/* Function to initialize the index variables. */
-void	init_index(t_data *data)
-{
-	data->j = 0;
-	data->i = 0;
-	data->k = 0;
-	data->l = 0;
-	data->m = 0;
+	i = -1;
+	while (i++, data->tokens[i])
+		assign_token_type(data, i);
 }
 
 /*Holds all relevant functions related to the lexing part.
@@ -56,19 +29,17 @@ void	init_index(t_data *data)
   from strings of 2d array*/
 int	lexer(t_data *data)
 {
-	int	i;
-
-	i = -1;
 	if (data->err_flag)
 		return (0);
 	if (insert_space(data))
 		return (1);
 	if (ft_expand(data))
 		return (1);
-	if (check_pipes(data->input))
+	if (data->err_flag)
+		return (0);
+	if (check_pipes(data->input) || check_redirects(data->input))
 	{
 		data->err_flag = 1;
-		free_str(&data->input);
 		return (0);
 	}
 	data->tokens = ft_tokenize(data->input, data);
@@ -76,8 +47,7 @@ int	lexer(t_data *data)
 		return (1);
 	if (!ft_malloc_token(data))
 		return (1);
-	while (i++, data->tokens[i])
-		assign_token_type(data, i);
+	helper_lexer(data);
 	if (remove_quotes(data))
 		return (1);
 	return (0);

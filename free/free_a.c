@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 15:22:27 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:35:57 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ void	free_all(t_data *data, int exit_flag)
 		free_int_arr(&data->pid_arr);
 	if (data->fd_arr)
 		free_2d_int_arr(data, &data->fd_arr);
-	if (exit_flag == 1)
-		exit(EXIT_FAILURE);
-	if (exit_flag == 2)
-		exit(EXIT_SUCCESS);
-	if (exit_flag == data->exit_status && exit_flag != 0)
+	if (exit_flag)
 		exit(data->exit_status);
 }
 
