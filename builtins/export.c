@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/16 12:23:04 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:41:22 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static bool	valid_export(t_data *data, char *var)
 
 	tmp = ft_split(var, '=');
 	if (!tmp || !tmp[0])
-		return (update_exit_status(data, 1, "export",
+		return (free_arr(&tmp), update_exit_status(data, 1, "export",
 				"Not a valid identifier"), false);
 	if (!is_str_alpha(tmp[0]))
-		return (update_exit_status(data, 1, "export",
+		return (free_arr(&tmp), update_exit_status(data, 1, "export",
 				"Not a valid identifier"), false);
 	if (tmp[1] && is_str_alpha(tmp[0]))
-		return (true);
+		return (free_arr(&tmp), true);
 	free_arr(&tmp);
 	return (false);
 }
@@ -94,7 +94,7 @@ int	export(t_data *data)
 	else
 	{
 		i = 0;
-		while (data->proc[data->j].cmd[i++])
+		while (i++, data->proc[data->j].cmd[i])
 		{
 			if (valid_export(data, data->proc[data->j].cmd[i]))
 				update_var(data, data->proc[data->j].cmd[i]);
