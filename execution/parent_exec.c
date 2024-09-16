@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:38:53 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/14 11:18:02 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:23:15 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	parent_close_fds(t_data *data)
 	if (data->pipe_flag && data->j == 0)
 	{
 		close(data->fd_arr[data->j][1]);
-		if (data->proc_nbr < 2) //new
-			close(data->fd_arr[data->j][0]); //new
+		if (data->proc_nbr < 2)
+			close(data->fd_arr[data->j][0]);
 	}
 	if (data->pipe_flag && data->j > 0 && data->j != data->proc_nbr -1)
 	{

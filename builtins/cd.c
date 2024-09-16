@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:33:42 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/13 12:39:57 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:49:39 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ int	cd(char **array, t_data *data)
 	else if (i == 2)
 		return (do_cd(array, data));
 	else
-		return (update_exit_status(data, 1, "cd", "Too many arguments"), 1);
+		return (update_exit_status(data, 1, "cd", "too many arguments"), 1);
 }

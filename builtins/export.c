@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/13 12:39:24 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:49:20 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ static bool	valid_export(t_data *data, char *var)
 	tmp = ft_split(var, '=');
 	if (!tmp || !tmp[0])
 		return (update_exit_status(data, 1, NULL,
-				"Not a valid identifier"), false);
+				"not a valid identifier"), false);
 	if (!is_str_alpha(tmp[0]))
 		return (update_exit_status(data, 1, NULL,
-				"Not a valid identifier"), false);
+				"not a valid identifier"), false);
 	if (tmp[1] && is_str_alpha(tmp[0]))
 		return (true);
 	free_arr(&tmp);
@@ -80,7 +80,7 @@ int	export(t_data *data)
 	i = len_array(data->proc[data->j].cmd);
 	if (i > 2)
 	{
-		update_exit_status(data, 0, "Error", "Too many arguments");
+		update_exit_status(data, 0, "Error", "too many arguments");
 		return (data->exit_status);
 	}
 	if (i == 1)

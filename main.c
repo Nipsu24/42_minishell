@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 12:50:59 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:57:31 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static int	input_extra(t_data *data)
 	if (ft_strlen(data->input) > 0)
 		add_history(data->input);
 	if (not_valid_input(data->input, data))
-	{
-		free_str(&data->input);
 		data->err_flag = 1;
-	}
 	if (lexer(data))
 		return (free_all(data, 0), 1);
 	if (parsing(data))
 		return (free_all(data, 0), 1);
 	if (exec_proc(data))
 		free_all(data, 0);
-	free_all(data, 0);
+	if (data->err_flag)
+		free_str(&data->input);
+	else
+		free_all(data, 0);
 	return (0);
 }
 
@@ -53,10 +53,7 @@ static int	ft_input(t_data *data)
 		setup_signal();
 		data->input = readline("minishell> ");
 		if (!data->input)
-		{
-			write(STDERR_FILENO, "exit\n", 5);
 			break ;
-		}
 		if (!data->input[0])
 			free_str(&data->input);
 		else

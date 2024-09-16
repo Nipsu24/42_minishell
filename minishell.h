@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 11:43:33 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:04:59 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int			check_red_out_app(char *input, int i);
 int			check_heredoc_err(char *input, int i);
 int			check_pipes(char *input);
 int			is_quote(char c);
+int			check_redirects(char *input);
 
 /* Lexing */
 
