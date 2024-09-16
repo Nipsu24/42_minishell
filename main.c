@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/16 15:57:31 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 16:15:39 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ int	main(int ac, char *av[], char *env[])
 		return (1);
 	if (ac > 1 || av[1])
 	{
-		printf("Error. File does not take input.\n");
+		print_error("Error","File does not take input.");
+		free_arr(&data.temp_env);
 		return (1);
 	}
 	else
