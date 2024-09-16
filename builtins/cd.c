@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 19:33:42 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/16 15:49:39 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 22:15:29 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,16 @@ static int	do_cd(char **array, t_data *data)
    change to the path given in the argument */
 int	cd(char **array, t_data *data)
 {
-	int	i;
+	int		i;
+	char	*home;
 
+	home = get_env_var(data, "HOME");
+	if (!home || !*home)
+		return (1);
 	i = len_array(array);
 	if (!getcwd(data->oldpwd, sizeof(data->oldpwd)))
-		return (print_error("cd",
-				"Error getting current working directory"), 1);
+		return (chdir(home), print_error("cd",
+				"Error getting cwd, returning to home"), 1);
 	if (i == 1)
 		return (cd_home(data));
 	else if (i == 2 && !ft_strncmp(array[1], "-", 2))
