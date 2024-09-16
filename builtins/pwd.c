@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/13 12:41:08 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 22:27:12 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
 int	pwd(t_data *data)
 {
 	char	cwd[BUFF_SIZE];
+	char	*home;
 
-	if (getcwd(cwd, sizeof(cwd)))
+	home = get_env_var(data, "HOME");
+	if (!home || !*home)
+		return (1);
+	if (!getcwd(cwd, sizeof(cwd)))
 	{
-		printf("%s\n", cwd);
-		return (0);
+		update_exit_status(data, 1, "pwd", "Error getting cwd");
+		return (chdir(home), 1);
 	}
-	else
-	{
-		update_exit_status(data, 1, "Error",
-			"Error getting current working directory");
-		return (data->exit_status);
-	}
+	printf("%s\n", cwd);
 	return (0);
 }

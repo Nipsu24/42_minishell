@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:54:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 12:45:42 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 22:21:08 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,11 @@ int	child_builtins(t_data *data)
 	if (!data->proc[data->j].cmd)
 		return (0);
 	if (ft_strncmp(data->proc[data->j].cmd[0], "echo", 5) == 0)
-	{
-		echo(data);
-		return (1);
-	}
+		return (echo(data), 1);
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "env", 4) == 0)
-	{
-		print_env(data);
-		return (1);
-	}
+		return (print_env(data), 1);
 	else if (ft_strncmp(data->proc[data->j].cmd[0], "pwd", 4) == 0)
-	{
-		pwd(data);
-		return (1);
-	}
+		return (pwd(data), 1);
 	return (0);
 }
 
