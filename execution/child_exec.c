@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:52:40 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 11:49:45 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/16 15:56:05 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ int	child_exec(t_data *data)
 {
 	if (data->proc[data->j].cmd != NULL)
 	{
-		if (!child_builtins(data))
+		if (!child_builtins(data) && !non_child_builtins(data))
 		{
 			if (!data->proc[data->j].path)
 			{
 				update_exit_status(data, 127, data->proc[data->j].cmd[0],
-					"Command not found");
+					"command not found");
 				return (1);
 			}
 			else
@@ -102,7 +102,7 @@ int	child_exec(t_data *data)
 						data->proc[data->j].cmd, data->temp_env) == -1)
 				{
 					update_exit_status(data, 126, NULL,
-						"Command not executable");
+						"command not executable");
 					return (1);
 				}
 				else
