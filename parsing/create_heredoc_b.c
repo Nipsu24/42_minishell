@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:03:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/13 12:47:37 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:57:03 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	cleanup_and_exit(int stdin_fd)
 static int	handle_sigint_or_tmp(t_data *data, int stdin_fd)
 {
 	if (g_sigint)
-		return (1);
+		return (update_exit_status(data, 130, NULL, NULL), 1); 
 	if (!data->tmp)
 	{
 		cleanup_and_exit(stdin_fd);
