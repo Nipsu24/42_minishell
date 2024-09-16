@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/13 12:39:24 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:14:31 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
    "declare -x VARIABLE". */
 static void	print_export_env(char **env)
 {
-	int	i;
+	int		i;
+	char	**tmp;
 
 	i = 0;
 	if (!env)
@@ -27,11 +28,16 @@ static void	print_export_env(char **env)
 	}
 	while (env[i])
 	{
-		printf("declare -x %s\n", env[i]);
+		tmp = ft_split(env[i], '=');
+		printf("declare -x %s=\"%s\"\n", tmp[0], tmp[1]);
 		i++;
+		free_arr(&tmp);
 	}
 }
 
+/* Function to check if a string is a valid identifier. It must start with a
+   letter or an underscore, and the rest of the string must be alphanumeric
+   characters or underscores. */
 static bool	is_str_alpha(char *str)
 {
 	int	i;
@@ -49,6 +55,8 @@ static bool	is_str_alpha(char *str)
 	return (true);
 }
 
+/* Function to check if the variable to be exported is valid. It must be in the
+   format "VARIABLE=value". */
 static bool	valid_export(t_data *data, char *var)
 {
 	char	**tmp;
