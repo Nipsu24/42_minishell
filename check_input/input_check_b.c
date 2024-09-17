@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check_b.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:57:41 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/05 22:15:18 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:11:17 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,19 @@ int	check_pipes(char *input)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (!input)
 		return (0);
-	while (input[i])
+	while (i++, input[i])
 	{
+		if (input[0] == '|')
+			return (write_sytx_error(NULL, '|'));
 		if (input[i] == '|' && !between_quotes(input, i))
 		{
 			i++;
 			if (input[i] == '|')
 				return (write_sytx_error("||", 0));
-			if (!input[i] || input[i] == '<' || input[i] == '>')
+			if (!input[i])
 				return (write_sytx_error(NULL, '|'));
 			while (input[i] && input[i] == 32)
 				i++;
@@ -87,7 +89,6 @@ int	check_pipes(char *input)
 			if (input[i] && input[i] == '|')
 				return (write_sytx_error(NULL, '|'));
 		}
-		i++;
 	}
 	return (0);
 }

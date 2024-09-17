@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:44:37 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/11 16:04:38 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:49:35 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ int	count_pipes(t_data *data)
 		if (data->token_list[i].type == PIPE)
 			p_cnt++;
 		i++;
+	}
+	if (p_cnt > 255)
+	{
+		print_error("Error", "Too many pipes in command line :(");
+		data->err_flag = 1;
+		return (0);
 	}
 	data->proc = (t_prc *) malloc ((p_cnt + 1) * sizeof(t_prc));
 	if (!data->proc)

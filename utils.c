@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 21:45:25 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/16 16:04:24 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:41:21 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ int	parsing(t_data *data)
 		return (0);
 	if (init_proc_structs(data))
 		return (1);
+	if (data->err_flag)
+	{
+		free_parser(data, 0);
+		return (0);
+	}
 	if (init_path(data))
 		return (1);
 	if (alloc_here_filename(data))

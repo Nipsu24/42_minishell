@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/17 11:39:25 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:40:42 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void		free_str(char **str);
 void		free_int_arr(int **arr);
 void		free_2d_int_arr(t_data *data, int ***arr);
 void		free_2d_int_arr_rev(int ***arr, int j);
+void		free_parser(t_data *data, int exit_flag);
 
 /* Error check and utils */
 
@@ -157,6 +158,11 @@ int			ft_malloc_token(t_data *data);
 void		assign_token_type(t_data *tokens, int i);
 int			remove_quotes(t_data *data);
 void		helper_ft_expand(t_data *data, int *i);
+int			in_both_quotes(char *input, int pos);
+int			count_s_quotes_right(char *input, int pos);
+int			count_s_quotes_left(char *input, int pos);
+int			count_d_quotes_right(char *input, int pos);
+int			count_d_quotes_left(char *input, int pos);
 
 /* Parsing */
 
