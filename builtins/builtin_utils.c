@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:21:17 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/13 12:39:33 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:20:18 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	update_var(t_data *data, char *var)
 	if (!data || !data->temp_env || !var)
 		return (1);
 	tmp = ft_split(var, '=');
-	if (!tmp || !tmp[0] || !tmp[1])
+	if (!tmp || !tmp[0])
 		return (1);
 	i = find_var(data->temp_env, tmp[0]);
 	if (i == len_array(data->temp_env))
