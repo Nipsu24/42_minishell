@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:12:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/10 13:49:13 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:23:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*returns 1, if double quotes left of character are an odd number,
   returns 2, if double quotes left of character are an even number*/
-static int	count_d_quotes_left(char *input, int pos)
+int	count_d_quotes_left(char *input, int pos)
 {
 	int	d_quotes;
 
@@ -37,7 +37,7 @@ static int	count_d_quotes_left(char *input, int pos)
 
 /*returns 1, if double quotes right of character are an odd number,
   returns 2, if double quotes right of character are an even number*/
-static int	count_d_quotes_right(char *input, int pos)
+int	count_d_quotes_right(char *input, int pos)
 {
 	int	d_quotes;
 
@@ -60,7 +60,7 @@ static int	count_d_quotes_right(char *input, int pos)
 
 /*returns 1, if single quotes left of character are an odd number,
   returns 2, if single quotes left of character are an even number*/
-static int	count_s_quotes_left(char *input, int pos)
+int	count_s_quotes_left(char *input, int pos)
 {
 	int	s_quotes;
 
@@ -83,7 +83,7 @@ static int	count_s_quotes_left(char *input, int pos)
 
 /*returns 1, if single quotes right of character are an odd number,
   returns 2, if single quotes right of character are an even number*/
-static int	count_s_quotes_right(char *input, int pos)
+int	count_s_quotes_right(char *input, int pos)
 {
 	int	s_quotes;
 

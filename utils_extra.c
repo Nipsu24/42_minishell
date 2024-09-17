@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:03:42 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/16 16:04:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:21:50 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,19 @@ void	init_index(t_data *data)
 	data->k = 0;
 	data->l = 0;
 	data->m = 0;
+}
+
+/*Checks if a character is enclosed by both, single and double quotes.*/
+int	in_both_quotes(char *input, int pos)
+{
+	int	count;
+
+	count = 0;
+	if ((count_d_quotes_left(input, pos) == 1)
+		&& (count_d_quotes_right(input, pos) != 0))
+		count++;
+	if ((count_s_quotes_left(input, pos) == 1)
+		&& (count_s_quotes_right(input, pos) != 0))
+		count++;
+	return (count);
 }

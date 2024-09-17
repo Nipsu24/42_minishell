@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/11 16:23:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:40:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ void	free_2d_int_arr_rev(int ***arr, int j)
 	}
 	free(*arr);
 	*arr = NULL;
+}
+
+/*Used if amount of pipes exceeded*/
+void	free_parser(t_data *data, int exit_flag)
+{
+	if (data->tokens && data->tokens[0])
+		free_arr_void(&data->tokens);
+	if (data->token_list)
+	{
+		free(data->token_list);
+		data->token_list = NULL;
+	}
+	if (exit_flag)
+		exit(data->exit_status);
 }

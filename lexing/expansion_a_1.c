@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_a_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:38:46 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/15 14:00:33 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:09:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	ft_expand(t_data *data)
 	while (data->input[i])
 	{
 		if (data->input[i] == '$' && (!between_quotes(data->input, i)
-				|| between_quotes(data->input, i) == 1))
+				|| between_quotes(data->input, i) == 1) && in_both_quotes(data->input, i) != 2)
 		{
 			if (data->input[i + 1] != 32 && data->input[i + 1] != '"'
 				&& data->input[i + 1])
