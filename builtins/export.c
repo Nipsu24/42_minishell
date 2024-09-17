@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/17 17:35:03 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:53:10 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ static bool	valid_export(t_data *data, char *var)
 	tmp = ft_split(var, '=');
 	if (!tmp || !tmp[0])
 		return (free_arr(&tmp), update_exit_status(data, 1, "export",
-				"Not a valid identifier"), false);
+				"not a valid identifier"), false);
 	if (!is_str_alpha(tmp[0]))
 		return (free_arr(&tmp), update_exit_status(data, 1, "export",
-				"Not a valid identifier"), false);
+				"not a valid identifier"), false);
 	if (is_str_alpha(tmp[0]))
 		return (free_arr(&tmp), true);
 	free_arr(&tmp);

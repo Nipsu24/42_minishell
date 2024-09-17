@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/17 12:04:24 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 17:53:26 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	do_exit(t_data *data)
 	
 	if (data->proc[data->j].cmd[1] && data->proc[data->j].cmd[2])
 	{
-		update_exit_status(data, 1, "Error", "Too many arguments");
+		update_exit_status(data, 1, "Error", "too many arguments");
 		return (data->exit_status);
 	}
 	if (data->proc[data->j].cmd[1])
@@ -67,7 +67,7 @@ int	do_exit(t_data *data)
 		if (!is_numeric(data->proc[data->j].cmd[1])
 			|| exit_overflow(data->proc[data->j].cmd[1]))
 		{
-			update_exit_status(data, 2, "Error", "Numeric argument required");
+			update_exit_status(data, 2, "Error", "numeric argument required");
 			return (data->exit_status);
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);
