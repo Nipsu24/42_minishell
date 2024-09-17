@@ -6,7 +6,7 @@
 /*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:26:55 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/12 15:42:26 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:15:35 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	print_env(t_data *data)
 	{
 		if (ft_strchr(data->temp_env[i], '='))
 		{
-			if (ft_strncmp(data->temp_env[i], "_=", 2) == 0)
+			if (!ft_strncmp(data->temp_env[i], "_=", 2))
 				printf("_=/usr/bin/env\n");
 			else
 				printf("%s\n", data->temp_env[i]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:04:01 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/16 16:18:49 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 17:35:03 by cesasanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,14 @@ static void	print_export_env(char **env)
 	while (env[i])
 	{
 		tmp = ft_split(env[i], '=');
-		printf("declare -x %s=\"%s\"\n", tmp[0], tmp[1]);
+		if (!tmp)
+			return ;
+		if (!tmp[1] && env[i][ft_strlen(env[i]) - 1] == '=')
+			printf("declare -x %s=\"\"\n", tmp[0]);
+		else if (!tmp[1])
+			printf("declare -x %s\n", tmp[0]);
+		else
+			printf("declare -x %s=\"%s\"\n", tmp[0], tmp[1]);
 		i++;
 		free_arr(&tmp);
 	}
@@ -68,7 +75,7 @@ static bool	valid_export(t_data *data, char *var)
 	if (!is_str_alpha(tmp[0]))
 		return (free_arr(&tmp), update_exit_status(data, 1, "export",
 				"Not a valid identifier"), false);
-	if (tmp[1] && is_str_alpha(tmp[0]))
+	if (is_str_alpha(tmp[0]))
 		return (free_arr(&tmp), true);
 	free_arr(&tmp);
 	return (false);
