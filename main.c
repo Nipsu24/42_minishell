@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:24:39 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/16 16:19:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 12:05:29 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ static int	input_extra(t_data *data)
 	if (not_valid_input(data->input, data))
 		data->err_flag = 1;
 	if (lexer(data))
-		return (free_all(data, 0), 1);
+		return (free_mid(data, 0), 1);
 	if (parsing(data))
-		return (free_all(data, 0), 1);
+		return (free_mid(data, 0), 1);
 	if (exec_proc(data))
-		free_all(data, 0);
+		free_mid(data, 0);
 	if (data->err_flag)
 		free_str(&data->input);
 	else
-		free_all(data, 0);
+		free_mid(data, 0);
 	return (0);
 }
 
@@ -115,7 +115,7 @@ void	init_data(t_data *data)
   env variables during minishell execution do not affect the original env.*/
 int	main(int ac, char *av[], char *env[])
 {
-	t_data	data;	
+	t_data	data;
 
 	init_data(&data);
 	data.temp_env = ft_copy_env(env, &data);
@@ -128,8 +128,10 @@ int	main(int ac, char *av[], char *env[])
 		return (1);
 	}
 	else
+	{
 		if (ft_input(&data))
 			return (1);
+	}
 	free_arr(&data.temp_env);
 	return (0);
 }
