@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:12 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/16 15:56:50 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 12:04:24 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ If it is, print an error message. If it is not, convert the argument to an int
 and exit with that status. If there are no arguments, exit with status 0. */
 int	do_exit(t_data *data)
 {
+	int exit_code;
+	
 	if (data->proc[data->j].cmd[1] && data->proc[data->j].cmd[2])
 	{
 		update_exit_status(data, 1, "Error", "Too many arguments");
@@ -70,5 +72,7 @@ int	do_exit(t_data *data)
 		}
 		data->exit_status = ft_atoi(data->proc[data->j].cmd[1]);
 	}
-	exit(data->exit_status);
+	exit_code = data->exit_status;
+	free_all(data, 0);
+	exit(exit_code);
 }

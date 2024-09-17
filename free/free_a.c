@@ -6,11 +6,37 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/16 16:19:20 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 11:36:57 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_mid(t_data *data, int exit_flag)
+{
+	if (data->err_flag)
+		return ;
+	if (data->input)
+		free_str(&data->input);
+	if (data->tokens && data->tokens[0])
+		free_arr_void(&data->tokens);
+	if (data->token_list)
+	{
+		free(data->token_list);
+		data->token_list = NULL;
+	}
+	if (data->proc_nbr)
+		free_proc_structs(data);
+	if (data->path_arr)
+		free_arr_void(&data->path_arr);
+	if (data->pid_arr)
+		free_int_arr(&data->pid_arr);
+	if (data->fd_arr)
+		free_2d_int_arr(data, &data->fd_arr);
+	if (exit_flag)
+		exit(data->exit_status);
+}
+
 
 /*Exit_flag 1: failure; Exit_flag 2: success.
   Frees relevant parts of the main struct.*/
@@ -35,6 +61,8 @@ void	free_all(t_data *data, int exit_flag)
 		free_int_arr(&data->pid_arr);
 	if (data->fd_arr)
 		free_2d_int_arr(data, &data->fd_arr);
+	if(data->temp_env)
+		free_arr(&data->temp_env);
 	if (exit_flag)
 		exit(data->exit_status);
 }

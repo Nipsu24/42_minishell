@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/16 14:04:59 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/17 11:39:25 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int			update_exit_status(t_data *data, int status, char *cmd, char *msg);
 /* Free functions */
 
 void		free_all(t_data *data, int exit_flag);
+void		free_mid(t_data *data, int exit_flag);
 char		**free_arr_rev(char ***av, int j);
 char		**free_arr(char ***arr);
 void		free_arr_void(char ***arr);
