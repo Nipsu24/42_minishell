@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:11:07 by cesasanc          #+#    #+#             */
-/*   Updated: 2024/09/17 17:38:06 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:43:11 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	pwd(t_data *data)
 {
 	char	cwd[BUFF_SIZE];
-	
+
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		update_exit_status(data, 1, "pwd", "Error getting cwd");
