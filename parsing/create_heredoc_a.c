@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_heredoc_a.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:11:03 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/09 14:06:22 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:55:45 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,20 @@ static int	ft_heredoc(t_data *data)
 /*Main function for creating heredocs.*/
 int	create_heredocs(t_data *data)
 {
-	if (data->proc[data->j].redir && data->proc[data->j].redir[data->l])
+	data->j = 0;
+	while (data->j < data->proc_nbr)
 	{
-		while (data->proc[data->j].redir[data->l])
+		if (data->proc[data->j].redir && data->proc[data->j].redir[data->l])
 		{
-			if (ft_heredoc(data))
-				return (1);
-			data->l++;
+			while (data->proc[data->j].redir[data->l])
+			{
+				if (ft_heredoc(data))
+					return (1);
+				data->l++;
+			}
+			data->l = 0;
 		}
+		data->j++;
 	}
 	return (0);
 }

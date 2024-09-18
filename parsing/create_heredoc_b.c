@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_heredoc_b.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:03:59 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/16 11:57:03 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:56:43 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,23 @@
   or NULL in case delimiter is encountered directly on first line
   (delim_fst_line == 1 from dup_for_empty_here function) to the 'open'
   function as argument. Then writes content of here_tmp string into 
-  file and closes fd. Index k is incremented for potential next loop 
-  (if further files for other redirects need to be set up).*/
+  file and closes fd.*/
 int	file_create_n_write(t_data *data)
 {
 	if (no_other_heredoc(data))
 	{
-		data->proc[data->j].fd[data->k]
+		data->proc[data->j].fd[0]
 			= open(data->proc[data->j].here_name,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (data->delim_fst_line == 1 || data->flag_cntlr_d)
-			write(data->proc[data->j].fd[data->k],
+			write(data->proc[data->j].fd[0],
 				NULL, 0);
 		else
-			write(data->proc[data->j].fd[data->k],
+			write(data->proc[data->j].fd[0],
 				data->proc[data->j].here_tmp,
 				ft_strlen(data->proc[data->j].here_tmp));
-		close (data->proc[data->j].fd[data->k]);
+		close (data->proc[data->j].fd[0]);
 		free_str(&data->tmp);
-		data->k++;
 	}
 	else
 	{
@@ -58,7 +56,7 @@ static int	cleanup_and_exit(int stdin_fd)
 static int	handle_sigint_or_tmp(t_data *data, int stdin_fd)
 {
 	if (g_sigint)
-		return (update_exit_status(data, 130, NULL, NULL), 1); 
+		return (update_exit_status(data, 130, NULL, NULL), 1);
 	if (!data->tmp)
 	{
 		cleanup_and_exit(stdin_fd);

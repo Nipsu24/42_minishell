@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesasanc <cesasanc@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 14:07:00 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/13 12:52:06 by cesasanc         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:54:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static int	helper_remove_quotes(t_data *data, int j, char quote)
 	{
 		if (cut_quotes_str(data, j, data->first, data->second))
 			return (1);
+		data->i = data->second - 1;
 		data->first = -1;
 		data->second = -1;
-		data->i = 0;
 	}
 	return (0);
 }
