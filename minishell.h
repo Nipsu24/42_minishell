@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/17 16:40:42 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/18 13:47:29 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,6 @@ int			do_exit(t_data *data);
 
 void		handle_signals(int sig);
 void		setup_signal(void);
-void		setup_termios(int mode);
 void		here_sig_int(int sig);
 
 /* Further functions */
