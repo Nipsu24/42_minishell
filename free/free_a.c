@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:03:23 by mmeier            #+#    #+#             */
-/*   Updated: 2024/09/17 11:36:57 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/18 12:00:39 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	free_mid(t_data *data, int exit_flag)
 		exit(data->exit_status);
 }
 
-
 /*Exit_flag 1: failure; Exit_flag 2: success.
   Frees relevant parts of the main struct.*/
 void	free_all(t_data *data, int exit_flag)
@@ -61,36 +60,10 @@ void	free_all(t_data *data, int exit_flag)
 		free_int_arr(&data->pid_arr);
 	if (data->fd_arr)
 		free_2d_int_arr(data, &data->fd_arr);
-	if(data->temp_env)
+	if (data->temp_env)
 		free_arr(&data->temp_env);
 	if (exit_flag)
 		exit(data->exit_status);
-}
-
-/*Frees all proc_structs in order.*/
-void	free_proc_structs(t_data *data)
-{
-	int	j;
-
-	j = 0;
-	while (j < data->proc_nbr)
-	{
-		if (data->proc[j].cmd != NULL)
-			free_arr_void(&data->proc[j].cmd);
-		if (data->proc[j].redir != NULL)
-			free_arr_void(&data->proc[j].redir);
-		if (data->proc[j].path != NULL)
-			free_str(&data->proc[j].path);
-		if (data->proc[j].fd != NULL)
-			free_int_arr(&data->proc[j].fd);
-		if (data->proc[j].here_tmp != NULL)
-			free_str(&data->proc[j].here_tmp);
-		if (data->proc[j].here_name != NULL)
-			free_str(&data->proc[j].here_name);
-		j++;
-	}
-	free(data->proc);
-	data->proc = NULL;
 }
 
 /*Helper function of free_proc_arrays_rev, loops through redir array.*/
