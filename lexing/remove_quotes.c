@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 14:07:00 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/09/17 15:09:40 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/09/18 11:54:33 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ static int	helper_remove_quotes(t_data *data, int j, char quote)
 		data->i = data->second - 1;
 		data->first = -1;
 		data->second = -1;
-		// if (data->tokens[j][data->i])
-		// 	data->i++;
-		//data->i = 0;
 	}
 	return (0);
 }
