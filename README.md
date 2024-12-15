@@ -5,7 +5,7 @@
 <h2 align="center">
 	<a href="#about">About</a>
 	<span> · </span>
-	<a href="#program scope">Program scope</a>
+	<a href="#Program scope">Program Scope</a>
 	<span> · </span>
 	<a href="#requirements">Requirements</a>
 	<span> · </span>
@@ -21,7 +21,8 @@ a command line shell and how to structure and develop a complex program written 
 built-in and external commands and comprehensive signal handling), the setup of a joint git repository and agreement on a suitable and efficient working
 mode is another pivotal aspect of this project.
 
-## Program scope
+## Program Scope
+
 ### EXECUTION  
 **builtins:**
   - `echo` with option -n
@@ -48,5 +49,12 @@ To compile the minishell, clone the repository, cd into the folder and run:
 ```
 $ make 
 ```
+### 2. Cleaning all binary (.o) and executable files
+
+To delete all files generated with make, run:
+```
+$ make fclean
+```
+
 ## Testing
 This library has been tested with [minishell_tester] (https://github.com/LucasKuhn/minishell_tester)
