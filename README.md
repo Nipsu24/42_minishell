@@ -22,7 +22,13 @@ built-in and external commands and comprehensive signal handling), the setup of 
 mode is another pivotal aspect of this project.
 
 ## Program Scope
-
+The implementation orients closely on a bash shell, the following functionalities **are within scope**:
+### PARSING  
+ - assigns tokens to user input based on bash syntax
+ - sets up and populates process structs containing e.g. command and redirections arrays, file descriptors and heredoc content
+ - handles single `'` and double quotes `"`
+ - handles environmental variable expansion via `$` character
+ - handles `$?` for displaying exit status of most recently executed foreground pipeline
 ### EXECUTION  
 **builtins:**
   - `echo` with option -n
@@ -32,9 +38,20 @@ mode is another pivotal aspect of this project.
   - `unset` with no options
   - `env` with no options or arguments
   - `exit` with no options
+    
+**pipes:**
+ - the shell supports chaining builtins and external commands by `|` operator up to an arbitrary amount of 255 pipes.
+
+**redirections:**
+ - handles the following redirections: `<, >, <<, >>`
+
+**signals:**
+ - `ctrl + d`
+ - `ctrl + c`
+ - `ctrl + \`
    
-The implementation orients closely on a bash shell, whereby the following functionalities **are out of scope**:  
-`unclosed quotes`, `whildcards *`, `&&`, `||`
+The following functionalities **are out of scope**:  
+`unclosed quotes`, `whildcards *`, `&&`, `||`, `\`, `;`
 
 ## Requirements
 -`gcc` compiler
