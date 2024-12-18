@@ -62,11 +62,16 @@ with `<readline.h>`
 ### 1. Compiling the program
 
 To compile the minishell, clone the repository, cd into the folder and run:
-
 ```
-$ make 
+$ make
 ```
-### 2. Cleaning all binary (.o) and executable files
+### 2. Run the program
+Run the executable with the following command:
+```
+$ ./minishell
+```
+You are now in the minishell environment and can conduct the respective bash commands.
+### 3. Cleaning all binary (.o) and executable files
 
 To delete all files generated with make, run:
 ```
